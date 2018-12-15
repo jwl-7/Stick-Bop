@@ -4,6 +4,7 @@ STICK BOP! --- IN DEVELOPMENT
 
 import pygame
 import random
+import sys
 
 SCREEN_WIDTH  = 900
 SCREEN_HEIGHT = 700
@@ -18,6 +19,8 @@ orange = (252, 151, 105)
 purple = (171, 157, 244)
 blue   = (119, 220, 230)
 
+background_image_filename = 'background_picture.png'
+
 score = 0
 
 def main():
@@ -28,8 +31,8 @@ def main():
     pygame.display.set_caption("Stick Bop! Test~~")
 
     #drawing background
-    bg = pygame.image.load('background_picture.png')
-    screen.blit(bg, (0,0))
+    background = pygame.image.load(background_image_filename).convert()
+    screen.blit(background, (0,0))
 
     # loop until user presses close button
     done = False
