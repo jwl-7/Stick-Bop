@@ -20,7 +20,6 @@ blue   = (119, 220, 230)
 
 score = 0
 
-
 def main():
     pygame.init()
     size = SCREEN_WIDTH, SCREEN_HEIGHT
@@ -29,7 +28,7 @@ def main():
     pygame.display.set_caption("Stick Bop! Test~~")
 
     #drawing background
-    bg = pygame.image.load('shiba.png')
+    bg = pygame.image.load('background_picture.png')
     screen.blit(bg, (0,0))
 
     # loop until user presses close button
