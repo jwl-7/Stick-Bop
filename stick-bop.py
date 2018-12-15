@@ -20,13 +20,17 @@ blue   = (119, 220, 230)
 
 score = 0
 
+
 def main():
     pygame.init()
-
-    size = [SCREEN_WIDTH, SCREEN_HEIGHT]
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.set_mode(size)
 
     pygame.display.set_caption("Stick Bop! Test~~")
+
+    #drawing background
+    bg = pygame.image.load('shiba.png')
+    screen.blit(bg, (0,0))
 
     # loop until user presses close button
     done = False
@@ -41,7 +45,6 @@ def main():
                 done = True
         
         screen.fill(white)
-        clock.tick(60)
 
         is_purple = True
 
@@ -53,10 +56,8 @@ def main():
         else: 
             color = blue
 
-        pygame.draw.rect(screen, color, pygame.Rect(200, 200, 200, 200))
-
-        # update screen
-        pygame.display.flip()
+        # update full-screen
+        pygame.display.update()
 
     pygame.quit()
 
