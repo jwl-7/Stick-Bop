@@ -18,6 +18,8 @@ orange = (252, 151, 105)
 purple = (171, 157, 244)
 blue   = (119, 220, 230)
 
+score = 0
+
 def main():
     pygame.init()
 
