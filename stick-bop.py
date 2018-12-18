@@ -55,6 +55,12 @@ def main():
                     image2 = pygame.image.load('stick_pic2.png').convert()
                     screen.blit(image2, [0, 0])
 
+            # change image when key(left arrow) is released
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    background_image = pygame.image.load('stick_pic.png').convert()
+                    screen.blit(background_image, [0, 0])
+
         
         #screen.fill(white)
 
