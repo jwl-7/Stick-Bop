@@ -2,9 +2,6 @@ import pygame
 import random
 import os
 
-# see what dir python is looking for files in
-print('THE CURRENT DIRECTORY IS: ' + os.getcwd())
-
 # look in dir that python file is in
 os.chdir(os.path.dirname(__file__))
 
@@ -20,8 +17,6 @@ yellow = (255, 216, 102)
 orange = (252, 151, 105)
 purple = (171, 157, 244)
 blue   = (119, 220, 230)
-
-#background_image_filename = 'background_picture.png'
 
 score = 0
 
@@ -56,9 +51,6 @@ def main():
                 if event.key == pygame.K_LEFT:
                     background_image = pygame.image.load('stick_pic.png').convert()
                     screen.blit(background_image, [0, 0])
-
-        
-        #screen.fill(white)
 
         pygame.display.flip()
         clock.tick(60)
