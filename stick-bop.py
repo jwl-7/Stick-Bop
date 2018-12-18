@@ -1,7 +1,3 @@
-"""
-STICK BOP! --- IN DEVELOPMENT
-"""
-
 import pygame
 import random
 import os
