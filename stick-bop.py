@@ -48,6 +48,13 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
+
+            # change image when key(left arrow) is pressed -- image stays after keypress
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    image2 = pygame.image.load('stick_pic2.png').convert()
+                    screen.blit(image2, [0, 0])
+
         
         #screen.fill(white)
 
