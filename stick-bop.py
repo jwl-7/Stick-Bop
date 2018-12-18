@@ -4,7 +4,13 @@ STICK BOP! --- IN DEVELOPMENT
 
 import pygame
 import random
-import sys
+import os
+
+# see what dir python is looking for files in
+print('THE CURRENT DIRECTORY IS: ' + os.getcwd())
+
+# look in dir that python file is in
+os.chdir(os.path.dirname(__file__))
 
 SCREEN_WIDTH  = 900
 SCREEN_HEIGHT = 700
@@ -19,26 +25,23 @@ orange = (252, 151, 105)
 purple = (171, 157, 244)
 blue   = (119, 220, 230)
 
-background_image_filename = 'background_picture.png'
+#background_image_filename = 'background_picture.png'
 
 score = 0
 
 def main():
     pygame.init()
-    size = SCREEN_WIDTH, SCREEN_HEIGHT
+    size   = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.set_mode(size)
+    clock  = pygame.time.Clock()
+    pygame.display.set_caption('Stick Bop! < TEST >')
 
-    pygame.display.set_caption("Stick Bop! Test~~")
-
-    #drawing background
-    background = pygame.image.load(background_image_filename).convert()
-    screen.blit(background, (0,0))
+    # display background image
+    background_image = pygame.image.load('stick_pic.png').convert()
+    screen.blit(background_image, [0, 0])
 
     # loop until user presses close button
     done = False
-
-    # manage how fast screen updates
-    clock = pygame.time.Clock()
 
     # program loop
     while done == False:
@@ -46,22 +49,12 @@ def main():
             if event.type == pygame.QUIT:
                 done = True
         
-        screen.fill(white)
+        #screen.fill(white)
 
-        is_purple = True
-
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            is_purple = not is_purple
-
-        if is_purple:
-            color = purple
-        else: 
-            color = blue
-
-        # update full-screen
-        pygame.display.update()
+        pygame.display.flip()
+        clock.tick(60)
 
     pygame.quit()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
