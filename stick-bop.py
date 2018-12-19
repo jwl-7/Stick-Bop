@@ -58,10 +58,10 @@ def main():
                     screen.blit(background_image, [0, 0])
                     
         # display score to screen into top right corner           
-        myFont = pygame.font.SysFont("Courier New", 25)
-        text = "Score: " + str(score)
-        label = myFont.render(text, 1, black)
-        screen.blit(label, (SCREEN_WIDTH-180,SCREEN_HEIGHT-(SCREEN_HEIGHT-20)))
+        game_font   = pygame.font.Font('OpenSans-Regular.ttf', 30)
+        score_text  = 'Score: ' + str(score)
+        score_label = game_font.render(score_text, 1, brown)
+        screen.blit(score_label, (SCREEN_WIDTH - 180, SCREEN_HEIGHT - (SCREEN_HEIGHT - 20)))
 
         pygame.display.update()
         clock.tick(60)
