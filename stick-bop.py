@@ -22,15 +22,19 @@ score = 0
 
 def main():
     pygame.init()
-
     size   = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.set_mode(size)
     clock  = pygame.time.Clock()
-    pygame.display.set_caption('Stick Bop!')
+    pygame.display.set_caption('Stick Bop! < TEST >')
 
     # display background image
     background_image = pygame.image.load('stick_pic.png').convert()
     screen.blit(background_image, [0, 0])
+
+    # play background music
+    #pygame.mixer.music.load('background_arcade_music.mp3')
+    #pygame.mixer.music.set_volume(0.08)
+    #pygame.mixer.music.play(-1)
 
     # loop until user presses close button
     done = False
@@ -44,7 +48,12 @@ def main():
             # change image when key(left arrow) is pressed -- image stays after keypress
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    image2 = pygame.image.load('stick_pic2.png').convert()
+
+                    pygame.mixer.music.load('sword_ahhhh.wav')
+                    pygame.mixer.music.set_volume(0.5)
+                    pygame.mixer.music.play(0)
+
+                    image2 = pygame.image.load('stick_pic_sword.png').convert()
                     screen.blit(image2, [0, 0])
 
             # change image when key(left arrow) is released
