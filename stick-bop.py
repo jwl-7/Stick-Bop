@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+Stick Bop! is a game made in pygame that was inspired by
+the 90s Bop It! toys.
+"""
+
 import pygame
 import random
 from os import path
