@@ -22,10 +22,11 @@ score = 0
 
 def main():
     pygame.init()
+
     size   = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.set_mode(size)
     clock  = pygame.time.Clock()
-    pygame.display.set_caption('Stick Bop! < TEST >')
+    pygame.display.set_caption('Stick Bop!')
 
     # display background image
     background_image = pygame.image.load('stick_pic.png').convert()
