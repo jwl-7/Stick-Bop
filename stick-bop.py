@@ -17,6 +17,7 @@ yellow = (255, 216, 102)
 orange = (252, 151, 105)
 purple = (171, 157, 244)
 blue   = (119, 220, 230)
+black  = (  0,   0,   0)
 
 score = 0
 
@@ -31,11 +32,6 @@ def main():
     background_image = pygame.image.load('stick_pic.png').convert()
     screen.blit(background_image, [0, 0])
 
-    # play background music
-    #pygame.mixer.music.load('background_arcade_music.mp3')
-    #pygame.mixer.music.set_volume(0.08)
-    #pygame.mixer.music.play(-1)
-
     # loop until user presses close button
     done = False
 
@@ -48,9 +44,8 @@ def main():
             # change image when key(left arrow) is pressed -- image stays after keypress
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-
                     pygame.mixer.music.load('sword_ahhhh.wav')
-                    pygame.mixer.music.set_volume(0.5)
+                    pygame.mixer.music.set_volume(1)
                     pygame.mixer.music.play(0)
 
                     image2 = pygame.image.load('stick_pic_sword.png').convert()
@@ -61,8 +56,14 @@ def main():
                 if event.key == pygame.K_LEFT:
                     background_image = pygame.image.load('stick_pic.png').convert()
                     screen.blit(background_image, [0, 0])
+                    
+        # display score to screen into top right corner           
+        myFont = pygame.font.SysFont("Courier New", 25)
+        text = "Score: " + str(score)
+        label = myFont.render(text, 1, black)
+        screen.blit(label, (SCREEN_WIDTH-180,SCREEN_HEIGHT-(SCREEN_HEIGHT-20)))
 
-        pygame.display.flip()
+        pygame.display.update()
         clock.tick(60)
 
     pygame.quit()
