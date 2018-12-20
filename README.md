@@ -1,13 +1,13 @@
 # Stick Bop!
-a python game inspired by the 90s Bop It toy
+a python game inspired by the 90s Bop It! toy
 
-## Features
-- help menu
-- monokai color scheme
-- 60fps gameplay
+## Gameplay
+You need to help your stick-figure character do as much work as possible!
+Follow the on-screen instructions for each work task.
+You win the game by getting a score of 100.
 
 ## Screenshots
-- none
+[![codex-chatbot.png](https://i.imgur.com/aaHo2h2.png)](https://imgur.com/aaHo2h2)
 
 ## Requirements
 * Python 3.7+
