@@ -7,7 +7,7 @@ Follow the on-screen instructions for each work task.
 You win the game by getting a score of 100.
 
 ## Screenshots
-[![codex-chatbot.png](https://i.imgur.com/aaHo2h2.png?1)](https://imgur.com/aaHo2h2)
+[![codex-chatbot.png](https://i.imgur.com/kAs7PWf.png)](https://imgur.com/kAs7PWf)
 
 ## Requirements
 * Python 3.7+
