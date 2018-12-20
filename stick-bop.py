@@ -61,7 +61,32 @@ def game_menu():
         else:
             pygame.display.update()
 
-    print('GAME READY TO START')
+def game_ready():
+    pygame.mixer.music.stop()
+
+    ready_snd = pygame.mixer.Sound(path.join(SND_DIR, 'ready-set-go.ogg'))
+    ready_snd.play()
+
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
+    screen = pygame.display.set_mode(size)
+
+    ready_img = pygame.image.load(path.join(IMG_DIR, 'ready.png')).convert()
+    ready_img = pygame.transform.scale(ready_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(ready_img, [0, 0])
+    pygame.display.update()
+    pygame.time.wait(1000)
+
+    set_img = pygame.image.load(path.join(IMG_DIR, 'set.png')).convert()
+    set_img = pygame.transform.scale(set_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(set_img, [0, 0])
+    pygame.display.update()
+    pygame.time.wait(1000)
+
+    go_img = pygame.image.load(path.join(IMG_DIR, 'go.png')).convert()
+    go_img = pygame.transform.scale(go_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(go_img, [0, 0])
+    pygame.display.update()
+    pygame.time.wait(1000)
 
 def draw_text(surface, text, size, x, y):
     game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
@@ -79,10 +104,6 @@ def main():
     clock = pygame.time.Clock()
     pygame.display.set_caption('Stick Bop!')
 
-    # load assets
-    image1 = pygame.image.load(path.join(IMG_DIR, 'stick-pic.png')).convert()
-    image2 = pygame.image.load(path.join(IMG_DIR, 'stick-pic-sword.png')).convert()
-
     # MAIN GAME LOOP
     #----------------------------------------------------------------
     running = True
@@ -92,26 +113,7 @@ def main():
     while running:
         if menu_display:
             game_menu()
-            pygame.mixer.music.stop()
-
-            ready_snd = pygame.mixer.Sound(path.join(SND_DIR, 'ready-set-go.ogg'))
-            ready_snd.play()
-
-            screen.fill(WHITE)
-            draw_text(screen, 'READY', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
-            pygame.display.update()
-            pygame.time.wait(1000)
-
-            screen.fill(WHITE)
-            draw_text(screen, 'SET', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
-            pygame.display.update()
-            pygame.time.wait(1000)
-
-            screen.fill(WHITE)
-            draw_text(screen, 'GO!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
-            pygame.display.update()
-            pygame.time.wait(1000)
-
+            game_ready()
             menu_display = False
 
         screen.fill(WHITE)
