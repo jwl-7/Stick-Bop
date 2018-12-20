@@ -44,7 +44,7 @@ def main():
     pygame.display.set_caption('Stick Bop! < TEST >')
 
     # load assets
-    background_image = pygame.image.load(path.join(img_dir, 'stick_pic.png')).convert()
+    background_image = pygame.image.load(path.join(img_dir, 'stick-bop-menu.png')).convert()
     pygame.mixer.music.load(path.join(snd_dir, 'sword_ahhhh.wav'))
     image2 = pygame.image.load(path.join(img_dir, 'stick_pic_sword.png')).convert()
     game_font = pygame.font.Font(path.join(font_dir, 'OpenSans-Regular.ttf'), 30)
@@ -54,8 +54,6 @@ def main():
 
     # loop until user presses close button
     done = False
-
-
 
     # program loop
     while done == False:
