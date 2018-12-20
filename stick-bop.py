@@ -19,6 +19,9 @@ font_dir = path.join(path.dirname(__file__), 'fonts')
 SCREEN_WIDTH  = 900
 SCREEN_HEIGHT = 700
 
+# game fps
+fps = 30
+
 # monokai color palette
 white  = (253, 250, 243)
 brown  = ( 45,  43,  46)
@@ -32,7 +35,7 @@ black  = (  0,   0,   0)
 
 # game constants
 score = 0
-
+    
 def main():
     pygame.init()
     size   = SCREEN_WIDTH, SCREEN_HEIGHT
@@ -51,6 +54,8 @@ def main():
 
     # loop until user presses close button
     done = False
+
+
 
     # program loop
     while done == False:
@@ -76,7 +81,7 @@ def main():
         screen.blit(score_label, (SCREEN_WIDTH - 180, SCREEN_HEIGHT - (SCREEN_HEIGHT - 20)))
 
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(fps)
 
     pygame.quit()
 
