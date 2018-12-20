@@ -65,6 +65,13 @@ def game_menu():
 
     print('GAME READY TO START')
 
+def draw_text(surface, text, size, x, y):
+    game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
+    text_surface = game_font.render(text, True, BLACK)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surface.blit(text_surface, text_rect)
+
 def main():
     game_init()
 
@@ -77,7 +84,6 @@ def main():
     # load assets
     image1 = pygame.image.load(path.join(IMG_DIR, 'stick-pic.png')).convert()
     image2 = pygame.image.load(path.join(IMG_DIR, 'stick-pic-sword.png')).convert()
-    game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), 30)
 
     # MAIN GAME LOOP
     #----------------------------------------------------------------
@@ -90,8 +96,26 @@ def main():
     while running:
         if menu_display:
             game_menu()
-            pygame.time.wait(1000)
             pygame.mixer.music.stop()
+            
+            ready_snd = pygame.mixer.Sound(path.join(SND_DIR, 'ready-set-go.ogg'))
+            ready_snd.play()
+
+            screen.fill(WHITE)
+            draw_text(screen, 'READY', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+            pygame.display.update()
+            pygame.time.wait(1000)
+
+            screen.fill(WHITE)
+            draw_text(screen, 'SET', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+            pygame.display.update()
+            pygame.time.wait(1000)
+
+            screen.fill(WHITE)
+            draw_text(screen, 'GO!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+            pygame.display.update()
+            pygame.time.wait(1000)
+
             menu_display = False
 
         clock.tick(FPS)
@@ -114,8 +138,7 @@ def main():
              
         # display score to screen into top right corner           
         score_text = 'Score: ' + str(SCORE)
-        score_label = game_font.render(score_text, 1, BROWN)
-        screen.blit(score_label, (SCREEN_WIDTH - 180, SCREEN_HEIGHT - (SCREEN_HEIGHT - 20)))
+        draw_text(screen, score_text, 30, SCREEN_WIDTH - 180, SCREEN_HEIGHT - (SCREEN_HEIGHT - 20))
 
         pygame.display.update()
 
