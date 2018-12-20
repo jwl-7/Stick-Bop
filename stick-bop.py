@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Stick Bop! is a game made in pygame that was inspired by
-the 90s Bop It! toys.
+Stick Bop! is a game made in pygame that was inspired by the 90s Bop It! toy.
 """
 
 import pygame
