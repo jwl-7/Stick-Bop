@@ -97,22 +97,22 @@ def main():
         if menu_display:
             game_menu()
             pygame.mixer.music.stop()
-            
+
             ready_snd = pygame.mixer.Sound(path.join(SND_DIR, 'ready-set-go.ogg'))
             ready_snd.play()
 
             screen.fill(WHITE)
-            draw_text(screen, 'READY', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+            draw_text(screen, 'READY', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
             pygame.display.update()
             pygame.time.wait(1000)
 
             screen.fill(WHITE)
-            draw_text(screen, 'SET', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+            draw_text(screen, 'SET', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
             pygame.display.update()
             pygame.time.wait(1000)
 
             screen.fill(WHITE)
-            draw_text(screen, 'GO!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+            draw_text(screen, 'GO!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
             pygame.display.update()
             pygame.time.wait(1000)
 
@@ -138,7 +138,7 @@ def main():
              
         # display score to screen into top right corner           
         score_text = 'Score: ' + str(SCORE)
-        draw_text(screen, score_text, 30, SCREEN_WIDTH - 180, SCREEN_HEIGHT - (SCREEN_HEIGHT - 20))
+        draw_text(screen, score_text, 40, SCREEN_WIDTH - (SCREEN_WIDTH / 6), 0)
 
         pygame.display.update()
 
