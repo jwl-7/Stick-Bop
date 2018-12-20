@@ -18,6 +18,7 @@ FONT_DIR = path.join(path.dirname(__file__), 'fonts')
 SCREEN_WIDTH  = 900
 SCREEN_HEIGHT = 700
 FPS = 30
+SCORE = 0
 
 # monokai color palette
 WHITE  = (253, 250, 243)
@@ -35,9 +36,23 @@ def game_init():
     pygame.init()
     pygame.mixer.init()
 
+def draw_text(surface, text, size, x, y):
+    game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
+    text_surface = game_font.render(text, True, BLACK)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surface.blit(text_surface, text_rect)
+
+def clear_text(surface, color, text, size, x, y):
+    game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
+    text_surface = game_font.render(text, True, BLACK)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surface.fill(color, text_rect)
+
 def game_menu():
     size = SCREEN_WIDTH, SCREEN_HEIGHT
-    screen = pygame.display.set_mode(size)
+    screen = pygame.display.get_surface()
     menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'piano-lofi-rain.ogg'))
     pygame.mixer.music.play(-1)
 
@@ -54,10 +69,8 @@ def game_menu():
                 break
             elif event.key == pygame.K_ESCAPE:
                 pygame.quit()
-                quit()
         elif event.type == pygame.QUIT:
             pygame.quit()
-            quit()
         else:
             pygame.display.update()
 
@@ -68,7 +81,7 @@ def game_ready():
     ready_snd.play()
 
     size = SCREEN_WIDTH, SCREEN_HEIGHT
-    screen = pygame.display.set_mode(size)
+    screen = pygame.display.get_surface()
 
     ready_img = pygame.image.load(path.join(IMG_DIR, 'ready.png')).convert()
     ready_img = pygame.transform.scale(ready_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
@@ -88,69 +101,90 @@ def game_ready():
     pygame.display.update()
     pygame.time.wait(1000)
 
-def draw_text(surface, text, size, x, y):
-    game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
-    text_surface = game_font.render(text, True, BLACK)
-    text_rect = text_surface.get_rect()
-    text_rect.midtop = (x, y)
-    surface.blit(text_surface, text_rect)
+def task_jackhammer():
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
+    screen = pygame.display.get_surface()
+    clock = pygame.time.Clock()
+
+    jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-1.png')).convert()
+    jackhammer1_img = pygame.transform.scale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(jackhammer1_img, [0, 0])
+
+    count = 0
+    start_time = pygame.time.get_ticks()
+
+    while True:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    jackhammer2_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-2.png')).convert()
+                    jackhammer2_img = pygame.transform.scale(jackhammer2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(jackhammer2_img, [0, 0])
+                    count += 1
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-1.png')).convert()
+                    jackhammer1_img = pygame.transform.scale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(jackhammer1_img, [0, 0])
+                    
+        count_down = 5
+
+        time_since = pygame.time.get_ticks() - start_time
+        millis = int(time_since)
+        seconds = (millis / 1000) % 60
+        seconds = int(seconds)
+
+        count_down_timer = count_down - seconds
+
+        count_msg = 'TIMER: ' + str(count_down_timer)
+
+        clear_text(screen, WHITE, count_msg, 40, SCREEN_WIDTH / 2, 0)
+        draw_text(screen, count_msg, 40, SCREEN_WIDTH / 2, 0)
+
+        if count >= 5 and count_down_timer > 0:
+            screen.fill(WHITE)
+            draw_text(screen, 'YOU WIN!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
+            break
+        elif count_down_timer <= 0:
+            screen.fill(BLUE)
+            draw_text(screen, 'GAME OVER!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
+            break
+        
+        pygame.display.update()
+        clock.tick(FPS)
 
 def main():
     game_init()
 
-    # setup game window
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.set_mode(size)
     clock = pygame.time.Clock()
     pygame.display.set_caption('Stick Bop!')
 
-    # MAIN GAME LOOP
-    #----------------------------------------------------------------
     running = True
     menu_display = True
-    start_time = None
+    scene_jackhammer = False
 
     while running:
         if menu_display:
             game_menu()
             game_ready()
             menu_display = False
+            scene_jackhammer = True
 
-        screen.fill(WHITE)
-        draw_text(screen, 'PRESS [SPACE]', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
+        if scene_jackhammer:
+            task_jackhammer()
+            scene_jackhammer = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    start_time = pygame.time.get_ticks()
-
-        screen.fill(WHITE)
-
-        SCORE = 0
-
-        if start_time:
-            count_down = 5
-
-            time_since = pygame.time.get_ticks() - start_time
-            millis = int(time_since)
-            seconds = (millis / 1000) % 60
-            seconds = int(seconds)
-
-            count_down_timer = count_down - seconds
-
-            count_msg = 'You have ' + str(count_down_timer)
-
-            draw_text(screen, count_msg, 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
-            
-            if count_down_timer <= 0:
-                screen.fill(BLUE)
-                draw_text(screen, 'GAME OVER!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
 
         score_text = 'Score: ' + str(SCORE)
         draw_text(screen, score_text, 40, SCREEN_WIDTH - (SCREEN_WIDTH / 6), 0)
-
         pygame.display.update()
         clock.tick(FPS)
 
