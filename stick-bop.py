@@ -19,7 +19,6 @@ FONT_DIR = path.join(path.dirname(__file__), 'fonts')
 SCREEN_WIDTH  = 900
 SCREEN_HEIGHT = 700
 FPS = 30
-SCORE = 0
 
 # monokai color palette
 WHITE  = (253, 250, 243)
@@ -87,12 +86,10 @@ def main():
 
     # MAIN GAME LOOP
     #----------------------------------------------------------------
-
-    # loop until user presses close button
     running = True
     menu_display = True
+    start_time = None
 
-    # program loop
     while running:
         if menu_display:
             game_menu()
@@ -118,29 +115,43 @@ def main():
 
             menu_display = False
 
-        clock.tick(FPS)
-        screen.blit(image1, [0, 0])
+        screen.fill(WHITE)
+        draw_text(screen, 'PRESS [SPACE]', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
-            # change image when key(left arrow) is pressed -- image stays after keypress
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    sword_snd = pygame.mixer.Sound(path.join(SND_DIR, 'sword_ahhhh.wav'))
-                    sword_snd.play()
-                    screen.blit(image2, [0, 0])
+                if event.key == pygame.K_SPACE:
+                    start_time = pygame.time.get_ticks()
 
-            # change image when key(left arrow) is released
-            elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    screen.blit(image1, [0, 0])
-             
-        # display score to screen into top right corner           
+        screen.fill(WHITE)
+
+        SCORE = 0
+
+        if start_time:
+            count_down = 5
+
+            time_since = pygame.time.get_ticks() - start_time
+            millis = int(time_since)
+            seconds = (millis / 1000) % 60
+            seconds = int(seconds)
+
+            count_down_timer = count_down - seconds
+
+            count_msg = 'You have ' + str(count_down_timer)
+
+            draw_text(screen, count_msg, 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
+            
+            if count_down_timer <= 0:
+                screen.fill(BLUE)
+                draw_text(screen, 'GAME OVER!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
+
         score_text = 'Score: ' + str(SCORE)
         draw_text(screen, score_text, 40, SCREEN_WIDTH - (SCREEN_WIDTH / 6), 0)
 
         pygame.display.update()
+        clock.tick(FPS)
 
     pygame.quit()
 
