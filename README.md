@@ -2,8 +2,8 @@
 a python game inspired by the 90s Bop It! toy
 
 ## Gameplay
-You need to help your stick-figure character do as much work as possible!
-Follow the on-screen instructions for each work task.
+You need to help your stick-figure character do as much work as possible!  
+Follow the on-screen instructions for each work task.  
 You win the game by getting a score of 100.
 
 ## Screenshots
