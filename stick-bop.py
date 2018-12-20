@@ -36,16 +36,16 @@ def game_init():
     pygame.init()
     pygame.mixer.init()
 
-def draw_text(surface, text, size, x, y):
+def draw_text(surface, color, text, size, x, y):
     game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
-    text_surface = game_font.render(text, True, BLACK)
+    text_surface = game_font.render(text, True, color)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
     surface.blit(text_surface, text_rect)
 
 def clear_text(surface, color, text, size, x, y):
     game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
-    text_surface = game_font.render(text, True, BLACK)
+    text_surface = game_font.render(text, True, color)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
     surface.fill(color, text_rect)
@@ -114,7 +114,6 @@ def task_jackhammer():
     start_time = pygame.time.get_ticks()
 
     while True:
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -142,15 +141,15 @@ def task_jackhammer():
         count_msg = 'TIMER: ' + str(count_down_timer)
 
         clear_text(screen, WHITE, count_msg, 40, SCREEN_WIDTH / 2, 0)
-        draw_text(screen, count_msg, 40, SCREEN_WIDTH / 2, 0)
+        draw_text(screen, BLACK, count_msg, 40, SCREEN_WIDTH / 2, 0)
 
         if count >= 5 and count_down_timer > 0:
             screen.fill(WHITE)
-            draw_text(screen, 'YOU WIN!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
+            draw_text(screen, BLUE, 'YOU WIN!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
             break
         elif count_down_timer <= 0:
             screen.fill(BLUE)
-            draw_text(screen, 'GAME OVER!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
+            draw_text(screen, WHITE, 'GAME OVER!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
             break
         
         pygame.display.update()
@@ -184,7 +183,7 @@ def main():
                 running = False
 
         score_text = 'Score: ' + str(SCORE)
-        draw_text(screen, score_text, 40, SCREEN_WIDTH - (SCREEN_WIDTH / 6), 0)
+        draw_text(screen, BLACK, score_text, 40, SCREEN_WIDTH - (SCREEN_WIDTH / 6), 0)
         pygame.display.update()
         clock.tick(FPS)
 
