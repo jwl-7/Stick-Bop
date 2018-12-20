@@ -19,6 +19,7 @@ FONT_DIR = path.join(path.dirname(__file__), 'fonts')
 SCREEN_WIDTH  = 900
 SCREEN_HEIGHT = 700
 FPS = 30
+SCORE = 0
 
 # monokai color palette
 WHITE  = (253, 250, 243)
@@ -30,9 +31,6 @@ ORANGE = (252, 151, 105)
 PURPLE = (171, 157, 244)
 BLUE   = (119, 220, 230)
 BLACK  = (  0,   0,   0)
-
-# game constants
-SCORE = 0
     
 def main():
     pygame.init()
@@ -73,7 +71,7 @@ def main():
              
         # display score to screen into top right corner           
         score_text  = 'Score: ' + str(SCORE)
-        score_label = game_font.render(score_text, 1, brown)
+        score_label = game_font.render(score_text, 1, BROWN)
         screen.blit(score_label, (SCREEN_WIDTH - 180, SCREEN_HEIGHT - (SCREEN_HEIGHT - 20)))
 
         pygame.display.update()
