@@ -137,14 +137,63 @@ def task_jackhammer():
             if event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                    jackhammer2_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-2.png')).convert()
-                    jackhammer2_img = pygame.transform.scale(jackhammer2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                    screen.blit(jackhammer2_img, [0, 0])
-                    count += 1
+                jackhammer2_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-2.png')).convert()
+                jackhammer2_img = pygame.transform.scale(jackhammer2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(jackhammer2_img, [0, 0])
+                count += 1
             elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
-                    jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-1.png')).convert()
-                    jackhammer1_img = pygame.transform.scale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                    screen.blit(jackhammer1_img, [0, 0])
+                jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-1.png')).convert()
+                jackhammer1_img = pygame.transform.scale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(jackhammer1_img, [0, 0])
+
+        time_elapsed = pygame.time.get_ticks() - start_time
+        timer_seconds = int(time_elapsed / 1000 % 60)
+        timer = timer_start - timer_seconds
+        timer_text = 'TIMER: ' + str(timer)
+        score_text = 'Score: ' + str(SCORE)
+
+        clear_text(screen, WHITE, timer_text, 40, SCREEN_WIDTH / 2, 0)
+        clear_text(screen, WHITE, score_text, 40, SCREEN_WIDTH - 150, 0)
+        draw_text(screen, BLACK, timer_text, 40, SCREEN_WIDTH / 2, 0)
+        draw_text(screen, BLACK, score_text, 40, SCREEN_WIDTH - 150, 0)
+        draw_progress_bar(screen, SCREEN_WIDTH - 100, SCREEN_HEIGHT / 4, count * 20)
+
+        if count >= 5 and timer > 0:
+            SCORE += 1
+            return True
+        elif timer <= 0:
+            return False
+        
+        pygame.display.update()
+
+def task_axe():
+    """Start and display axe work task."""
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
+    screen = pygame.display.get_surface()
+    clock = pygame.time.Clock()
+
+    axe1_img = pygame.image.load(path.join(IMG_DIR, 'axe-1.png')).convert()
+    axe1_img = pygame.transform.scale(axe1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(axe1_img, [0, 0])
+
+    global SCORE
+    count = 0
+    timer_start = 5
+    start_time = pygame.time.get_ticks()
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+                axe2_img = pygame.image.load(path.join(IMG_DIR, 'axe-2.png')).convert()
+                axe2_img = pygame.transform.scale(axe2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(axe2_img, [0, 0])
+                count += 1
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                axe1_img = pygame.image.load(path.join(IMG_DIR, 'axe-1.png')).convert()
+                axe1_img = pygame.transform.scale(axe1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(axe1_img, [0, 0])
 
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = int(time_elapsed / 1000 % 60)
@@ -229,25 +278,32 @@ def main():
     clock = pygame.time.Clock()
     pygame.display.set_caption('Stick Bop!')
 
+    task_list = ['jackhammer', 'axe']
+
     running = True
     menu_display = True
-    scene_jackhammer = False
     task_completed = True
 
     while running:
         if menu_display:
             game_menu()
-            #game_ready()
+            game_ready()
             menu_display = False
-            scene_jackhammer = True
-        elif scene_jackhammer:
-            task_completed = task_jackhammer()
-            scene_jackhammer = False
+        elif not menu_display:
+            task = random.choice(task_list)
+
+            if task == 'jackhammer':
+                task_completed = task_jackhammer()
+            elif task == 'axe':
+                task_completed = task_axe()
 
         if task_completed:
-            scene_jackhammer = True
+            jackhammer_display = True
         elif not task_completed:
             game_end()
+
+        if SCORE >= 10:
+            game_win()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
