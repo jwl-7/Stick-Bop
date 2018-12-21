@@ -156,9 +156,12 @@ def task_jackhammer():
         seconds = int(seconds)
         count_down_timer = count_down - seconds
         count_msg = 'TIMER: ' + str(count_down_timer)
+        score_text = 'Score: ' + str(SCORE)
 
         clear_text(screen, WHITE, count_msg, 40, SCREEN_WIDTH / 2, 0)
+        clear_text(screen, WHITE, score_text, 40, SCREEN_WIDTH - 150, 0)
         draw_text(screen, BLACK, count_msg, 40, SCREEN_WIDTH / 2, 0)
+        draw_text(screen, BLACK, score_text, 40, SCREEN_WIDTH - 150, 0)
         draw_progress_bar(screen, SCREEN_WIDTH - 100, SCREEN_HEIGHT / 4, count * 20)
 
         if count >= 5 and count_down_timer > 0:
@@ -198,9 +201,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
-        score_text = 'Score: ' + str(SCORE)
-        draw_text(screen, BLACK, score_text, 40, SCREEN_WIDTH - (SCREEN_WIDTH / 6), 0)
+                
         pygame.display.update()
         clock.tick(FPS)
 
