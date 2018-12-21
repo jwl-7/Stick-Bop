@@ -180,11 +180,10 @@ def main():
     while running:
         if menu_display:
             game_menu()
-            #game_ready()
+            game_ready()
             menu_display = False
             scene_jackhammer = True
-
-        if scene_jackhammer:
+        elif scene_jackhammer:
             task_jackhammer()
             scene_jackhammer = False
 
