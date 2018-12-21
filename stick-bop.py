@@ -173,11 +173,15 @@ def game_end():
 
     menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'piano-lofi-rain.ogg'))
     pygame.mixer.music.play(-1)
-    screen.fill(BLUE)
+
+    gameover_img = pygame.image.load(path.join(IMG_DIR, 'game-over.png')).convert()
+    gameover_img = pygame.transform.scale(gameover_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(gameover_img, [0, 0])
+
     score_text = 'Final Score: ' + str(SCORE)
-    draw_text(screen, WHITE, 'GAME OVER!', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3)
-    draw_text(screen, WHITE, score_text, 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
-    draw_text(screen, WHITE, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    draw_text(screen, BLACK, score_text, 70, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
+    draw_text(screen, BLACK, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5)
+    
     pygame.display.update()
 
     while True:
@@ -207,7 +211,7 @@ def main():
     while running:
         if menu_display:
             game_menu()
-            game_ready()
+            #game_ready()
             menu_display = False
             scene_jackhammer = True
         elif scene_jackhammer:
