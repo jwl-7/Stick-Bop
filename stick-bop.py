@@ -34,6 +34,9 @@ def game_init():
     """Initialize Pygame and mixer module."""
     pygame.init()
     pygame.mixer.init()
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
+    screen = pygame.display.set_mode(size)
+    pygame.display.set_caption('Stick Bop!')
 
 def draw_text(surface, color, text, size, x, y):
     """Draw text in rectangle to surface."""
@@ -80,13 +83,15 @@ def game_menu():
 
     while True:
         event = pygame.event.poll()
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 break
             elif event.key == pygame.K_ESCAPE:
                 pygame.quit()
-        elif event.type == pygame.QUIT:
-            pygame.quit()
+                quit()
         else:
             pygame.display.update()
 
@@ -136,6 +141,7 @@ def task_jackhammer():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                quit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 jackhammer2_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-2.png')).convert()
                 jackhammer2_img = pygame.transform.scale(jackhammer2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
@@ -185,6 +191,7 @@ def task_axe():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                quit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
                 axe2_img = pygame.image.load(path.join(IMG_DIR, 'axe-2.png')).convert()
                 axe2_img = pygame.transform.scale(axe2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
@@ -235,11 +242,13 @@ def game_end():
 
     while True:
         event = pygame.event.poll()
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
-        elif event.type == pygame.QUIT:
-            pygame.quit()
+                quit()
         else:
             pygame.display.update()
 
@@ -264,19 +273,17 @@ def game_win():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
+                quit()
         elif event.type == pygame.QUIT:
             pygame.quit()
+            quit()
         else:
             pygame.display.update()
 
 def main():
     """Initialize game and run main game loop."""
     game_init()
-
-    size = SCREEN_WIDTH, SCREEN_HEIGHT
-    screen = pygame.display.set_mode(size)
     clock = pygame.time.Clock()
-    pygame.display.set_caption('Stick Bop!')
 
     task_list = ['jackhammer', 'axe']
 
@@ -285,6 +292,10 @@ def main():
     task_completed = True
 
     while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
         if menu_display:
             game_menu()
             game_ready()
@@ -304,15 +315,12 @@ def main():
 
         if SCORE >= 10:
             game_win()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
                 
         pygame.display.update()
         clock.tick(FPS)
 
     pygame.quit()
+    quit()
 
 if __name__ == '__main__':
     main()
