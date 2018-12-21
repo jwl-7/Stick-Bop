@@ -33,10 +33,12 @@ BLACK  = (  0,   0,   0)
 
 
 def game_init():
+    """Initialize Pygame and mixer module."""
     pygame.init()
     pygame.mixer.init()
 
 def draw_text(surface, color, text, size, x, y):
+    """Draw text in rectangle to surface."""
     game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
     text_surface = game_font.render(text, True, color)
     text_rect = text_surface.get_rect()
@@ -44,6 +46,7 @@ def draw_text(surface, color, text, size, x, y):
     surface.blit(text_surface, text_rect)
 
 def clear_text(surface, color, text, size, x, y):
+    """Cover text with solid rectangle to surface."""
     game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
     text_surface = game_font.render(text, True, color)
     text_rect = text_surface.get_rect()
@@ -51,6 +54,7 @@ def clear_text(surface, color, text, size, x, y):
     surface.fill(color, text_rect)
 
 def draw_progress_bar(surface, x, y, progress):
+    """Draw a colored progress bar with outline to surface."""
     BAR_LENGTH = 40
     BAR_HEIGHT = 400
 
@@ -64,6 +68,7 @@ def draw_progress_bar(surface, x, y, progress):
     pygame.draw.rect(surface, BLACK, outline_rect, 4)
 
 def game_menu():
+    """Display start menu."""
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'piano-lofi-rain.ogg'))
@@ -88,6 +93,7 @@ def game_menu():
             pygame.display.update()
 
 def game_ready():
+    """Display ready, set, GO! message with sound."""
     pygame.mixer.music.stop()
 
     ready_snd = pygame.mixer.Sound(path.join(SND_DIR, 'ready-set-go.ogg'))
@@ -115,6 +121,7 @@ def game_ready():
     pygame.time.wait(1000)
 
 def task_jackhammer():
+    """Start and display jackhammer work task."""
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
@@ -166,6 +173,7 @@ def task_jackhammer():
         pygame.display.update()
 
 def main():
+    """Initialize game and run main game loop."""
     game_init()
 
     size = SCREEN_WIDTH, SCREEN_HEIGHT
