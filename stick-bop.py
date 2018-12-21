@@ -50,6 +50,19 @@ def clear_text(surface, color, text, size, x, y):
     text_rect.midtop = (x, y)
     surface.fill(color, text_rect)
 
+def draw_progress_bar(surface, x, y, progress):
+    BAR_LENGTH = 40
+    BAR_HEIGHT = 400
+
+    progress = max(progress, 0)
+    fill = (progress / 100) * BAR_HEIGHT
+    fill_rect = pygame.Rect(x, y, BAR_LENGTH, fill)
+    outline_rect = pygame.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
+
+    pygame.draw.rect(surface, GREEN, outline_rect)
+    pygame.draw.rect(surface, WHITE, fill_rect)
+    pygame.draw.rect(surface, BLACK, outline_rect, 4)
+
 def game_menu():
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
@@ -111,6 +124,7 @@ def task_jackhammer():
     screen.blit(jackhammer1_img, [0, 0])
 
     count = 0
+    count_down = 5
     start_time = pygame.time.get_ticks()
 
     while True:
@@ -128,20 +142,17 @@ def task_jackhammer():
                     jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-1.png')).convert()
                     jackhammer1_img = pygame.transform.scale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                     screen.blit(jackhammer1_img, [0, 0])
-                    
-        count_down = 5
 
         time_since = pygame.time.get_ticks() - start_time
         millis = int(time_since)
         seconds = (millis / 1000) % 60
         seconds = int(seconds)
-
         count_down_timer = count_down - seconds
-
         count_msg = 'TIMER: ' + str(count_down_timer)
 
         clear_text(screen, WHITE, count_msg, 40, SCREEN_WIDTH / 2, 0)
         draw_text(screen, BLACK, count_msg, 40, SCREEN_WIDTH / 2, 0)
+        draw_progress_bar(screen, SCREEN_WIDTH - 100, SCREEN_HEIGHT / 4, count * 20)
 
         if count >= 5 and count_down_timer > 0:
             screen.fill(WHITE)
@@ -153,7 +164,6 @@ def task_jackhammer():
             break
         
         pygame.display.update()
-        clock.tick(FPS)
 
 def main():
     game_init()
@@ -170,7 +180,7 @@ def main():
     while running:
         if menu_display:
             game_menu()
-            game_ready()
+            #game_ready()
             menu_display = False
             scene_jackhammer = True
 
