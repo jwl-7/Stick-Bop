@@ -21,8 +21,8 @@ FONT_DIR = path.join(path.dirname(__file__), 'fonts')
 # game constants
 SCREEN_WIDTH  = 900
 SCREEN_HEIGHT = 700
-FPS = 30
-SCORE = 0
+FPS   = 30
+SCORE =  0
 
 # monokai color palette
 WHITE  = (253, 250, 243)
