@@ -130,6 +130,7 @@ def task_jackhammer():
     jackhammer1_img = pygame.transform.scale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(jackhammer1_img, [0, 0])
 
+    global SCORE
     count = 0
     count_down = 5
     start_time = pygame.time.get_ticks()
@@ -165,9 +166,8 @@ def task_jackhammer():
         draw_progress_bar(screen, SCREEN_WIDTH - 100, SCREEN_HEIGHT / 4, count * 20)
 
         if count >= 5 and count_down_timer > 0:
-            screen.fill(WHITE)
-            draw_text(screen, BLUE, 'YOU WIN!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
-            break
+            SCORE += 1
+            return True
         elif count_down_timer <= 0:
             return False
         
@@ -220,7 +220,10 @@ def main():
         elif scene_jackhammer:
             task_completed = task_jackhammer()
             scene_jackhammer = False
-        if not task_completed:
+
+        if task_completed:
+            scene_jackhammer = True
+        elif not task_completed:
             game_end()
 
         for event in pygame.event.get():
