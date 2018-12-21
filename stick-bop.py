@@ -181,7 +181,33 @@ def game_end():
     score_text = 'Final Score: ' + str(SCORE)
     draw_text(screen, BLACK, score_text, 70, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
     draw_text(screen, BLACK, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5)
-    
+
+    pygame.display.update()
+
+    while True:
+        event = pygame.event.poll()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
+        elif event.type == pygame.QUIT:
+            pygame.quit()
+        else:
+            pygame.display.update()
+
+def game_win():
+    """Display winner image and message."""
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
+    screen = pygame.display.get_surface()
+
+    menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'strum-strums.ogg'))
+    pygame.mixer.music.play(-1)
+
+    gameover_img = pygame.image.load(path.join(IMG_DIR, 'winner.png')).convert()
+    gameover_img = pygame.transform.scale(gameover_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(gameover_img, [0, 0])
+
+    draw_text(screen, BLACK, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5)
+
     pygame.display.update()
 
     while True:
