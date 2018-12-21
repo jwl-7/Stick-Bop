@@ -22,15 +22,13 @@ SCORE = 0
 
 # monokai color palette
 WHITE  = (253, 250, 243)
-BROWN  = ( 45,  43,  46)
-PINK   = (255,  96, 137)
+BLACK  = ( 45,  43,  46)
+RED    = (255,  96, 137)
 GREEN  = (169, 220, 199)
+BLUE   = (119, 220, 230)
 YELLOW = (255, 216, 102)
 ORANGE = (252, 151, 105)
 PURPLE = (171, 157, 244)
-BLUE   = (119, 220, 230)
-BLACK  = (  0,   0,   0)
-
 
 def game_init():
     """Initialize Pygame and mixer module."""
@@ -94,13 +92,12 @@ def game_menu():
 
 def game_ready():
     """Display ready, set, GO! message with sound."""
-    pygame.mixer.music.stop()
-
-    ready_snd = pygame.mixer.Sound(path.join(SND_DIR, 'ready-set-go.ogg'))
-    ready_snd.play()
-
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
+
+    pygame.mixer.music.stop()
+    ready_snd = pygame.mixer.Sound(path.join(SND_DIR, 'ready-set-go.ogg'))
+    ready_snd.play()
 
     ready_img = pygame.image.load(path.join(IMG_DIR, 'ready.png')).convert()
     ready_img = pygame.transform.scale(ready_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
@@ -173,9 +170,9 @@ def game_end():
     """Display game over message and final score."""
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
+
     menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'piano-lofi-rain.ogg'))
     pygame.mixer.music.play(-1)
-
     screen.fill(BLUE)
     score_text = 'Final Score: ' + str(SCORE)
     draw_text(screen, WHITE, 'GAME OVER!', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3)
