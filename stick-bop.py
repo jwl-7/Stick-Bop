@@ -7,7 +7,11 @@ Stick Bop! is a game made in pygame that was inspired by the 90s Bop It! toy.
 
 import pygame
 import random
+import sys
 from os import path
+
+if getattr(sys, 'frozen', False):
+    os.chdir(sys._MEIPASS)
 
 # asset folder paths
 IMG_DIR  = path.join(path.dirname(__file__), 'images')
