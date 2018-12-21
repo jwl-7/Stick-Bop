@@ -169,11 +169,33 @@ def task_jackhammer():
             draw_text(screen, BLUE, 'YOU WIN!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
             break
         elif count_down_timer <= 0:
-            screen.fill(BLUE)
-            draw_text(screen, WHITE, 'GAME OVER!', 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
-            break
+            return False
         
         pygame.display.update()
+
+def game_end():
+    """Display game over message and final score."""
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
+    screen = pygame.display.get_surface()
+    menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'piano-lofi-rain.ogg'))
+    pygame.mixer.music.play(-1)
+
+    screen.fill(BLUE)
+    score_text = 'Final Score: ' + str(SCORE)
+    draw_text(screen, WHITE, 'GAME OVER!', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3)
+    draw_text(screen, WHITE, score_text, 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
+    draw_text(screen, WHITE, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    pygame.display.update()
+
+    while True:
+        event = pygame.event.poll()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
+        elif event.type == pygame.QUIT:
+            pygame.quit()
+        else:
+            pygame.display.update()
 
 def main():
     """Initialize game and run main game loop."""
@@ -187,6 +209,7 @@ def main():
     running = True
     menu_display = True
     scene_jackhammer = False
+    task_completed = True
 
     while running:
         if menu_display:
@@ -195,8 +218,10 @@ def main():
             menu_display = False
             scene_jackhammer = True
         elif scene_jackhammer:
-            task_jackhammer()
+            task_completed = task_jackhammer()
             scene_jackhammer = False
+        if not task_completed:
+            game_end()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
