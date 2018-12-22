@@ -155,6 +155,8 @@ def task_jackhammer():
                 jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-1.png')).convert()
                 jackhammer1_img = pygame.transform.scale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(jackhammer1_img, [0, 0])
+            else:
+                 game_end()
 
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = int(time_elapsed / 1000 % 60)
@@ -173,9 +175,9 @@ def task_jackhammer():
             return True
         elif timer <= 0:
             return False
-        
-        pygame.display.update()
 
+        pygame.display.update()
+        
 def task_axe():
     """Start and display axe work task."""
     size = SCREEN_WIDTH, SCREEN_HEIGHT
@@ -203,7 +205,7 @@ def task_axe():
                 axe2_img = pygame.transform.scale(axe2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(axe2_img, [0, 0])
                 count += 1
-                
+
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = int(time_elapsed / 1000 % 60)
         timer = timer_start - timer_seconds
@@ -221,7 +223,7 @@ def task_axe():
             return True
         elif timer <= 0:
             return False
-        
+
         pygame.display.update()
 
 def game_end():
@@ -239,6 +241,8 @@ def game_end():
     score_text = 'Final Score: ' + str(SCORE)
     draw_text(screen, BLACK, score_text, 70, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
     draw_text(screen, BLACK, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5)
+    draw_text(screen, BLACK, 'Press [P] to Play Again!', 40, SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 1.5)+50)
+    
 
     pygame.display.update()
 
@@ -267,7 +271,7 @@ def game_win():
     screen.blit(gameover_img, [0, 0])
 
     draw_text(screen, BLACK, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5)
-    draw_text(screen, BLACK, 'Press [T] to Try Again!', 40, SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 1.5)+50)
+    draw_text(screen, BLACK, 'Press [P] to Play Again!', 40, SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 1.5)+50)
 
     pygame.display.update()
 
