@@ -242,7 +242,6 @@ def game_end():
     draw_text(screen, BLACK, score_text, 70, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
     draw_text(screen, BLACK, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5)
     draw_text(screen, BLACK, 'Press [P] to Play Again!', 40, SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 1.5)+50)
-    
 
     pygame.display.update()
 
@@ -255,6 +254,8 @@ def game_end():
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 quit()
+            if event.key == pygame.K_p:
+                main()
         else:
             pygame.display.update()
 
@@ -281,6 +282,8 @@ def game_win():
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 quit()
+            if event.key == pygame.K_p:
+                main()
         elif event.type == pygame.QUIT:
             pygame.quit()
             quit()
@@ -293,6 +296,8 @@ def main():
     clock = pygame.time.Clock()
 
     task_list = ['jackhammer', 'axe']
+
+    SCORE = 0
 
     running = True
     menu_display = True
