@@ -105,7 +105,7 @@ def game_ready():
     screen = pygame.display.get_surface()
 
     pygame.mixer.music.stop()
-    ready_snd = pygame.mixer.Sound(path.join(SND_DIR, 'ready-set-go.ogg'))
+    ready_snd = pygame.mixer.Sound(path.join(SND_DIR, 'brandons-ready-set-go.ogg'))
     ready_snd.play()
 
     ready_img = pygame.image.load(path.join(IMG_DIR, 'ready.png')).convert()
@@ -226,6 +226,59 @@ def task_axe():
 
         pygame.display.update()
 
+def task_sword():
+    """Start and display sword work task."""
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
+    screen = pygame.display.get_surface()
+    clock = pygame.time.Clock()
+
+    sword1_img = pygame.image.load(path.join(IMG_DIR, 'sword-1.png')).convert()
+    sword1_img = pygame.transform.scale(sword1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(sword1_img, [0, 0])
+
+    global SCORE
+    count = 0
+    timer_start = 5
+    start_time = pygame.time.get_ticks()
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+                sword2_img = pygame.image.load(path.join(IMG_DIR, 'sword-2.png')).convert()
+                sword2_img = pygame.transform.scale(sword2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(sword2_img, [0, 0])
+                count += 1
+            elif event.type == pygame.KEYUP and event.key == pygame.K_s:
+                sword1_img = pygame.image.load(path.join(IMG_DIR, 'sword-1.png')).convert()
+                sword1_img = pygame.transform.scale(sword1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(sword1_img, [0, 0])
+            #else:
+                 #game_end()
+
+        time_elapsed = pygame.time.get_ticks() - start_time
+        timer_seconds = int(time_elapsed / 1000 % 60)
+        timer = timer_start - timer_seconds
+        timer_text = 'TIMER: ' + str(timer)
+        score_text = 'Score: ' + str(SCORE)
+
+        clear_text(screen, WHITE, timer_text, 40, SCREEN_WIDTH / 2, 0)
+        clear_text(screen, WHITE, score_text, 40, SCREEN_WIDTH - 150, 0)
+        draw_text(screen, BLACK, timer_text, 40, SCREEN_WIDTH / 2, 0)
+        draw_text(screen, BLACK, score_text, 40, SCREEN_WIDTH - 150, 0)
+        draw_progress_bar(screen, SCREEN_WIDTH - 100, SCREEN_HEIGHT / 4, count * 20)
+
+        if count >= 5 and timer > 0:
+            SCORE += 1
+            return True
+        elif timer <= 0:
+            return False
+
+        pygame.display.update()
+
 def game_end():
     """Display game over message and final score."""
     size = SCREEN_WIDTH, SCREEN_HEIGHT
@@ -295,7 +348,7 @@ def main():
     game_init()
     clock = pygame.time.Clock()
 
-    task_list = ['jackhammer', 'axe']
+    task_list = ['jackhammer', 'axe', 'sword']
 
     SCORE = 0
 
@@ -319,6 +372,8 @@ def main():
                 task_completed = task_jackhammer()
             elif task == 'axe':
                 task_completed = task_axe()
+            elif task == 'sword':
+                task_completed = task_sword()
 
         if task_completed:
             jackhammer_display = True
