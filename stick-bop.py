@@ -196,16 +196,14 @@ def task_axe():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]:
                 axe2_img = pygame.image.load(path.join(IMG_DIR, 'axe-2.png')).convert()
                 axe2_img = pygame.transform.scale(axe2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(axe2_img, [0, 0])
                 count += 1
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
-                axe1_img = pygame.image.load(path.join(IMG_DIR, 'axe-1.png')).convert()
-                axe1_img = pygame.transform.scale(axe1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(axe1_img, [0, 0])
-
+                
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = int(time_elapsed / 1000 % 60)
         timer = timer_start - timer_seconds
@@ -269,6 +267,7 @@ def game_win():
     screen.blit(gameover_img, [0, 0])
 
     draw_text(screen, BLACK, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5)
+    draw_text(screen, BLACK, 'Press [T] to Try Again!', 40, SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 1.5)+50)
 
     pygame.display.update()
 
