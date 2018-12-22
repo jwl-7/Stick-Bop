@@ -192,19 +192,37 @@ def task_axe():
     count = 0
     timer_start = 5
     start_time = pygame.time.get_ticks()
+    left_pressed = False
+    right_pressed = False
+    right_was_pressed = False
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                left_pressed = True
 
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]:
-                axe2_img = pygame.image.load(path.join(IMG_DIR, 'axe-2.png')).convert()
-                axe2_img = pygame.transform.scale(axe2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(axe2_img, [0, 0])
-                count += 1
+                if right_was_pressed and not right_pressed:
+                    axe1_img = pygame.image.load(path.join(IMG_DIR, 'axe-1.png')).convert()
+                    axe1_img = pygame.transform.scale(axe1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(axe1_img, [0, 0])
+                    right_was_pressed = False
+                    count += 1
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+                right_pressed = True
+
+                if not left_pressed:
+                    axe2_img = pygame.image.load(path.join(IMG_DIR, 'axe-2.png')).convert()
+                    axe2_img = pygame.transform.scale(axe2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(axe2_img, [0, 0])
+            elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
+                left_pressed = False
+            elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+                if right_pressed:
+                    right_pressed = False
+                    right_was_pressed = True
 
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = int(time_elapsed / 1000 % 60)
@@ -246,7 +264,6 @@ def task_sword():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                 sword2_img = pygame.image.load(path.join(IMG_DIR, 'sword-2.png')).convert()
                 sword2_img = pygame.transform.scale(sword2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
@@ -256,8 +273,6 @@ def task_sword():
                 sword1_img = pygame.image.load(path.join(IMG_DIR, 'sword-1.png')).convert()
                 sword1_img = pygame.transform.scale(sword1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(sword1_img, [0, 0])
-            #else:
-                 #game_end()
 
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = int(time_elapsed / 1000 % 60)
