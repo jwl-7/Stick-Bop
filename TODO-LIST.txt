@@ -1,0 +1,51 @@
+-----------------------
+| Stick-Bop ToDo List |
+-----------------------
+
+These are in no particular order of importance.
+
+------------------
+|  stick-bop.py  |
+------------------
+-> add additional work tasks
+-> add a short delay between each work task
+-> implement common game soundtrack throughout all work tasks
+-> implement higher BPM versions of game soundtrack according to score
+-> implement common timer and count goal for each work task
+-> decrease timer for all work tasks according to score
+-> trigger game failure if wrong button is pressed (maybe ANY other buttons)
+-> add feature to inc/dec game res via [CTRL] + [+/-]
+-> (maybe) add help menu
+
+------------
+|  images  |
+------------
+-> add images for all work tasks
+-> add helper images for all work tasks (show keys to press)
+-> render all images at high resolution
+-> (maybe) add additional images for fluid animations
+
+------------
+|  fonts   |
+------------
+-> DONE
+
+------------
+|  sounds  |
+------------
+-> add task completion sound
+-> add task failed sound
+-> add game finished sound
+-> add game won sound
+-> add sounds for all work tasks
+-> add game soundtrack
+-> add speeded up versions of game soundtrack (increased BPM)
+
+----------------
+|  work tasks  |
+----------------
+-> raise flag - [MWHEELUP]
+-> take-down flag - [MWHEELDOWN]
+-> chop wood - [LEFT] / [RIGHT]
+-> shovel stuff - [SPACEBAR]
+-> paint wall - [UP] / [DOWN]
