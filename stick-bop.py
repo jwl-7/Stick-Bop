@@ -21,6 +21,8 @@ FONT_DIR = path.join(path.dirname(__file__), 'fonts')
 # game constants
 SCREEN_WIDTH  = 900
 SCREEN_HEIGHT = 700
+SCREEN_MAX_WIDTH = 900
+SCREEN_MAX_HEIGHT = 700
 FPS   = 30
 SCORE =  0
 
@@ -36,9 +38,15 @@ PURPLE = (171, 157, 244)
 
 def game_init():
     """Initialize Pygame and mixer module."""
+    global SCREEN_MAX_WIDTH
+    global SCREEN_MAX_HEIGHT
+
     pygame.init()
     pygame.mixer.init()
     size = SCREEN_WIDTH, SCREEN_HEIGHT
+    display_info = pygame.display.Info()
+    SCREEN_MAX_WIDTH = display_info.current_w
+    SCREEN_MAX_HEIGHT = display_info.current_h
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Stick Bop!')
 
@@ -74,6 +82,9 @@ def draw_progress_bar(surface, x, y, progress):
 
 def game_menu():
     """Display start menu."""
+    global SCREEN_WIDTH
+    global SCREEN_HEIGHT
+
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'piano-lofi-rain.ogg'))
@@ -86,18 +97,35 @@ def game_menu():
     pygame.display.update()
 
     while True:
-        event = pygame.event.poll()
-        if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:
-                break
-            elif event.key == pygame.K_ESCAPE:
-                pygame.quit()
-                quit()
-        else:
-            pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    break
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    quit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_EQUALS:
+                if SCREEN_WIDTH <= SCREEN_MAX_WIDTH and SCREEN_WIDTH <= SCREEN_MAX_HEIGHT:
+                    SCREEN_WIDTH += 100
+                    SCREEN_HEIGHT += 100
+                    size = SCREEN_WIDTH, SCREEN_HEIGHT
+                    screen = pygame.display.set_mode(size)
+                    menu_img = pygame.image.load(path.join(IMG_DIR, 'game-menu.png')).convert()
+                    menu_img = pygame.transform.scale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(menu_img, [0, 0])
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_MINUS:
+                if SCREEN_WIDTH >= 500 and SCREEN_HEIGHT >= 300: 
+                    SCREEN_WIDTH -= 100
+                    SCREEN_HEIGHT -= 100
+                    size = SCREEN_WIDTH, SCREEN_HEIGHT
+                    screen = pygame.display.set_mode(size)
+                    menu_img = pygame.image.load(path.join(IMG_DIR, 'game-menu.png')).convert()
+                    menu_img = pygame.transform.scale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(menu_img, [0, 0])
+
+        pygame.display.update()
 
 def game_ready():
     """Display ready, set, GO! message with sound."""
