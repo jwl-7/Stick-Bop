@@ -7,14 +7,18 @@ These are in no particular order of importance.
 ------------------
 |  stick-bop.py  |
 ------------------
--> add additional work tasks
+-> add raise flag task
+-> add take-down flag task
+-> add chop wood task -- brandosaurus
+-> add shovel stuff task -- brandino
+-> add paint wall task -- brondoburger
 -> add a short delay between each work task
 -> implement common game soundtrack throughout all work tasks
 -> implement higher BPM versions of game soundtrack according to score
 -> implement common timer and count goal for each work task
 -> decrease timer for all work tasks according to score
 -> trigger game failure if wrong button is pressed (maybe ANY other buttons)
--> add feature to inc/dec game res via [CTRL] + [+/-]
+-> add feature to inc/dec game res via [+]/[-] -- needs bug checking
 -> (maybe) add help menu
 
 ------------
@@ -33,6 +37,8 @@ These are in no particular order of importance.
 ------------
 |  sounds  |
 ------------
+-> find task completion sound -- branflakes
+-> find task failed sound -- b-rad
 -> add task completion sound
 -> add task failed sound
 -> add game finished sound
@@ -47,5 +53,5 @@ These are in no particular order of importance.
 -> raise flag - [MWHEELUP]
 -> take-down flag - [MWHEELDOWN]
 -> chop wood - [LEFT] / [RIGHT]
--> shovel stuff - [SPACEBAR]
--> paint wall - [UP] / [DOWN]
+-> shovel stuff - [SPACEBAR] -- brandino
+-> paint wall - [UP] / [DOWN] -- brondoburger
