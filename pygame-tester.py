@@ -28,24 +28,22 @@ def main():
 
     while running:
         screen.fill(WHITE)
-        keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_LCTRL] and keys[pygame.K_EQUALS]:
-            if SCREEN_WIDTH <= display_max_width and SCREEN_WIDTH <= display_max_height:
-                SCREEN_WIDTH += 100
-                SCREEN_HEIGHT += 100
-                size = SCREEN_WIDTH, SCREEN_HEIGHT
-                screen = pygame.display.set_mode(size)
-        elif keys[pygame.K_LCTRL] and keys[pygame.K_MINUS]:
-            if SCREEN_WIDTH >= 700 and SCREEN_HEIGHT >= 500: 
-                SCREEN_WIDTH -= 100
-                SCREEN_HEIGHT -= 100
-                size = SCREEN_WIDTH, SCREEN_HEIGHT
-                screen = pygame.display.set_mode(size)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_EQUALS:
+                if SCREEN_WIDTH <= display_max_width and SCREEN_WIDTH <= display_max_height:
+                    SCREEN_WIDTH += 100
+                    SCREEN_HEIGHT += 100
+                    size = SCREEN_WIDTH, SCREEN_HEIGHT
+                    screen = pygame.display.set_mode(size)
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_MINUS:
+                if SCREEN_WIDTH >= 700 and SCREEN_HEIGHT >= 500: 
+                    SCREEN_WIDTH -= 100
+                    SCREEN_HEIGHT -= 100
+                    size = SCREEN_WIDTH, SCREEN_HEIGHT
+                    screen = pygame.display.set_mode(size)
                 
         pygame.display.update()
         clock.tick(30)
