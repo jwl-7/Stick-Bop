@@ -273,15 +273,15 @@ def task_axe():
 
         pygame.display.update()
 
-def task_sword():
-    """Start and display sword work task."""
+def task_wood():
+    """Start and display wood work task"""
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
-    sword1_img = pygame.image.load(path.join(IMG_DIR, 'sword-1.png')).convert()
-    sword1_img = pygame.transform.scale(sword1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-    screen.blit(sword1_img, [0, 0])
+    wood1_img = pygame.image.load(path.join(IMG_DIR, 'wood-1.png')).convert()
+    wood1_img = pygame.transform.scale(wood1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(wood1_img, [0, 0])
 
     global SCORE
     count = 0
@@ -293,15 +293,15 @@ def task_sword():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-                sword2_img = pygame.image.load(path.join(IMG_DIR, 'sword-2.png')).convert()
-                sword2_img = pygame.transform.scale(sword2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(sword2_img, [0, 0])
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
+                wood2_img = pygame.image.load(path.join(IMG_DIR, 'wood-2.png')).convert()
+                wood2_img = pygame.transform.scale(wood2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(wood2_img, [0, 0])
                 count += 1
-            elif event.type == pygame.KEYUP and event.key == pygame.K_s:
-                sword1_img = pygame.image.load(path.join(IMG_DIR, 'sword-1.png')).convert()
-                sword1_img = pygame.transform.scale(sword1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(sword1_img, [0, 0])
+            elif event.type == pygame.KEYUP and event.key == pygame.K_w:
+                wood1_img = pygame.image.load(path.join(IMG_DIR, 'wood-1.png')).convert()
+                wood1_img = pygame.transform.scale(wood1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(wood1_img, [0, 0])
 
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = int(time_elapsed / 1000 % 60)
@@ -392,7 +392,7 @@ def main():
     game_init()
     clock = pygame.time.Clock()
 
-    task_list = ['jackhammer', 'axe', 'sword']
+    task_list = ['jackhammer', 'axe', 'wood']
 
     SCORE = 0
 
@@ -416,8 +416,8 @@ def main():
                 task_completed = task_jackhammer()
             elif task == 'axe':
                 task_completed = task_axe()
-            elif task == 'sword':
-                task_completed = task_sword()
+            elif task == 'wood':
+                task_completed = task_wood()
 
         if task_completed:
             jackhammer_display = True
