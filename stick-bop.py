@@ -207,7 +207,7 @@ def task_jackhammer():
 
         pygame.display.update()
         
-def task_axe():
+def task_pickaxe():
     """Start and display axe work task."""
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
@@ -273,7 +273,7 @@ def task_axe():
 
         pygame.display.update()
 
-def task_wood():
+def task_axe():
     """Start and display wood work task"""
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
@@ -392,7 +392,7 @@ def main():
     game_init()
     clock = pygame.time.Clock()
 
-    task_list = ['jackhammer', 'axe', 'wood']
+    task_list = ['jackhammer', 'pickaxe', 'axe']
 
     SCORE = 0
 
@@ -414,10 +414,10 @@ def main():
 
             if task == 'jackhammer':
                 task_completed = task_jackhammer()
+            elif task == 'pickaxe':
+                task_completed = task_pickaxe()
             elif task == 'axe':
                 task_completed = task_axe()
-            elif task == 'wood':
-                task_completed = task_wood()
 
         if task_completed:
             jackhammer_display = True
