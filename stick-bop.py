@@ -97,35 +97,35 @@ def game_menu():
     pygame.display.update()
 
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                    break
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                    pygame.quit()
-                    quit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_EQUALS:
-                if SCREEN_WIDTH <= SCREEN_MAX_WIDTH and SCREEN_WIDTH <= SCREEN_MAX_HEIGHT:
-                    SCREEN_WIDTH += 100
-                    SCREEN_HEIGHT += 100
-                    size = SCREEN_WIDTH, SCREEN_HEIGHT
-                    screen = pygame.display.set_mode(size)
-                    menu_img = pygame.image.load(path.join(IMG_DIR, 'game-menu.png')).convert()
-                    menu_img = pygame.transform.scale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                    screen.blit(menu_img, [0, 0])
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_MINUS:
-                if SCREEN_WIDTH >= 500 and SCREEN_HEIGHT >= 300: 
-                    SCREEN_WIDTH -= 100
-                    SCREEN_HEIGHT -= 100
-                    size = SCREEN_WIDTH, SCREEN_HEIGHT
-                    screen = pygame.display.set_mode(size)
-                    menu_img = pygame.image.load(path.join(IMG_DIR, 'game-menu.png')).convert()
-                    menu_img = pygame.transform.scale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                    screen.blit(menu_img, [0, 0])
-
-        pygame.display.update()
+        event = pygame.event.poll()
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+            break
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            pygame.quit()
+            quit()
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_EQUALS:
+            if SCREEN_WIDTH <= SCREEN_MAX_WIDTH and SCREEN_WIDTH <= SCREEN_MAX_HEIGHT:
+                SCREEN_WIDTH += 100
+                SCREEN_HEIGHT += 100
+                size = SCREEN_WIDTH, SCREEN_HEIGHT
+                screen = pygame.display.set_mode(size)
+                menu_img = pygame.image.load(path.join(IMG_DIR, 'game-menu.png')).convert()
+                menu_img = pygame.transform.scale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(menu_img, [0, 0])
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_MINUS:
+            if SCREEN_WIDTH >= 500 and SCREEN_HEIGHT >= 300: 
+                SCREEN_WIDTH -= 100
+                SCREEN_HEIGHT -= 100
+                size = SCREEN_WIDTH, SCREEN_HEIGHT
+                screen = pygame.display.set_mode(size)
+                menu_img = pygame.image.load(path.join(IMG_DIR, 'game-menu.png')).convert()
+                menu_img = pygame.transform.scale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(menu_img, [0, 0])
+        else:
+            pygame.display.update()
 
 def game_ready():
     """Display ready, set, GO! message with sound."""
