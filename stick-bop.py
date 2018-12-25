@@ -91,7 +91,7 @@ def game_menu():
     menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'piano-lofi-rain.ogg'))
     pygame.mixer.music.play(-1)
 
-    menu_img = pygame.image.load(path.join(IMG_DIR, 'game-menu.png')).convert()
+    menu_img = pygame.image.load(path.join(IMG_DIR, 'stick-bop-menu.png')).convert()
     menu_img = pygame.transform.scale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
 
     screen.blit(menu_img, [0, 0])
@@ -113,7 +113,7 @@ def game_menu():
                 SCREEN_HEIGHT += 100
                 size = SCREEN_WIDTH, SCREEN_HEIGHT
                 screen = pygame.display.set_mode(size)
-                menu_img = pygame.image.load(path.join(IMG_DIR, 'game-menu.png')).convert()
+                menu_img = pygame.image.load(path.join(IMG_DIR, 'stick-bop-menu.png')).convert()
                 menu_img = pygame.transform.smoothscale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(menu_img, [0, 0])
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_MINUS:
@@ -122,7 +122,7 @@ def game_menu():
                 SCREEN_HEIGHT -= 100
                 size = SCREEN_WIDTH, SCREEN_HEIGHT
                 screen = pygame.display.set_mode(size)
-                menu_img = pygame.image.load(path.join(IMG_DIR, 'game-menu.png')).convert()
+                menu_img = pygame.image.load(path.join(IMG_DIR, 'stick-bop-menu.png')).convert()
                 menu_img = pygame.transform.smoothscale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(menu_img, [0, 0])
         else:
@@ -161,7 +161,7 @@ def task_jackhammer():
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
-    jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-1.png')).convert()
+    jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'concrete-1.png')).convert()
     jackhammer1_img = pygame.transform.scale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(jackhammer1_img, [0, 0])
 
@@ -176,12 +176,12 @@ def task_jackhammer():
                 pygame.quit()
                 quit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                jackhammer2_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-2.png')).convert()
+                jackhammer2_img = pygame.image.load(path.join(IMG_DIR, 'concrete-2.png')).convert()
                 jackhammer2_img = pygame.transform.scale(jackhammer2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(jackhammer2_img, [0, 0])
                 count += 1
             elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
-                jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'jackhammer-1.png')).convert()
+                jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'concrete-1.png')).convert()
                 jackhammer1_img = pygame.transform.scale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(jackhammer1_img, [0, 0])
             else:
@@ -213,7 +213,7 @@ def task_pickaxe():
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
-    axe1_img = pygame.image.load(path.join(IMG_DIR, 'axe-1.png')).convert()
+    axe1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
     axe1_img = pygame.transform.scale(axe1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(axe1_img, [0, 0])
 
@@ -234,7 +234,7 @@ def task_pickaxe():
                 left_pressed = True
 
                 if right_was_pressed and not right_pressed:
-                    axe1_img = pygame.image.load(path.join(IMG_DIR, 'axe-1.png')).convert()
+                    axe1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
                     axe1_img = pygame.transform.scale(axe1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                     screen.blit(axe1_img, [0, 0])
                     right_was_pressed = False
@@ -243,7 +243,7 @@ def task_pickaxe():
                 right_pressed = True
 
                 if not left_pressed:
-                    axe2_img = pygame.image.load(path.join(IMG_DIR, 'axe-2.png')).convert()
+                    axe2_img = pygame.image.load(path.join(IMG_DIR, 'mining-2.png')).convert()
                     axe2_img = pygame.transform.scale(axe2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                     screen.blit(axe2_img, [0, 0])
             elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
