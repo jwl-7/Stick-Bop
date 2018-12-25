@@ -10,6 +10,7 @@ import random
 import sys
 from os import path
 
+# for use with PyInstaller
 if getattr(sys, 'frozen', False):
     os.chdir(sys._MEIPASS)
 
@@ -113,7 +114,7 @@ def game_menu():
                 size = SCREEN_WIDTH, SCREEN_HEIGHT
                 screen = pygame.display.set_mode(size)
                 menu_img = pygame.image.load(path.join(IMG_DIR, 'game-menu.png')).convert()
-                menu_img = pygame.transform.scale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                menu_img = pygame.transform.smoothscale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(menu_img, [0, 0])
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_MINUS:
             if SCREEN_WIDTH >= 500 and SCREEN_HEIGHT >= 300: 
@@ -122,7 +123,7 @@ def game_menu():
                 size = SCREEN_WIDTH, SCREEN_HEIGHT
                 screen = pygame.display.set_mode(size)
                 menu_img = pygame.image.load(path.join(IMG_DIR, 'game-menu.png')).convert()
-                menu_img = pygame.transform.scale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                menu_img = pygame.transform.smoothscale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(menu_img, [0, 0])
         else:
             pygame.display.update()
