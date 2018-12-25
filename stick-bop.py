@@ -394,8 +394,6 @@ def main():
 
     task_list = ['concrete', 'mining', 'wood']
 
-    SCORE = 0
-
     running = True
     menu_display = True
     task_completed = True
