@@ -8,8 +8,17 @@ BLACK  = ( 45,  43,  46)
 BLUE   = (119, 220, 230)
 
 def main():
+    global SCREEN_WIDTH
+    global SCREEN_HEIGHT
+
     pygame.init()
     pygame.mixer.init()
+
+    # get user's screen resolution
+    display_info_object = pygame.display.Info()
+    display_max_width = display_info_object.current_w
+    display_max_height = display_info_object.current_h
+
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Pygame Test')
@@ -19,6 +28,20 @@ def main():
 
     while running:
         screen.fill(WHITE)
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_LCTRL] and keys[pygame.K_EQUALS]:
+            if SCREEN_WIDTH <= display_max_width and SCREEN_WIDTH <= display_max_height:
+                SCREEN_WIDTH += 100
+                SCREEN_HEIGHT += 100
+                size = SCREEN_WIDTH, SCREEN_HEIGHT
+                screen = pygame.display.set_mode(size)
+        elif keys[pygame.K_LCTRL] and keys[pygame.K_MINUS]:
+            if SCREEN_WIDTH >= 700 and SCREEN_HEIGHT >= 500: 
+                SCREEN_WIDTH -= 100
+                SCREEN_HEIGHT -= 100
+                size = SCREEN_WIDTH, SCREEN_HEIGHT
+                screen = pygame.display.set_mode(size)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
