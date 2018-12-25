@@ -9,8 +9,6 @@ These are in no particular order of importance.
 ------------------
 -> add raise flag task
 -> add take-down flag task
--> add chop wood task -- brandosaurus
--> add shovel stuff task -- brandino
 -> add paint wall task -- brondoburger
 -> add a short delay between each work task
 -> implement common game soundtrack throughout all work tasks
@@ -50,8 +48,19 @@ These are in no particular order of importance.
 ----------------
 |  work tasks  |
 ----------------
--> raise flag - [MWHEELUP]
--> take-down flag - [MWHEELDOWN]
+-> raise flag up/down - [MWHEELUP]/[MWHEELDOWN]
 -> chop wood - [LEFT] / [RIGHT]
 -> shovel stuff - [SPACEBAR] -- brandino
 -> paint wall - [UP] / [DOWN] -- brondoburger
+
+-------------------------
+|  tasks for johnny boy  |
+--------------------------
+-> photoshop chopping wood
+-> photoshop shoveling stuff
+
+---------------------
+|  completed tasks  |
+---------------------
+-> jackhammer - [SPACEBAR] - DONE
+-> mining - [LEFT], [RIGHT] - DONE
