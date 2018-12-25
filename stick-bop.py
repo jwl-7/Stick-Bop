@@ -273,7 +273,7 @@ def task_mining():
 
         pygame.display.update()
 
-def task_wood():
+def task_logging():
     """Start and display wood work task"""
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
@@ -393,7 +393,7 @@ def main():
     clock = pygame.time.Clock()
 
     global SCORE
-    task_list = ['concrete', 'mining', 'wood']
+    task_list = ['concrete', 'mining', 'logging']
 
     running = True
     menu_display = True
@@ -417,8 +417,8 @@ def main():
                 task_completed = task_concrete()
             elif task == 'mining':
                 task_completed = task_mining()
-            elif task == 'wood':
-                task_completed = task_wood()
+            elif task == 'logging':
+                task_completed = task_logging()
         elif not task_completed:
             game_end()
 
