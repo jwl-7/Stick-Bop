@@ -338,7 +338,7 @@ def game_end():
     score_text = 'Final Score: ' + str(SCORE)
     draw_text(screen, BLACK, score_text, 70, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
     draw_text(screen, BLACK, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5)
-    draw_text(screen, BLACK, 'Press [P] to Play Again!', 40, SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 1.5)+50)
+    draw_text(screen, BLACK, 'Press [ENTER] to Play Again!', 40, SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 1.5)+50)
 
     pygame.display.update()
 
@@ -351,7 +351,7 @@ def game_end():
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 quit()
-            if event.key == pygame.K_p:
+            if event.key == pygame.K_RETURN:
                 main()
         else:
             pygame.display.update()
@@ -369,7 +369,7 @@ def game_win():
     screen.blit(gameover_img, [0, 0])
 
     draw_text(screen, BLACK, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5)
-    draw_text(screen, BLACK, 'Press [P] to Play Again!', 40, SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 1.5)+50)
+    draw_text(screen, BLACK, 'Press [ENTER] to Play Again!', 40, SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 1.5)+50)
 
     pygame.display.update()
 
@@ -379,7 +379,7 @@ def game_win():
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 quit()
-            if event.key == pygame.K_p:
+            if event.key == pygame.K_RETURN:
                 main()
         elif event.type == pygame.QUIT:
             pygame.quit()
@@ -392,11 +392,14 @@ def main():
     game_init()
     clock = pygame.time.Clock()
 
+    global SCORE
     task_list = ['concrete', 'mining', 'wood']
 
     running = True
     menu_display = True
     task_completed = True
+
+    SCORE = 0
 
     while running:
         for event in pygame.event.get():
@@ -407,7 +410,7 @@ def main():
             game_menu()
             game_ready()
             menu_display = False
-        elif not menu_display or task_completed:
+        elif task_completed or not menu_display:
             task = random.choice(task_list)
 
             if task == 'concrete':
@@ -420,7 +423,7 @@ def main():
         if not task_completed:
             game_end()
 
-        if SCORE >= 10:
+        if SCORE >= 5:
             game_win()
                 
         pygame.display.update()
