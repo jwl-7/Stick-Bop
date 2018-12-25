@@ -155,15 +155,15 @@ def game_ready():
     pygame.display.update()
     pygame.time.wait(1000)
 
-def task_jackhammer():
-    """Start and display jackhammer work task."""
+def task_concrete():
+    """Start and display concrete work task."""
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
-    jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'concrete-1.png')).convert()
-    jackhammer1_img = pygame.transform.smoothscale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-    screen.blit(jackhammer1_img, [0, 0])
+    concrete1_img = pygame.image.load(path.join(IMG_DIR, 'concrete-1.png')).convert()
+    concrete1_img = pygame.transform.smoothscale(concrete1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(concrete1_img, [0, 0])
 
     global SCORE
     count = 0
@@ -176,14 +176,14 @@ def task_jackhammer():
                 pygame.quit()
                 quit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                jackhammer2_img = pygame.image.load(path.join(IMG_DIR, 'concrete-2.png')).convert()
-                jackhammer2_img = pygame.transform.smoothscale(jackhammer2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(jackhammer2_img, [0, 0])
+                concrete2_img = pygame.image.load(path.join(IMG_DIR, 'concrete-2.png')).convert()
+                concrete2_img = pygame.transform.smoothscale(concrete2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(concrete2_img, [0, 0])
                 count += 1
             elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
-                jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'concrete-1.png')).convert()
-                jackhammer1_img = pygame.transform.smoothscale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(jackhammer1_img, [0, 0])
+                concrete1_img = pygame.image.load(path.join(IMG_DIR, 'concrete-1.png')).convert()
+                concrete1_img = pygame.transform.smoothscale(concrete1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(concrete1_img, [0, 0])
             else:
                  game_end()
 
@@ -207,15 +207,15 @@ def task_jackhammer():
 
         pygame.display.update()
         
-def task_pickaxe():
-    """Start and display axe work task."""
+def task_mining():
+    """Start and display mining work task."""
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
-    axe1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
-    axe1_img = pygame.transform.smoothscale(axe1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-    screen.blit(axe1_img, [0, 0])
+    mining1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
+    mining1_img = pygame.transform.smoothscale(mining1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(mining1_img, [0, 0])
 
     global SCORE
     count = 0
@@ -234,18 +234,18 @@ def task_pickaxe():
                 left_pressed = True
 
                 if right_was_pressed and not right_pressed:
-                    axe1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
-                    axe1_img = pygame.transform.smoothscale(axe1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                    screen.blit(axe1_img, [0, 0])
+                    mining1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
+                    mining1_img = pygame.transform.smoothscale(mining1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(mining1_img, [0, 0])
                     right_was_pressed = False
                     count += 1
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
                 right_pressed = True
 
                 if not left_pressed:
-                    axe2_img = pygame.image.load(path.join(IMG_DIR, 'mining-2.png')).convert()
-                    axe2_img = pygame.transform.smoothscale(axe2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                    screen.blit(axe2_img, [0, 0])
+                    mining2_img = pygame.image.load(path.join(IMG_DIR, 'mining-2.png')).convert()
+                    mining2_img = pygame.transform.smoothscale(mining2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(mining2_img, [0, 0])
             elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
                 left_pressed = False
             elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
@@ -273,7 +273,7 @@ def task_pickaxe():
 
         pygame.display.update()
 
-def task_axe():
+def task_wood():
     """Start and display wood work task"""
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
@@ -392,7 +392,7 @@ def main():
     game_init()
     clock = pygame.time.Clock()
 
-    task_list = ['jackhammer', 'pickaxe', 'axe']
+    task_list = ['concrete', 'mining', 'wood']
 
     SCORE = 0
 
@@ -412,15 +412,15 @@ def main():
         elif not menu_display:
             task = random.choice(task_list)
 
-            if task == 'jackhammer':
-                task_completed = task_jackhammer()
-            elif task == 'pickaxe':
-                task_completed = task_pickaxe()
-            elif task == 'axe':
-                task_completed = task_axe()
+            if task == 'concrete':
+                task_completed = task_concrete()
+            elif task == 'mining':
+                task_completed = task_mining()
+            elif task == 'wood':
+                task_completed = task_wood()
 
         if task_completed:
-            jackhammer_display = True
+            concrete_display = True
         elif not task_completed:
             game_end()
 
