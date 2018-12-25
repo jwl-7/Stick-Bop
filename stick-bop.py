@@ -21,8 +21,8 @@ FONT_DIR = path.join(path.dirname(__file__), 'fonts')
 # game constants
 SCREEN_WIDTH  = 900
 SCREEN_HEIGHT = 700
-SCREEN_MAX_WIDTH = 900
-SCREEN_MAX_HEIGHT = 700
+SCREEN_MAX_WIDTH  = 1920
+SCREEN_MAX_HEIGHT = 1080
 FPS   = 30
 SCORE =  0
 
