@@ -409,7 +409,7 @@ def main():
             game_menu()
             game_ready()
             menu_display = False
-        elif not menu_display:
+        elif not menu_display or task_completed:
             task = random.choice(task_list)
 
             if task == 'concrete':
@@ -419,9 +419,7 @@ def main():
             elif task == 'wood':
                 task_completed = task_wood()
 
-        if task_completed:
-            concrete_display = True
-        elif not task_completed:
+        if not task_completed:
             game_end()
 
         if SCORE >= 10:
