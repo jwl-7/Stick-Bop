@@ -92,7 +92,7 @@ def game_menu():
     pygame.mixer.music.play(-1)
 
     menu_img = pygame.image.load(path.join(IMG_DIR, 'stick-bop-menu.png')).convert()
-    menu_img = pygame.transform.scale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    menu_img = pygame.transform.smoothscale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
 
     screen.blit(menu_img, [0, 0])
     pygame.display.update()
@@ -138,19 +138,19 @@ def game_ready():
     ready_snd.play()
 
     ready_img = pygame.image.load(path.join(IMG_DIR, 'ready.png')).convert()
-    ready_img = pygame.transform.scale(ready_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    ready_img = pygame.transform.smoothscale(ready_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(ready_img, [0, 0])
     pygame.display.update()
     pygame.time.wait(1000)
 
     set_img = pygame.image.load(path.join(IMG_DIR, 'set.png')).convert()
-    set_img = pygame.transform.scale(set_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    set_img = pygame.transform.smoothscale(set_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(set_img, [0, 0])
     pygame.display.update()
     pygame.time.wait(1000)
 
     go_img = pygame.image.load(path.join(IMG_DIR, 'go.png')).convert()
-    go_img = pygame.transform.scale(go_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    go_img = pygame.transform.smoothscale(go_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(go_img, [0, 0])
     pygame.display.update()
     pygame.time.wait(1000)
@@ -162,7 +162,7 @@ def task_jackhammer():
     clock = pygame.time.Clock()
 
     jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'concrete-1.png')).convert()
-    jackhammer1_img = pygame.transform.scale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    jackhammer1_img = pygame.transform.smoothscale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(jackhammer1_img, [0, 0])
 
     global SCORE
@@ -177,12 +177,12 @@ def task_jackhammer():
                 quit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 jackhammer2_img = pygame.image.load(path.join(IMG_DIR, 'concrete-2.png')).convert()
-                jackhammer2_img = pygame.transform.scale(jackhammer2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                jackhammer2_img = pygame.transform.smoothscale(jackhammer2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(jackhammer2_img, [0, 0])
                 count += 1
             elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
                 jackhammer1_img = pygame.image.load(path.join(IMG_DIR, 'concrete-1.png')).convert()
-                jackhammer1_img = pygame.transform.scale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                jackhammer1_img = pygame.transform.smoothscale(jackhammer1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(jackhammer1_img, [0, 0])
             else:
                  game_end()
@@ -214,7 +214,7 @@ def task_pickaxe():
     clock = pygame.time.Clock()
 
     axe1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
-    axe1_img = pygame.transform.scale(axe1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    axe1_img = pygame.transform.smoothscale(axe1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(axe1_img, [0, 0])
 
     global SCORE
@@ -235,7 +235,7 @@ def task_pickaxe():
 
                 if right_was_pressed and not right_pressed:
                     axe1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
-                    axe1_img = pygame.transform.scale(axe1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    axe1_img = pygame.transform.smoothscale(axe1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                     screen.blit(axe1_img, [0, 0])
                     right_was_pressed = False
                     count += 1
@@ -244,7 +244,7 @@ def task_pickaxe():
 
                 if not left_pressed:
                     axe2_img = pygame.image.load(path.join(IMG_DIR, 'mining-2.png')).convert()
-                    axe2_img = pygame.transform.scale(axe2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    axe2_img = pygame.transform.smoothscale(axe2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                     screen.blit(axe2_img, [0, 0])
             elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
                 left_pressed = False
@@ -280,7 +280,7 @@ def task_axe():
     clock = pygame.time.Clock()
 
     wood1_img = pygame.image.load(path.join(IMG_DIR, 'wood-1.png')).convert()
-    wood1_img = pygame.transform.scale(wood1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    wood1_img = pygame.transform.smoothscale(wood1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(wood1_img, [0, 0])
 
     global SCORE
@@ -295,12 +295,12 @@ def task_axe():
                 quit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
                 wood2_img = pygame.image.load(path.join(IMG_DIR, 'wood-2.png')).convert()
-                wood2_img = pygame.transform.scale(wood2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                wood2_img = pygame.transform.smoothscale(wood2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(wood2_img, [0, 0])
                 count += 1
             elif event.type == pygame.KEYUP and event.key == pygame.K_w:
                 wood1_img = pygame.image.load(path.join(IMG_DIR, 'wood-1.png')).convert()
-                wood1_img = pygame.transform.scale(wood1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                wood1_img = pygame.transform.smoothscale(wood1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(wood1_img, [0, 0])
 
         time_elapsed = pygame.time.get_ticks() - start_time
@@ -332,7 +332,7 @@ def game_end():
     pygame.mixer.music.play(-1)
 
     gameover_img = pygame.image.load(path.join(IMG_DIR, 'game-over.png')).convert()
-    gameover_img = pygame.transform.scale(gameover_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    gameover_img = pygame.transform.smoothscale(gameover_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(gameover_img, [0, 0])
 
     score_text = 'Final Score: ' + str(SCORE)
@@ -365,7 +365,7 @@ def game_win():
     pygame.mixer.music.play(-1)
 
     gameover_img = pygame.image.load(path.join(IMG_DIR, 'winner.png')).convert()
-    gameover_img = pygame.transform.scale(gameover_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    gameover_img = pygame.transform.smoothscale(gameover_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(gameover_img, [0, 0])
 
     draw_text(screen, BLACK, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5)
