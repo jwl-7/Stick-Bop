@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# Authors: Jonathan Lusk and Brandon Hough
+
 """
 Stick Bop! is a game made in pygame that was inspired by the 90s Bop It! toy.
 """
