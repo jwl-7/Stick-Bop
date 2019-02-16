@@ -30,8 +30,7 @@
 ----------------
 |  work tasks  |
 ----------------
--> raise flag - [MWHEELUP]
--> take-down flag - [MWHEELDOWN]
+-> raise flag up/down - [MWHEELUP]/[MWHEELDOWN]
 -> chop wood - [LEFT] / [RIGHT]
 -> shovel stuff - [SPACEBAR]
 -> paint wall - [UP] / [DOWN]
