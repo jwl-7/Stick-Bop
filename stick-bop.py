@@ -41,6 +41,7 @@ PURPLE = (171, 157, 244)
 
 def game_init():
     """Initialize Pygame and mixer module."""
+    
     global SCREEN_MAX_WIDTH
     global SCREEN_MAX_HEIGHT
 
@@ -55,6 +56,7 @@ def game_init():
 
 def draw_text(surface, color, text, size, x, y):
     """Draw text in rectangle to surface."""
+
     game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
     text_surface = game_font.render(text, True, color)
     text_rect = text_surface.get_rect()
@@ -63,6 +65,7 @@ def draw_text(surface, color, text, size, x, y):
 
 def clear_text(surface, color, text, size, x, y):
     """Cover text with solid rectangle to surface."""
+
     game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
     text_surface = game_font.render(text, True, color)
     text_rect = text_surface.get_rect()
@@ -71,6 +74,7 @@ def clear_text(surface, color, text, size, x, y):
 
 def draw_progress_bar(surface, x, y, progress):
     """Draw a colored progress bar with outline to surface."""
+
     BAR_LENGTH = 40
     BAR_HEIGHT = 400
 
@@ -85,6 +89,7 @@ def draw_progress_bar(surface, x, y, progress):
 
 def game_menu():
     """Display start menu."""
+
     global SCREEN_WIDTH
     global SCREEN_HEIGHT
 
@@ -132,6 +137,7 @@ def game_menu():
 
 def game_ready():
     """Display ready, set, GO! message with sound."""
+
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
 
@@ -159,6 +165,7 @@ def game_ready():
 
 def task_concrete():
     """Start and display concrete work task."""
+
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
@@ -211,6 +218,7 @@ def task_concrete():
         
 def task_mining():
     """Start and display mining work task."""
+
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
@@ -275,8 +283,10 @@ def task_mining():
 
         pygame.display.update()
 
+'''
 def task_logging():
     """Start and display wood work task"""
+
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
@@ -327,6 +337,7 @@ def task_logging():
 
 def task_shoveling():
     """Start and display shovel work task"""
+
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
@@ -374,8 +385,11 @@ def task_shoveling():
             return False
 
         pygame.display.update()
+'''
+
 def game_end():
     """Display game over message and final score."""
+
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
 
@@ -409,6 +423,7 @@ def game_end():
 
 def game_win():
     """Display winner image and message."""
+
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
 
@@ -440,6 +455,7 @@ def game_win():
 
 def main():
     """Initialize game and run main game loop."""
+
     game_init()
     clock = pygame.time.Clock()
 
@@ -468,10 +484,12 @@ def main():
                 task_completed = task_concrete()
             elif task == 'mining':
                 task_completed = task_mining()
+            '''
             elif task == 'logging':
                 task_completed = task_logging()
             elif task == 'shoveling':
                 task_completed = task_shoveling()
+            '''
         elif not task_completed:
             game_end()
 
