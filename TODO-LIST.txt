@@ -1,8 +1,6 @@
 ------------------
 |  stick-bop.py  |
 ------------------
--> implement common game soundtrack throughout all work tasks
--> implement higher BPM versions of game soundtrack according to score
 -> implement common timer and count goal for each work task
 -> decrease timer for all work tasks according to score
 -> trigger game failure if wrong button is pressed (maybe ANY other buttons)
@@ -13,19 +11,6 @@
 -> add chop wood task
 -> add shovel stuff task
 -> add paint wall task
-
-------------
-|  sounds  |
-------------
--> find task completion sound
--> find task failed sound
--> add task completion sound
--> add task failed sound
--> add game finished sound
--> add game won sound
--> add sounds for all work tasks
--> add game soundtrack
--> add speeded up versions of game soundtrack (increased BPM)
 
 ----------------
 |  work tasks  |
