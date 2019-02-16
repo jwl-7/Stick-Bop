@@ -176,8 +176,16 @@ def task_concrete():
 
     global SCORE
     count = 0
-    timer_start = 5
     start_time = pygame.time.get_ticks()
+
+    if SCORE >= 75:
+        timer_start = 3.5
+    elif SCORE >= 50:
+        timer_start = 4
+    elif SCORE >= 25:
+        timer_start = 4.5
+    elif SCORE >= 0:
+        timer_start = 5
 
     while True:
         for event in pygame.event.get():
@@ -231,11 +239,19 @@ def task_mining():
 
     global SCORE
     count = 0
-    timer_start = 5
     start_time = pygame.time.get_ticks()
     left_pressed = False
     right_pressed = False
     right_was_pressed = False
+
+    if SCORE >= 75:
+        timer_start = 3.5
+    elif SCORE >= 50:
+        timer_start = 4
+    elif SCORE >= 25:
+        timer_start = 4.5
+    elif SCORE >= 0:
+        timer_start = 5
 
     while True:
         for event in pygame.event.get():
