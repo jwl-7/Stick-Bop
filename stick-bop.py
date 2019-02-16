@@ -199,8 +199,8 @@ def task_concrete():
             '''
 
         time_elapsed = pygame.time.get_ticks() - start_time
-        timer_seconds = int(time_elapsed / 1000 % 60)
-        timer = timer_start - timer_seconds
+        timer_seconds = float(time_elapsed / 1000 % 60)
+        timer = round(timer_start - timer_seconds, 1)
         timer_text = 'TIMER: ' + str(timer)
         score_text = 'Score: ' + str(SCORE)
 
@@ -266,8 +266,8 @@ def task_mining():
                     right_was_pressed = True
 
         time_elapsed = pygame.time.get_ticks() - start_time
-        timer_seconds = int(time_elapsed / 1000 % 60)
-        timer = timer_start - timer_seconds
+        timer_seconds = float(time_elapsed / 1000 % 60)
+        timer = round(timer_start - timer_seconds, 1)
         timer_text = 'TIMER: ' + str(timer)
         score_text = 'Score: ' + str(SCORE)
 
