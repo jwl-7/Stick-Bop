@@ -41,7 +41,7 @@ PURPLE = (171, 157, 244)
 
 def game_init():
     """Initialize Pygame and mixer module."""
-    
+
     global SCREEN_MAX_WIDTH
     global SCREEN_MAX_HEIGHT
 
@@ -95,7 +95,7 @@ def game_menu():
 
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
-    menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'piano-lofi-rain.ogg'))
+    menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'insert-quarter.ogg'))
     pygame.mixer.music.play(-1)
 
     menu_img = pygame.image.load(path.join(IMG_DIR, 'stick-bop-menu.png')).convert()
@@ -142,7 +142,7 @@ def game_ready():
     screen = pygame.display.get_surface()
 
     pygame.mixer.music.stop()
-    ready_snd = pygame.mixer.Sound(path.join(SND_DIR, 'brandons-ready-set-go.ogg'))
+    ready_snd = pygame.mixer.Sound(path.join(SND_DIR, 'ready-set-go.ogg'))
     ready_snd.play()
 
     ready_img = pygame.image.load(path.join(IMG_DIR, 'ready.png')).convert()
@@ -193,8 +193,10 @@ def task_concrete():
                 concrete1_img = pygame.image.load(path.join(IMG_DIR, 'concrete-1.png')).convert()
                 concrete1_img = pygame.transform.smoothscale(concrete1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(concrete1_img, [0, 0])
+            '''
             else:
                  game_end()
+            '''
 
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = int(time_elapsed / 1000 % 60)
@@ -427,7 +429,7 @@ def game_win():
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
 
-    menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'strum-strums.ogg'))
+    menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'future-grid.ogg'))
     pygame.mixer.music.play(-1)
 
     gameover_img = pygame.image.load(path.join(IMG_DIR, 'winner.png')).convert()
@@ -477,7 +479,13 @@ def main():
             game_menu()
             game_ready()
             menu_display = False
+            task_snd = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner.ogg'))
+            pygame.mixer.music.play(-1)
         elif task_completed:
+            if SCORE > 0:
+                task_done_snd = pygame.mixer.Sound(path.join(SND_DIR, 'task-done.ogg'))
+                pygame.mixer.Channel(0).play(task_done_snd)
+
             task = random.choice(task_list)
 
             if task == 'concrete':
@@ -493,7 +501,19 @@ def main():
         elif not task_completed:
             game_end()
 
-        if SCORE >= 5:
+        '''
+        if SCORE >= 25:
+            game_snd_1 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x125.ogg'))
+            pygame.mixer.music.play(-1)
+        elif SCORE >= 50:
+            game_snd_1 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x150.ogg'))
+            pygame.mixer.music.play(-1)
+        elif SCORE >= 75:
+            game_snd_1 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x175.ogg'))
+            pygame.mixer.music.play(-1)
+        '''
+            
+        if SCORE >= 10:
             game_win()
                 
         pygame.display.update()
