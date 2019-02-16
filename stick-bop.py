@@ -403,9 +403,7 @@ def game_end():
     screen.blit(gameover_img, [0, 0])
 
     score_text = 'Final Score: ' + str(SCORE)
-    draw_text(screen, BLACK, score_text, 70, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
-    draw_text(screen, BLACK, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5)
-    draw_text(screen, BLACK, 'Press [ENTER] to Play Again!', 40, SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 1.5)+50)
+    draw_text(screen, BLACK, score_text, 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2.5)
 
     pygame.display.update()
 
@@ -435,9 +433,6 @@ def game_win():
     gameover_img = pygame.image.load(path.join(IMG_DIR, 'winner.png')).convert()
     gameover_img = pygame.transform.smoothscale(gameover_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(gameover_img, [0, 0])
-
-    draw_text(screen, BLACK, 'Press [ESC] to QUIT', 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.5)
-    draw_text(screen, BLACK, 'Press [ENTER] to Play Again!', 40, SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 1.5)+50)
 
     pygame.display.update()
 
