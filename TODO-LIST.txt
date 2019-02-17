@@ -1,14 +1,8 @@
 ------------------
 |  stick-bop.py  |
 ------------------
--> implement common timer and count goal for each work task
--> decrease timer for all work tasks according to score
--> trigger game failure if wrong button is pressed (maybe ANY other buttons)
--> add feature to inc/dec game res via [+]/[-] -- needs bug checking
--> add a short delay between each work task
 -> add raise flag task
 -> add take-down flag task
--> add chop wood task
 -> add shovel stuff task
 -> add paint wall task
 
