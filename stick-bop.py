@@ -458,7 +458,7 @@ def main():
             game_menu()
             game_ready()
             menu_display = False
-            task_snd = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner.ogg'))
+            game_snd = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner.ogg'))
             pygame.mixer.music.play(-1)
         elif task_completed:
             if SCORE > 0:
@@ -476,16 +476,16 @@ def main():
         elif not task_completed:
             game_end()
 
-        if SCORE >= 25:
-            game_snd_1 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x125.ogg'))
+        if SCORE == 25:
+            game_snd_x25 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x125.ogg'))
             pygame.mixer.music.play(-1)
-        elif SCORE >= 50:
-            game_snd_1 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x150.ogg'))
+        elif SCORE == 50:
+            game_snd_x50 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x150.ogg'))
             pygame.mixer.music.play(-1)
-        elif SCORE >= 75:
-            game_snd_1 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x175.ogg'))
+        elif SCORE == 75:
+            game_snd_x75 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x175.ogg'))
             pygame.mixer.music.play(-1)
-        elif SCORE >= 100:
+        elif SCORE == 100:
             game_win()
                 
         pygame.display.update()
