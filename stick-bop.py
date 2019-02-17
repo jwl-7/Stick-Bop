@@ -163,16 +163,16 @@ def game_ready():
     pygame.display.update()
     pygame.time.wait(1000)
 
-def task_concrete():
-    """Start and display concrete work task."""
+def task_drilling():
+    """Start and display drilling work task."""
 
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
-    concrete1_img = pygame.image.load(path.join(IMG_DIR, 'concrete-1.png')).convert()
-    concrete1_img = pygame.transform.smoothscale(concrete1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-    screen.blit(concrete1_img, [0, 0])
+    drilling1_img = pygame.image.load(path.join(IMG_DIR, 'drilling-1.png')).convert()
+    drilling1_img = pygame.transform.smoothscale(drilling1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(drilling1_img, [0, 0])
 
     global SCORE
     count = 0
@@ -193,18 +193,14 @@ def task_concrete():
                 pygame.quit()
                 quit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                concrete2_img = pygame.image.load(path.join(IMG_DIR, 'concrete-2.png')).convert()
-                concrete2_img = pygame.transform.smoothscale(concrete2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(concrete2_img, [0, 0])
+                drilling2_img = pygame.image.load(path.join(IMG_DIR, 'drilling-2.png')).convert()
+                drilling2_img = pygame.transform.smoothscale(drilling2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(drilling2_img, [0, 0])
                 count += 1
             elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
-                concrete1_img = pygame.image.load(path.join(IMG_DIR, 'concrete-1.png')).convert()
-                concrete1_img = pygame.transform.smoothscale(concrete1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(concrete1_img, [0, 0])
-            '''
-            else:
-                 game_end()
-            '''
+                drilling1_img = pygame.image.load(path.join(IMG_DIR, 'drilling-1.png')).convert()
+                drilling1_img = pygame.transform.smoothscale(drilling1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(drilling1_img, [0, 0])
 
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = float(time_elapsed / 1000 % 60)
@@ -301,41 +297,64 @@ def task_mining():
 
         pygame.display.update()
 
-'''
-def task_logging():
-    """Start and display wood work task"""
+def task_woodchopping():
+    """Start and display woodchopping work task."""
 
     size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
-    wood1_img = pygame.image.load(path.join(IMG_DIR, 'wood-1.png')).convert()
-    wood1_img = pygame.transform.smoothscale(wood1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-    screen.blit(wood1_img, [0, 0])
+    woodchopping1_img = pygame.image.load(path.join(IMG_DIR, 'woodchopping-1.png')).convert()
+    woodchopping1_img = pygame.transform.smoothscale(woodchopping1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+    screen.blit(woodchopping1_img, [0, 0])
 
     global SCORE
     count = 0
-    timer_start = 5
     start_time = pygame.time.get_ticks()
+    left_pressed = False
+    right_pressed = False
+    right_was_pressed = False
+
+    if SCORE >= 75:
+        timer_start = 3.5
+    elif SCORE >= 50:
+        timer_start = 4
+    elif SCORE >= 25:
+        timer_start = 4.5
+    elif SCORE >= 0:
+        timer_start = 5
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
-                wood2_img = pygame.image.load(path.join(IMG_DIR, 'wood-2.png')).convert()
-                wood2_img = pygame.transform.smoothscale(wood2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(wood2_img, [0, 0])
-                count += 1
-            elif event.type == pygame.KEYUP and event.key == pygame.K_w:
-                wood1_img = pygame.image.load(path.join(IMG_DIR, 'wood-1.png')).convert()
-                wood1_img = pygame.transform.smoothscale(wood1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(wood1_img, [0, 0])
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                left_pressed = True
+
+                if right_was_pressed and not right_pressed:
+                    woodchopping1_img = pygame.image.load(path.join(IMG_DIR, 'woodchopping-1.png')).convert()
+                    woodchopping1_img = pygame.transform.smoothscale(woodchopping1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(woodchopping1_img, [0, 0])
+                    right_was_pressed = False
+                    count += 1
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+                right_pressed = True
+
+                if not left_pressed:
+                    woodchopping2_img = pygame.image.load(path.join(IMG_DIR, 'woodchopping-2.png')).convert()
+                    woodchopping2_img = pygame.transform.smoothscale(woodchopping2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(woodchopping2_img, [0, 0])
+            elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
+                left_pressed = False
+            elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+                if right_pressed:
+                    right_pressed = False
+                    right_was_pressed = True
 
         time_elapsed = pygame.time.get_ticks() - start_time
-        timer_seconds = int(time_elapsed / 1000 % 60)
-        timer = timer_start - timer_seconds
+        timer_seconds = float(time_elapsed / 1000 % 60)
+        timer = round(timer_start - timer_seconds, 1)
         timer_text = 'TIMER: ' + str(timer)
         score_text = 'Score: ' + str(SCORE)
 
@@ -352,58 +371,6 @@ def task_logging():
             return False
 
         pygame.display.update()
-
-def task_shoveling():
-    """Start and display shovel work task"""
-
-    size = SCREEN_WIDTH, SCREEN_HEIGHT
-    screen = pygame.display.get_surface()
-    clock = pygame.time.Clock()
-
-    dirt1_img = pygame.image.load(path.join(IMG_DIR, 'dirt-1.png')).convert()
-    dirt1_img = pygame.transform.smoothscale(dirt1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-    screen.blit(dirt1_img, [0, 0])
-
-    global SCORE
-    count = 0
-    timer_start = 5
-    start_time = pygame.time.get_ticks()
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                dirt2_img = pygame.image.load(path.join(IMG_DIR, 'dirt-2.png')).convert()
-                dirt2_img = pygame.transform.smoothscale(dirt2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(dirt2_img, [0, 0])
-                count += 1
-            elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
-                dirt1_img = pygame.image.load(path.join(IMG_DIR, 'dirt-1.png')).convert()
-                dirt1_img = pygame.transform.smoothscale(dirt1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(dirt1_img, [0, 0])
-
-        time_elapsed = pygame.time.get_ticks() - start_time
-        timer_seconds = int(time_elapsed / 1000 % 60)
-        timer = timer_start - timer_seconds
-        timer_text = 'TIMER: ' + str(timer)
-        score_text = 'Score: ' + str(SCORE)
-
-        clear_text(screen, WHITE, timer_text, 40, SCREEN_WIDTH / 2, 0)
-        clear_text(screen, WHITE, score_text, 40, SCREEN_WIDTH - 150, 0)
-        draw_text(screen, BLACK, timer_text, 40, SCREEN_WIDTH / 2, 0)
-        draw_text(screen, BLACK, score_text, 40, SCREEN_WIDTH - 150, 0)
-        draw_progress_bar(screen, SCREEN_WIDTH - 100, SCREEN_HEIGHT / 4, count * 20)
-
-        if count >= 5 and timer > 0:
-            SCORE += 1
-            return True
-        elif timer <= 0:
-            return False
-
-        pygame.display.update()
-'''
 
 def game_end():
     """Display game over message and final score."""
@@ -470,10 +437,11 @@ def main():
     """Initialize game and run main game loop."""
 
     game_init()
+    screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
     global SCORE
-    task_list = ['concrete', 'mining', 'logging', 'shoveling']
+    task_list = ['drilling', 'mining', 'woodchopping']
 
     running = True
     menu_display = True
@@ -499,20 +467,15 @@ def main():
 
             task = random.choice(task_list)
 
-            if task == 'concrete':
-                task_completed = task_concrete()
+            if task == 'drilling':
+                task_completed = task_drilling()
             elif task == 'mining':
                 task_completed = task_mining()
-            '''
-            elif task == 'logging':
-                task_completed = task_logging()
-            elif task == 'shoveling':
-                task_completed = task_shoveling()
-            '''
+            elif task == 'woodchopping':
+                task_completed = task_woodchopping()
         elif not task_completed:
             game_end()
 
-        '''
         if SCORE >= 25:
             game_snd_1 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x125.ogg'))
             pygame.mixer.music.play(-1)
@@ -522,9 +485,7 @@ def main():
         elif SCORE >= 75:
             game_snd_1 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x175.ogg'))
             pygame.mixer.music.play(-1)
-        '''
-            
-        if SCORE >= 10:
+        elif SCORE >= 100:
             game_win()
                 
         pygame.display.update()
