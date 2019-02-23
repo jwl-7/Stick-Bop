@@ -251,12 +251,12 @@ def task_mining():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
                 mining2_img = pygame.image.load(path.join(IMG_DIR, 'mining-2.png')).convert()
                 mining2_img = pygame.transform.smoothscale(mining2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(mining2_img, [0, 0])
                 count += 1
-            elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+            elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
                 mining1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
                 mining1_img = pygame.transform.smoothscale(mining1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(mining1_img, [0, 0])
@@ -310,12 +310,12 @@ def task_woodchopping():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
                 woodchopping2_img = pygame.image.load(path.join(IMG_DIR, 'woodchopping-2.png')).convert()
                 woodchopping2_img = pygame.transform.smoothscale(woodchopping2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(woodchopping2_img, [0, 0])
                 count += 1
-            elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+            elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
                 woodchopping1_img = pygame.image.load(path.join(IMG_DIR, 'woodchopping-1.png')).convert()
                 woodchopping1_img = pygame.transform.smoothscale(woodchopping1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(woodchopping1_img, [0, 0])
