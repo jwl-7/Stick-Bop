@@ -236,9 +236,6 @@ def task_mining():
     global SCORE
     count = 0
     start_time = pygame.time.get_ticks()
-    left_pressed = False
-    right_pressed = False
-    right_was_pressed = False
 
     if SCORE >= 75:
         timer_start = 3.5
@@ -255,27 +252,14 @@ def task_mining():
                 pygame.quit()
                 quit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
-                left_pressed = True
-
-                if right_was_pressed and not right_pressed:
-                    mining1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
-                    mining1_img = pygame.transform.smoothscale(mining1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                    screen.blit(mining1_img, [0, 0])
-                    right_was_pressed = False
-                    count += 1
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
-                right_pressed = True
-
-                if not left_pressed:
-                    mining2_img = pygame.image.load(path.join(IMG_DIR, 'mining-2.png')).convert()
-                    mining2_img = pygame.transform.smoothscale(mining2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                    screen.blit(mining2_img, [0, 0])
-            elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
-                left_pressed = False
+                mining2_img = pygame.image.load(path.join(IMG_DIR, 'mining-2.png')).convert()
+                mining2_img = pygame.transform.smoothscale(mining2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(mining2_img, [0, 0])
+                count += 1
             elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
-                if right_pressed:
-                    right_pressed = False
-                    right_was_pressed = True
+                mining1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
+                mining1_img = pygame.transform.smoothscale(mining1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(mining1_img, [0, 0])
 
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = float(time_elapsed / 1000 % 60)
@@ -311,9 +295,6 @@ def task_woodchopping():
     global SCORE
     count = 0
     start_time = pygame.time.get_ticks()
-    left_pressed = False
-    right_pressed = False
-    right_was_pressed = False
 
     if SCORE >= 75:
         timer_start = 3.5
@@ -330,27 +311,14 @@ def task_woodchopping():
                 pygame.quit()
                 quit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
-                left_pressed = True
-
-                if right_was_pressed and not right_pressed:
-                    woodchopping1_img = pygame.image.load(path.join(IMG_DIR, 'woodchopping-1.png')).convert()
-                    woodchopping1_img = pygame.transform.smoothscale(woodchopping1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                    screen.blit(woodchopping1_img, [0, 0])
-                    right_was_pressed = False
-                    count += 1
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
-                right_pressed = True
-
-                if not left_pressed:
-                    woodchopping2_img = pygame.image.load(path.join(IMG_DIR, 'woodchopping-2.png')).convert()
-                    woodchopping2_img = pygame.transform.smoothscale(woodchopping2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                    screen.blit(woodchopping2_img, [0, 0])
-            elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
-                left_pressed = False
+                woodchopping2_img = pygame.image.load(path.join(IMG_DIR, 'woodchopping-2.png')).convert()
+                woodchopping2_img = pygame.transform.smoothscale(woodchopping2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(woodchopping2_img, [0, 0])
+                count += 1
             elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
-                if right_pressed:
-                    right_pressed = False
-                    right_was_pressed = True
+                woodchopping1_img = pygame.image.load(path.join(IMG_DIR, 'woodchopping-1.png')).convert()
+                woodchopping1_img = pygame.transform.smoothscale(woodchopping1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                screen.blit(woodchopping1_img, [0, 0])
 
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = float(time_elapsed / 1000 % 60)
