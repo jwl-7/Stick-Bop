@@ -43,7 +43,126 @@ YELLOW = (255, 216, 102)
 ORANGE = (252, 151, 105)
 PURPLE = (171, 157, 244)
 
-class Game:
+settings = {
+    'screen_size': (900, 700),
+    'screen_width': 900,
+    'screen_height': 700,
+    'screen_max_width': 1920,
+    'screen_max_height': 1080,
+    'fps': 60,
+    'title': 'Stick Bop!'  
+}
+
+class State(object):
+    """Parent class for various game states.
+
+    Attributes:
+        done (bool): State completion status.
+        quit (bool): State exit status.
+        next (none): Holds the value of the next state.
+        previous (none): Holds the value of the previous(current) state.
+    """
+
+    def __init__(self):
+        self.done = False
+        self.quit = False
+        self.next = None
+        self.previous = None
+
+class StateController:
+    """Controls and sets up the game settings, game states, and main game loop.
+    
+    Args:
+        **settings (dict): Game display settings.
+
+    Attributes:
+        done (bool): State completion status.
+        display_info (obj): Provides information about the default display mode.
+        screen_max_width (int): Maximum screen width allowed based on display_info.
+        screen_max_height (int): Maximum screen height allowed based on display_height.
+        screen (obj): Initializes display surface.
+        caption (obj): Sets the window title.
+        clock (obj): Initializes clock object to help track time.
+        game_states (dict): The various game states.
+    """
+
+    def __init__(self, **settings):
+        self.__dict__.update(settings)
+        self.done = False
+        self.display_info = pygame.display.Info()
+        self.screen_max_width = self.display_info.current_w
+        self.screen_max_height = self.display_info.current_h
+        self.screen = pygame.display.set_mode(self.screen_size)
+        self.caption = pygame.display.set_caption(self.title)
+        self.clock = pygame.time.Clock()
+        self.game_states = {
+            'loading': Loading(self),
+            'menu': Menu(self),
+            'start': Start(self),
+            'loss': Loss(self),
+            'win': Win(self),
+            'drilling': Drilling(self),
+            'mining': Mining(self),
+            'woodchopping': Woodchopping(self)
+        }
+    
+    def setup_states(self, game_states, start_state):
+        self.game_states = game_states
+        self.state_name = start_state
+        self.state = self.game_states[self.state_name]
+
+    def flip_state(self):
+        """Flips to the next state."""
+        self.state.done = False
+
+        # this translates to:
+        #       previous = current state_name
+        #       state_name = next state
+        # change this logic to use current, previous, and next for easier understanding
+        previous, self.state_name = self.state_name, self.state.next
+
+        self.state.cleanup()
+        self.state = self.game_states[self.state_name]
+        self.state.startup()
+        self.state.previous = previous
+
+    def update(self, dt):
+        """Checks for state flip and updates current state.
+
+        Args:
+            dt (int): Milliseconds since last frame.
+        """
+        if self.state.quit:
+            self.done = True
+        elif self.state.done:
+            self.flip_state()
+        self.state.update(self.screen, dt)
+
+    def event_loop(self):
+        """Events are passed for handling the current state."""
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.done = True
+            self.state.get_event(event)
+
+    def game_loop(self):
+        """This is the main game loop."""
+        while not self.done:
+            delta_time = self.clock.tick(self.fps) / 1000.0
+            self.event_loop()
+            self.update(delta_time)
+            pygame.display.update()
+
+def main():
+    """Initialize pygame and run game."""
+    pygame.init()
+    game = StateController(**settings)
+    game.setup_states(game_states, 'menu')
+    game.game_loop()
+    pygame.quit()
+    sys.exit()
+
+class ZZZ:
     """This class deals with every part of the game."""
 
     def game_init(self):
@@ -490,16 +609,6 @@ class Game:
 
         pygame.quit()
         quit()
-
-
-def main():
-    """Initialize game and run main game loop."""
-
-    game = Game()
-    game.game_init()
-    screen = pygame.display.get_surface()
-    game.loop(screen)
-    pygame.quit()
 
 if __name__ == '__main__':
     main()
