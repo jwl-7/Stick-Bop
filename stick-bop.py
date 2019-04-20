@@ -96,18 +96,17 @@ class StateController:
         self.caption = pygame.display.set_caption(self.title)
         self.clock = pygame.time.Clock()
         self.game_states = {
-            'loading': Loading(self),
-            'menu': Menu(self),
-            'start': Start(self),
-            'loss': Loss(self),
-            'win': Win(self),
-            'drilling': Drilling(self),
-            'mining': Mining(self),
-            'woodchopping': Woodchopping(self)
+            'loading': Loading(),
+            #'menu': Menu(),
+            #'start': Start(),
+            #'loss': Loss(),
+            #'win': Win(),
+            #'drilling': Drilling(),
+            #'mining': Mining(),
+            #'woodchopping': Woodchopping()
         }
     
-    def setup_states(self, game_states, start_state):
-        self.game_states = game_states
+    def setup_states(self, start_state):
         self.state_name = start_state
         self.state = self.game_states[self.state_name]
 
@@ -153,11 +152,26 @@ class StateController:
             self.update(delta_time)
             pygame.display.update()
 
+class Loading(State):
+    def __init__(self):
+        State.__init__(self)
+        #self.next = 'game'
+    def cleanup(self):
+        pass
+    def startup(self):
+        pass
+    def get_event(self, event):
+        pass
+    def update(self, screen, dt):
+        self.draw(screen)
+    def draw(self, screen):
+        screen.fill(WHITE)
+   
 def main():
     """Initialize pygame and run game."""
     pygame.init()
     game = StateController(**settings)
-    game.setup_states(game_states, 'menu')
+    game.setup_states('loading')
     game.game_loop()
     pygame.quit()
     sys.exit()
