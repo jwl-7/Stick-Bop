@@ -17,25 +17,25 @@ if getattr(sys, 'frozen', False):
     os.chdir(sys._MEIPASS)
 
 # asset folder paths
-IMG_DIR  = os.path.join(os.path.dirname(__file__), 'images')
-SND_DIR  = os.path.join(os.path.dirname(__file__), 'sounds')
-FONT_DIR = os.path.join(os.path.dirname(__file__), 'fonts')
+IMG_DIR = os.path.join(os.path.dirname(__file__), 'images')
+SND_DIR = os.path.join(os.path.dirname(__file__), 'sounds')
+FNT_DIR = os.path.join(os.path.dirname(__file__), 'fonts')
 
 # game constants
-SCREEN_WIDTH  = 900
+SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 700
-SCREEN_MAX_WIDTH  = 1920
+SCREEN_MAX_WIDTH = 1920
 SCREEN_MAX_HEIGHT = 1080
 SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT
-FPS   = 60
-SCORE =  0
+FPS = 60
+SCORE = 0
 
 # monokai color palette
-WHITE  = (253, 250, 243)
-BLACK  = ( 45,  43,  46)
-RED    = (255,  96, 137)
-GREEN  = (169, 220, 199)
-BLUE   = (119, 220, 230)
+WHITE = (253, 250, 243)
+BLACK = (45, 43, 46)
+RED = (255, 96, 137)
+GREEN = (169, 220, 199)
+BLUE = (119, 220, 230)
 YELLOW = (255, 216, 102)
 ORANGE = (252, 151, 105)
 PURPLE = (171, 157, 244)
@@ -56,7 +56,8 @@ class Assets:
 
     def __init__(self):
         self.images = {}
-        #pass
+        self.sounds = {}
+        self.fonts = {}
 
     def load_images(directory, colorkey=(0, 0, 0), extensions=('.png', '.jpg', '.bmp')):
         """Loads all images with the specified file extensions.
@@ -235,6 +236,8 @@ class Loading(State, Assets):
 
     def startup(self):
         Assets.images = Assets.load_images(IMG_DIR)
+        Assets.sounds = Assets.load_sounds(SND_DIR)
+        Assets.fonts = Assets.load_fonts(FNT_DIR)
 
     def get_event(self, event):
         pass
