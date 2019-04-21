@@ -21,9 +21,6 @@ IMG_DIR  = os.path.join(os.path.dirname(__file__), 'images')
 SND_DIR  = os.path.join(os.path.dirname(__file__), 'sounds')
 FONT_DIR = os.path.join(os.path.dirname(__file__), 'fonts')
 
-# asset dictionaries
-IMG_DICT = {}
-
 # game constants
 SCREEN_WIDTH  = 900
 SCREEN_HEIGHT = 700
@@ -53,6 +50,82 @@ settings = {
     'title': 'Stick Bop!'  
 }
 
+class Assets:
+    """Sets up game assets including fonts, images, and sounds.
+    """
+
+    def __init__(self):
+        self.images = {}
+        #pass
+
+    def load_images(directory, colorkey=(0, 0, 0), extensions=('.png', '.jpg', '.bmp')):
+        """Loads all images with the specified file extensions.
+
+        Args:
+            directory (str): Path to the directory that contains the files.
+            colorkey  (tup): Used to set colorkey if no alpha transparency is found in image.
+            extensions (tup): The file extensions accepted by the function.
+
+        Returns:
+            images (dict): The loaded images.
+        """
+        images = {}
+        for img in os.listdir(directory):
+            name, ext = os.path.splitext(img)
+            if ext in extensions:
+                img = pygame.image.load(os.path.join(directory, img))
+                if img.get_alpha():
+                    img = img.convert_alpha()
+                else:
+                    img = img.convert()
+                    img.set_colorkey(colorkey)
+                images[name] = img
+        return images
+
+    def load_sounds(directory, extensions=('.ogg', '.mp3', '.wav', '.mdi')):
+        """Loads all sounds with the specified file extensions.
+
+        Args:
+            directory (str): Path to the directory that contains the files.
+            extensions (tup): The file extensions accepted by the function.
+
+        Returns:
+            sounds (dict): The loaded images.
+        """
+        sounds = {}
+        for snd in os.listdir(directory):
+            name, ext = os.path.splitext(snd)
+            if ext in extensions:
+                sounds[name] = os.path.join(directory, snd)
+        return sounds
+
+    def load_fonts(directory, extension=('.ttf')):
+        """Loads all fonts with the specified file extension.
+
+        Args:
+            directory (str): Path to the directory that contains the files.
+            extension (tup): The file extension accepted by the function.
+
+        Returns:
+            fonts (dict): The loaded fonts.
+        fonts = {}
+        """
+        fonts = {}
+        for fnt in os.listdir(directory):
+            name, ext = os.path.splitext(fnt)
+            if ext in extensions:
+                fonts[name] = os.path.join(directory, fnt)
+        return fonts
+
+        def render_image(self, image, screen, screen_size):
+            """Renders an image to the screen at the size of the window.
+
+            Args:
+                image (str): Filename of the image.
+            """
+            if image.get_rect().size != screen_size:
+                image.transform.smoothscale(image, screen_size, screen)
+
 class State(object):
     """Parent class for various game states.
 
@@ -60,14 +133,14 @@ class State(object):
         done (bool): State completion status.
         quit (bool): State exit status.
         next (none): Holds the value of the next state.
-        previous (none): Holds the value of the previous(current) state.
+        current (none): Holds the value of the current state.
     """
 
     def __init__(self):
         self.done = False
         self.quit = False
         self.next = None
-        self.previous = None
+        self.current = None
 
 class StateController:
     """Controls and sets up the game settings, game states, and main game loop.
@@ -83,7 +156,7 @@ class StateController:
         screen (obj): Initializes display surface.
         caption (obj): Sets the window title.
         clock (obj): Initializes clock object to help track time.
-        game_states (dict): The various game states.
+        states (dict): The various game states.
     """
 
     def __init__(self, **settings):
@@ -95,7 +168,7 @@ class StateController:
         self.screen = pygame.display.set_mode(self.screen_size)
         self.caption = pygame.display.set_caption(self.title)
         self.clock = pygame.time.Clock()
-        self.game_states = {
+        self.states = {
             'loading': Loading(),
             #'menu': Menu(),
             #'start': Start(),
@@ -108,22 +181,16 @@ class StateController:
     
     def setup_states(self, start_state):
         self.state_name = start_state
-        self.state = self.game_states[self.state_name]
+        self.state = self.states[self.state_name]
 
     def flip_state(self):
         """Flips to the next state."""
         self.state.done = False
-
-        # this translates to:
-        #       previous = current state_name
-        #       state_name = next state
-        # change this logic to use current, previous, and next for easier understanding
-        previous, self.state_name = self.state_name, self.state.next
-
-        self.state.cleanup()
-        self.state = self.game_states[self.state_name]
+        current = self.state_name
+        self.state_name = self.state.next
+        self.state = self.states[self.state_name]
         self.state.startup()
-        self.state.previous = previous
+        self.state.current = current
 
     def update(self, dt):
         """Checks for state flip and updates current state.
@@ -152,21 +219,33 @@ class StateController:
             self.update(delta_time)
             pygame.display.update()
 
-class Loading(State):
+class Loading(State, Assets):
+    """Loads all assets including fonts, images, and sounds.
+
+    Attributes:
+        next (str): Specifies the name of the next state.
+        load_img (obj): Loading image that displays while the assets load.
+    """
+
     def __init__(self):
         State.__init__(self)
-        #self.next = 'game'
-    def cleanup(self):
-        pass
+        self.__dict__.update(settings)
+        #self.next = 'menu'
+        self.load_img = pygame.image.load(os.path.join(IMG_DIR, 'loading.png')).convert()
+
     def startup(self):
-        pass
+        Assets.images = Assets.load_images(IMG_DIR)
+
     def get_event(self, event):
         pass
+
     def update(self, screen, dt):
+        self.load_img = pygame.transform.smoothscale(self.load_img, SCREEN_SIZE, screen)
         self.draw(screen)
+
     def draw(self, screen):
-        screen.fill(WHITE)
-   
+        screen.blit(self.load_img, [0, 0])
+
 def main():
     """Initialize pygame and run game."""
     pygame.init()
