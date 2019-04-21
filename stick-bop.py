@@ -255,6 +255,12 @@ def main():
     pygame.quit()
     sys.exit()
 
+#----------------------------------------------------------------------------------------
+#
+# EVERYTHING BELOW WILL BE REFACTORED ~~~~
+#
+#----------------------------------------------------------------------------------------
+
 class ZZZ:
     """This class deals with every part of the game."""
 
