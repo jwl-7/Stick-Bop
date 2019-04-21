@@ -22,11 +22,6 @@ SND_DIR = os.path.join(os.path.dirname(__file__), 'sounds')
 FNT_DIR = os.path.join(os.path.dirname(__file__), 'fonts')
 
 # game constants
-SCREEN_WIDTH = 900
-SCREEN_HEIGHT = 700
-SCREEN_MAX_WIDTH = 1920
-SCREEN_MAX_HEIGHT = 1080
-SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT
 FPS = 60
 SCORE = 0
 
@@ -243,7 +238,7 @@ class Loading(State, Assets):
         pass
 
     def update(self, screen, dt):
-        self.load_img = pygame.transform.smoothscale(self.load_img, SCREEN_SIZE, screen)
+        self.load_img = pygame.transform.smoothscale(self.load_img, self.screen_size, screen)
         self.draw(screen)
 
     def draw(self, screen):
