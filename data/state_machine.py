@@ -99,22 +99,10 @@ class StateController:
         self.caption = pygame.display.set_caption(self.title)
         self.clock = pygame.time.Clock()
         self.states = {}
-        '''
-        self.states = {
-            'loading': Loading(),
-            'menu': Menu(),
-            'start': Start(),
-            'loss': Loss(),
-            'win': Win(),
-            'drilling': Drilling(),
-            'mining': Mining(),
-            'woodchopping': Woodchopping()
-        }
-        '''
     
-    def setup_states(self, states, start_state):
+    def setup_states(self, state_dict, start_state):
         """Sets the initial state."""
-        self.states = states
+        self.states = state_dict
         self.state_name = start_state
         self.state = self.states[self.state_name]
 

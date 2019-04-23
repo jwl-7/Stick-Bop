@@ -1,4 +1,3 @@
-
 import pygame
 import random
 import os
@@ -9,9 +8,6 @@ from . import tools
 IMG_DIR = os.path.join('assets', 'images')
 SND_DIR = os.path.join('assets', 'sounds')
 FNT_DIR = os.path.join('assets', 'fonts')
-
-PARENT_DIR = os.path.join(os.path.join('.'), os.path.dirname(__file__))
-print(f'PARENT DIRECTORY {PARENT_DIR}')
 
 # monokai color palette
 WHITE = (253, 250, 243)
