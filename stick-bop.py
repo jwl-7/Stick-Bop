@@ -132,6 +132,26 @@ class Assets:
             image = pygame.transform.smoothscale(image, screen_size, screen)
         return image
 
+    def render_text(self, font, color, text, size, x, y, screen):
+        """Draws text in rectangle to surface."""
+        text_font = pygame.font.Font(font, size)
+        text_surface = text_font.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.midtop = (x, y)
+        #text = (text_surface, text_rect)
+        #return text
+        screen.blit(text_surface, text_rect)
+
+    def clear_text(self, font, color, text, size, x, y, screen):
+        """Covers text with solid rectangle to surface."""
+        text_font = pygame.font.Font(font, size)
+        text_surface = text_font.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.midtop = (x, y)
+        #clear_text = (color, text_rect)
+        #return clear_text
+        screen.fill(color, text_rect)
+
 class State(object):
     """Parent class for various game states.
 
@@ -141,6 +161,8 @@ class State(object):
         next (none): Holds the value of the next state.
         current (none): Holds the value of the current state.
     """
+    score = 0
+    count = 0
 
     def __init__(self):
         self.done = False
@@ -369,13 +391,18 @@ class Woodchopping(State, Assets):
                 self.right_was_pressed = True
 
     def update(self, screen, dt):
+        timer_start = 5
         self.wood_img = self.render_image(self.wood_img, self.screen_size, screen)
         self.draw(screen)
         time_elapsed = pygame.time.get_ticks() - self.start_time
+        timer_seconds = float(time_elapsed / 1000 % 60)
+        timer = round(timer_start - timer_seconds, 1)
+        timer_text = 'Timer: ' + str(timer)
+        self.clear_text(self.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        self.render_text(self.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
 
     def draw(self, screen):
         screen.blit(self.wood_img, [0, 0])
-        pass
 
 def main():
     """Initialize pygame and run game."""
