@@ -1,22 +1,63 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Authors: Jonathan Lusk and Brandon Hough
+
+"""
+Stick Bop! is a game made in pygame that was inspired by the 90s Bop It! toy.
+"""
+
+import pygame
+import random
+import sys
+from os import path
+
+# for use with PyInstaller
+if getattr(sys, 'frozen', False):
+    os.chdir(sys._MEIPASS)
+
+# asset folder paths
+IMG_DIR  = path.join(path.dirname(__file__), 'images')
+SND_DIR  = path.join(path.dirname(__file__), 'sounds')
+FONT_DIR = path.join(path.dirname(__file__), 'fonts')
+
+# game constants
+SCREEN_WIDTH  = 900
+SCREEN_HEIGHT = 700
+SCREEN_MAX_WIDTH  = 1920
+SCREEN_MAX_HEIGHT = 1080
+FPS   = 30
+SCORE =  0
+
+# monokai color palette
+WHITE  = (253, 250, 243)
+BLACK  = ( 45,  43,  46)
+RED    = (255,  96, 137)
+GREEN  = (169, 220, 199)
+BLUE   = (119, 220, 230)
+YELLOW = (255, 216, 102)
+ORANGE = (252, 151, 105)
+PURPLE = (171, 157, 244)
+
 def game_init():
     """Initialize Pygame and mixer module."""
 
     global SCREEN_MAX_WIDTH
     global SCREEN_MAX_HEIGHT
-    global SCREEN_SIZE
 
     pygame.init()
     pygame.mixer.init()
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
     display_info = pygame.display.Info()
     SCREEN_MAX_WIDTH = display_info.current_w
     SCREEN_MAX_HEIGHT = display_info.current_h
-    pygame.display.set_mode(SCREEN_SIZE)
+    screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Stick Bop!')
 
 def draw_text(surface, color, text, size, x, y):
     """Draw text in rectangle to surface."""
 
-    game_font = pygame.font.Font(os.path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
+    game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
     text_surface = game_font.render(text, True, color)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
@@ -25,7 +66,7 @@ def draw_text(surface, color, text, size, x, y):
 def clear_text(surface, color, text, size, x, y):
     """Cover text with solid rectangle to surface."""
 
-    game_font = pygame.font.Font(os.path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
+    game_font = pygame.font.Font(path.join(FONT_DIR, 'OpenSans-Regular.ttf'), size)
     text_surface = game_font.render(text, True, color)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
@@ -51,16 +92,16 @@ def game_menu():
 
     global SCREEN_WIDTH
     global SCREEN_HEIGHT
-    global SCREEN_SIZE
 
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
-    menu_snd = pygame.mixer.music.load(os.path.join(SND_DIR, 'insert-quarter.ogg'))
+    menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'insert-quarter.ogg'))
     pygame.mixer.music.play(-1)
 
-    menu_img = pygame.image.load(os.path.join(IMG_DIR, 'stick-bop-menu.png')).convert()
+    menu_img = pygame.image.load(path.join(IMG_DIR, 'stick-bop-menu.png')).convert()
     menu_img = pygame.transform.smoothscale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-    screen.blit(menu_img, [0, 0])
 
+    screen.blit(menu_img, [0, 0])
     pygame.display.update()
 
     while True:
@@ -77,19 +118,19 @@ def game_menu():
             if SCREEN_WIDTH <= SCREEN_MAX_WIDTH and SCREEN_WIDTH <= SCREEN_MAX_HEIGHT:
                 SCREEN_WIDTH += 100
                 SCREEN_HEIGHT += 100
-                SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT
-                screen = pygame.display.set_mode(SCREEN_SIZE)
-                menu_img = pygame.image.load(os.path.join(IMG_DIR, 'stick-bop-menu.png')).convert()
-                menu_img = pygame.transform.smoothscale(menu_img, (SCREEN_SIZE), screen)
+                size = SCREEN_WIDTH, SCREEN_HEIGHT
+                screen = pygame.display.set_mode(size)
+                menu_img = pygame.image.load(path.join(IMG_DIR, 'stick-bop-menu.png')).convert()
+                menu_img = pygame.transform.smoothscale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(menu_img, [0, 0])
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_MINUS:
             if SCREEN_WIDTH >= 500 and SCREEN_HEIGHT >= 300: 
                 SCREEN_WIDTH -= 100
                 SCREEN_HEIGHT -= 100
-                SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT
-                screen = pygame.display.set_mode(SCREEN_SIZE)
-                menu_img = pygame.image.load(os.path.join(IMG_DIR, 'stick-bop-menu.png')).convert()
-                menu_img = pygame.transform.smoothscale(menu_img, (SCREEN_SIZE), screen)
+                size = SCREEN_WIDTH, SCREEN_HEIGHT
+                screen = pygame.display.set_mode(size)
+                menu_img = pygame.image.load(path.join(IMG_DIR, 'stick-bop-menu.png')).convert()
+                menu_img = pygame.transform.smoothscale(menu_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(menu_img, [0, 0])
         else:
             pygame.display.update()
@@ -97,27 +138,26 @@ def game_menu():
 def game_ready():
     """Display ready, set, GO! message with sound."""
 
-    global SCREEN_SIZE
-
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
 
     pygame.mixer.music.stop()
-    ready_snd = pygame.mixer.Sound(os.path.join(SND_DIR, 'ready-set-go.ogg'))
+    ready_snd = pygame.mixer.Sound(path.join(SND_DIR, 'ready-set-go.ogg'))
     ready_snd.play()
 
-    ready_img = pygame.image.load(os.path.join(IMG_DIR, 'ready.png')).convert()
+    ready_img = pygame.image.load(path.join(IMG_DIR, 'ready.png')).convert()
     ready_img = pygame.transform.smoothscale(ready_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(ready_img, [0, 0])
     pygame.display.update()
     pygame.time.wait(1000)
 
-    set_img = pygame.image.load(os.path.join(IMG_DIR, 'set.png')).convert()
+    set_img = pygame.image.load(path.join(IMG_DIR, 'set.png')).convert()
     set_img = pygame.transform.smoothscale(set_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(set_img, [0, 0])
     pygame.display.update()
     pygame.time.wait(1000)
 
-    go_img = pygame.image.load(os.path.join(IMG_DIR, 'go.png')).convert()
+    go_img = pygame.image.load(path.join(IMG_DIR, 'go.png')).convert()
     go_img = pygame.transform.smoothscale(go_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(go_img, [0, 0])
     pygame.display.update()
@@ -126,12 +166,11 @@ def game_ready():
 def task_drilling():
     """Start and display drilling work task."""
 
-    global SCREEN_SIZE
-
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
-    drilling1_img = pygame.image.load(os.path.join(IMG_DIR, 'drilling-1.png')).convert()
+    drilling1_img = pygame.image.load(path.join(IMG_DIR, 'drilling-1.png')).convert()
     drilling1_img = pygame.transform.smoothscale(drilling1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(drilling1_img, [0, 0])
 
@@ -154,12 +193,12 @@ def task_drilling():
                 pygame.quit()
                 quit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                drilling2_img = pygame.image.load(os.path.join(IMG_DIR, 'drilling-2.png')).convert()
+                drilling2_img = pygame.image.load(path.join(IMG_DIR, 'drilling-2.png')).convert()
                 drilling2_img = pygame.transform.smoothscale(drilling2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(drilling2_img, [0, 0])
                 count += 1
             elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
-                drilling1_img = pygame.image.load(os.path.join(IMG_DIR, 'drilling-1.png')).convert()
+                drilling1_img = pygame.image.load(path.join(IMG_DIR, 'drilling-1.png')).convert()
                 drilling1_img = pygame.transform.smoothscale(drilling1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
                 screen.blit(drilling1_img, [0, 0])
 
@@ -186,18 +225,20 @@ def task_drilling():
 def task_mining():
     """Start and display mining work task."""
 
-    global SCREEN_SIZE
-
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
-    mining1_img = pygame.image.load(os.path.join(IMG_DIR, 'mining-1.png')).convert()
+    mining1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
     mining1_img = pygame.transform.smoothscale(mining1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(mining1_img, [0, 0])
 
     global SCORE
     count = 0
     start_time = pygame.time.get_ticks()
+    left_pressed = False
+    right_pressed = False
+    right_was_pressed = False
 
     if SCORE >= 75:
         timer_start = 3.5
@@ -213,15 +254,28 @@ def task_mining():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                left_pressed = True
+
+                if right_was_pressed and not right_pressed:
+                    mining1_img = pygame.image.load(path.join(IMG_DIR, 'mining-1.png')).convert()
+                    mining1_img = pygame.transform.smoothscale(mining1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(mining1_img, [0, 0])
+                    right_was_pressed = False
+                    count += 1
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
-                mining2_img = pygame.image.load(os.path.join(IMG_DIR, 'mining-2.png')).convert()
-                mining2_img = pygame.transform.smoothscale(mining2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(mining2_img, [0, 0])
-                count += 1
+                right_pressed = True
+
+                if not left_pressed:
+                    mining2_img = pygame.image.load(path.join(IMG_DIR, 'mining-2.png')).convert()
+                    mining2_img = pygame.transform.smoothscale(mining2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(mining2_img, [0, 0])
             elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
-                mining1_img = pygame.image.load(os.path.join(IMG_DIR, 'mining-1.png')).convert()
-                mining1_img = pygame.transform.smoothscale(mining1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(mining1_img, [0, 0])
+                left_pressed = False
+            elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+                if right_pressed:
+                    right_pressed = False
+                    right_was_pressed = True
 
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = float(time_elapsed / 1000 % 60)
@@ -246,18 +300,20 @@ def task_mining():
 def task_woodchopping():
     """Start and display woodchopping work task."""
 
-    global SCREEN_SIZE
-
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
-    woodchopping1_img = pygame.image.load(os.path.join(IMG_DIR, 'woodchopping-1.png')).convert()
+    woodchopping1_img = pygame.image.load(path.join(IMG_DIR, 'woodchopping-1.png')).convert()
     woodchopping1_img = pygame.transform.smoothscale(woodchopping1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(woodchopping1_img, [0, 0])
 
     global SCORE
     count = 0
     start_time = pygame.time.get_ticks()
+    left_pressed = False
+    right_pressed = False
+    right_was_pressed = False
 
     if SCORE >= 75:
         timer_start = 3.5
@@ -273,15 +329,28 @@ def task_woodchopping():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                left_pressed = True
+
+                if right_was_pressed and not right_pressed:
+                    woodchopping1_img = pygame.image.load(path.join(IMG_DIR, 'woodchopping-1.png')).convert()
+                    woodchopping1_img = pygame.transform.smoothscale(woodchopping1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(woodchopping1_img, [0, 0])
+                    right_was_pressed = False
+                    count += 1
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
-                woodchopping2_img = pygame.image.load(os.path.join(IMG_DIR, 'woodchopping-2.png')).convert()
-                woodchopping2_img = pygame.transform.smoothscale(woodchopping2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(woodchopping2_img, [0, 0])
-                count += 1
+                right_pressed = True
+
+                if not left_pressed:
+                    woodchopping2_img = pygame.image.load(path.join(IMG_DIR, 'woodchopping-2.png')).convert()
+                    woodchopping2_img = pygame.transform.smoothscale(woodchopping2_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
+                    screen.blit(woodchopping2_img, [0, 0])
             elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
-                woodchopping1_img = pygame.image.load(os.path.join(IMG_DIR, 'woodchopping-1.png')).convert()
-                woodchopping1_img = pygame.transform.smoothscale(woodchopping1_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-                screen.blit(woodchopping1_img, [0, 0])
+                left_pressed = False
+            elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+                if right_pressed:
+                    right_pressed = False
+                    right_was_pressed = True
 
         time_elapsed = pygame.time.get_ticks() - start_time
         timer_seconds = float(time_elapsed / 1000 % 60)
@@ -306,14 +375,13 @@ def task_woodchopping():
 def game_end():
     """Display game over message and final score."""
 
-    global SCREEN_SIZE
-
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
 
-    menu_snd = pygame.mixer.music.load(os.path.join(SND_DIR, 'piano-lofi-rain.ogg'))
+    menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'piano-lofi-rain.ogg'))
     pygame.mixer.music.play(-1)
 
-    gameover_img = pygame.image.load(os.path.join(IMG_DIR, 'game-over.png')).convert()
+    gameover_img = pygame.image.load(path.join(IMG_DIR, 'game-over.png')).convert()
     gameover_img = pygame.transform.smoothscale(gameover_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(gameover_img, [0, 0])
 
@@ -339,14 +407,13 @@ def game_end():
 def game_win():
     """Display winner image and message."""
 
-    global SCREEN_SIZE
-    
+    size = SCREEN_WIDTH, SCREEN_HEIGHT
     screen = pygame.display.get_surface()
 
-    menu_snd = pygame.mixer.music.load(os.path.join(SND_DIR, 'future-grid.ogg'))
+    menu_snd = pygame.mixer.music.load(path.join(SND_DIR, 'future-grid.ogg'))
     pygame.mixer.music.play(-1)
 
-    gameover_img = pygame.image.load(os.path.join(IMG_DIR, 'winner.png')).convert()
+    gameover_img = pygame.image.load(path.join(IMG_DIR, 'winner.png')).convert()
     gameover_img = pygame.transform.smoothscale(gameover_img, (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
     screen.blit(gameover_img, [0, 0])
 
@@ -367,8 +434,9 @@ def game_win():
             pygame.display.update()
 
 def main():
-    game_init()
+    """Initialize game and run main game loop."""
 
+    game_init()
     screen = pygame.display.get_surface()
     clock = pygame.time.Clock()
 
@@ -390,11 +458,11 @@ def main():
             game_menu()
             game_ready()
             menu_display = False
-            game_snd = pygame.mixer.music.load(os.path.join(SND_DIR, 'neon-runner.ogg'))
+            game_snd = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner.ogg'))
             pygame.mixer.music.play(-1)
         elif task_completed:
             if SCORE > 0:
-                task_done_snd = pygame.mixer.Sound(os.path.join(SND_DIR, 'task-done.ogg'))
+                task_done_snd = pygame.mixer.Sound(path.join(SND_DIR, 'task-done.ogg'))
                 pygame.mixer.Channel(0).play(task_done_snd)
 
             task = random.choice(task_list)
@@ -409,13 +477,13 @@ def main():
             game_end()
 
         if SCORE == 25:
-            game_snd_x25 = pygame.mixer.music.load(os.path.join(SND_DIR, 'neon-runner-x125.ogg'))
+            game_snd_x25 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x125.ogg'))
             pygame.mixer.music.play(-1)
         elif SCORE == 50:
-            game_snd_x50 = pygame.mixer.music.load(os.path.join(SND_DIR, 'neon-runner-x150.ogg'))
+            game_snd_x50 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x150.ogg'))
             pygame.mixer.music.play(-1)
         elif SCORE == 75:
-            game_snd_x75 = pygame.mixer.music.load(os.path.join(SND_DIR, 'neon-runner-x175.ogg'))
+            game_snd_x75 = pygame.mixer.music.load(path.join(SND_DIR, 'neon-runner-x175.ogg'))
             pygame.mixer.music.play(-1)
         elif SCORE == 100:
             game_win()
