@@ -22,7 +22,6 @@ SND_DIR = os.path.join(os.path.dirname(__file__), 'sounds')
 FNT_DIR = os.path.join(os.path.dirname(__file__), 'fonts')
 
 # game constants
-FPS = 60
 SCORE = 0
 
 # monokai color palette
@@ -48,13 +47,17 @@ settings = {
 class Assets:
     """Sets up game assets including fonts, images, and sounds.
     """
+    images = {}
+    sounds = {}
+    fonts = {}
 
     def __init__(self):
-        self.images = {}
-        self.sounds = {}
-        self.fonts = {}
+        pass
+        #self.images = {}
+        #self.sounds = {}
+        #self.fonts = {}
 
-    def load_images(directory, colorkey=(0, 0, 0), extensions=('.png', '.jpg', '.bmp')):
+    def load_images(self, directory, colorkey=(0, 0, 0), extensions=('.png', '.jpg', '.bmp')):
         """Loads all images with the specified file extensions.
 
         Args:
@@ -63,9 +66,9 @@ class Assets:
             extensions (tup): The file extensions accepted by the function.
 
         Returns:
-            images (dict): The loaded images.
+            self.images (dict): The loaded images.
         """
-        images = {}
+        images = Assets.images
         for img in os.listdir(directory):
             name, ext = os.path.splitext(img)
             if ext in extensions:
@@ -78,7 +81,7 @@ class Assets:
                 images[name] = img
         return images
 
-    def load_sounds(directory, extensions=('.ogg', '.mp3', '.wav', '.mdi')):
+    def load_sounds(self, directory, extensions=('.ogg', '.mp3', '.wav', '.mdi')):
         """Loads all sounds with the specified file extensions.
 
         Args:
@@ -86,41 +89,43 @@ class Assets:
             extensions (tup): The file extensions accepted by the function.
 
         Returns:
-            sounds (dict): The loaded images.
+            self.sounds (dict): The loaded images.
         """
-        sounds = {}
+        sounds = Assets.sounds
         for snd in os.listdir(directory):
             name, ext = os.path.splitext(snd)
             if ext in extensions:
                 sounds[name] = os.path.join(directory, snd)
         return sounds
 
-    def load_fonts(directory, extension=('.ttf')):
+    def load_fonts(self, directory, extensions=('.ttf')):
         """Loads all fonts with the specified file extension.
 
         Args:
             directory (str): Path to the directory that contains the files.
-            extension (tup): The file extension accepted by the function.
+            extensions (tup): The file extensions accepted by the function.
 
         Returns:
-            fonts (dict): The loaded fonts.
-        fonts = {}
-        """
-        fonts = {}
+            self.fonts (dict): The loaded fonts.
+        """ 
+        fonts = Assets.fonts
         for fnt in os.listdir(directory):
             name, ext = os.path.splitext(fnt)
             if ext in extensions:
                 fonts[name] = os.path.join(directory, fnt)
         return fonts
 
-        def render_image(self, image, screen, screen_size):
-            """Renders an image to the screen at the size of the window.
+    def render_image(self, image, screen_size, screen):
+        """Renders an image to the screen at the size of the window.
 
-            Args:
-                image (str): Filename of the image.
-            """
-            if image.get_rect().size != screen_size:
-                image.transform.smoothscale(image, screen_size, screen)
+        Args:
+            image (str): Filename of the image.
+        Returns:
+            image (obj): Image that has been scaled to the screen size.
+        """
+        if image.get_size() != screen_size:
+            image = pygame.transform.smoothscale(image, screen_size, screen)
+        return image
 
 class State(object):
     """Parent class for various game states.
@@ -166,7 +171,7 @@ class StateController:
         self.clock = pygame.time.Clock()
         self.states = {
             'loading': Loading(),
-            #'menu': Menu(),
+            'menu': Menu(),
             #'start': Start(),
             #'loss': Loss(),
             #'win': Win(),
@@ -216,7 +221,7 @@ class StateController:
             pygame.display.update()
 
 class Loading(State, Assets):
-    """Loads all assets including fonts, images, and sounds.
+    """Displays loading image. Loads all assets including fonts, images, and sounds.
 
     Attributes:
         next (str): Specifies the name of the next state.
@@ -226,23 +231,60 @@ class Loading(State, Assets):
     def __init__(self):
         State.__init__(self)
         self.__dict__.update(settings)
-        #self.next = 'menu'
+        self.next = 'menu'
+        self.load = True
+        self.start_time = pygame.time.get_ticks()
         self.load_img = pygame.image.load(os.path.join(IMG_DIR, 'loading.png')).convert()
+        print('loading state activated')
+    
+    def load_assets(self):
+        if self.load == True:
+            self.images = self.load_images(IMG_DIR)
+            self.sounds = self.load_sounds(SND_DIR)
+            self.fonts = self.load_fonts(FNT_DIR)
+            self.load = False
 
     def startup(self):
-        Assets.images = Assets.load_images(IMG_DIR)
-        Assets.sounds = Assets.load_sounds(SND_DIR)
-        Assets.fonts = Assets.load_fonts(FNT_DIR)
+        pass
 
     def get_event(self, event):
         pass
 
     def update(self, screen, dt):
-        self.load_img = pygame.transform.smoothscale(self.load_img, self.screen_size, screen)
+        self.load_img = self.render_image(self.load_img, self.screen_size, screen)
         self.draw(screen)
+        time_elapsed = pygame.time.get_ticks() - self.start_time
+        if time_elapsed >= 200:
+            self.load_assets()
+        if self.load == False:
+            self.done = True
 
     def draw(self, screen):
         screen.blit(self.load_img, [0, 0])
+
+class Menu(State, Assets):
+    """Displays main menu. Allows user to start or quit game.
+    """
+
+    def __init__(self):
+        State.__init__(self)
+        self.__dict__.update(settings)
+        #self.next = 'start'
+
+    def startup(self):
+        print('menu state activated')
+        self.menu_img = self.images['stick-bop-menu']
+
+    def get_event(self, event):
+        pass
+
+    def update(self, screen, dt):
+        self.menu_img = self.render_image(self.menu_img, self.screen_size, screen)
+        self.draw(screen)
+
+    def draw(self, screen):
+        screen.blit(self.menu_img, [0, 0])
+        pass
 
 def main():
     """Initialize pygame and run game."""
