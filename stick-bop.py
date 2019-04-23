@@ -246,8 +246,8 @@ class StateController:
             'start': Start(),
             'loss': Loss(),
             'win': Win(),
-            #'drilling': Drilling(),
-            #'mining': Mining(),
+            'drilling': Drilling(),
+            'mining': Mining(),
             'woodchopping': Woodchopping()
         }
     
@@ -375,7 +375,7 @@ class Start(State, Assets):
     def __init__(self):
         State.__init__(self)
         self.__dict__.update(settings)
-        self.next = 'woodchopping'
+        self.next = random.choice(self.task_list)
 
     def startup(self):
         pygame.mixer.music.stop()
@@ -408,10 +408,11 @@ class Woodchopping(State, Assets):
     def __init__(self):
         State.__init__(self)
         self.__dict__.update(settings)
-        #self.next = random.choice(self.task_list)
-        self.next = 'woodchopping'
+        self.next = random.choice(self.task_list)
 
     def startup(self):
+        self.next = random.choice(self.task_list)
+        print(self.next)
         self.count = 0
         self.left_pressed = False
         self.right_pressed = False
@@ -459,6 +460,112 @@ class Woodchopping(State, Assets):
 
     def draw(self, screen):
         screen.blit(self.wood_img, [0, 0])
+
+class Drilling(State, Assets):
+    """Drilling task.
+    """
+
+    def __init__(self):
+        State.__init__(self)
+        self.__dict__.update(settings)
+        self.next = random.choice(self.task_list)
+
+    def startup(self):
+        self.next = random.choice(self.task_list)
+        print(self.next)
+        self.count = 0
+        self.start_time = pygame.time.get_ticks()
+        self.timer_start = self.timer_check(self.score)
+        self.drill_img = self.images['drilling-1']
+
+        game_snd = self.music_check(self.score)
+        pygame.mixer.music.load(self.sounds[game_snd])
+        pygame.mixer.music.play(-1)
+
+    def get_event(self, event):
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            self.drill_img = self.images['drilling-2']
+            self.count += 1
+        elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+            self.drill_img = self.images['drilling-1']
+
+    def update(self, screen, dt):
+        self.drill_img = self.render_image(self.drill_img, self.screen_size, screen)
+        self.draw(screen)
+        time_elapsed = pygame.time.get_ticks() - self.start_time
+        timer_seconds = float(time_elapsed / 1000 % 60)
+        timer = round(self.timer_start - timer_seconds, 1)
+        timer_text = 'Timer: ' + str(timer)
+        score_text = 'Score: ' + str(self.score)
+        self.clear_text(self.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        self.render_text(self.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        self.clear_text(self.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        self.render_text(self.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        self.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
+        self.count_check(self.count, timer)
+
+    def draw(self, screen):
+        screen.blit(self.drill_img, [0, 0])
+
+class Mining(State, Assets):
+    """Mining task.
+    """
+
+    def __init__(self):
+        State.__init__(self)
+        self.__dict__.update(settings)
+        self.next = random.choice(self.task_list)
+
+    def startup(self):
+        self.next = random.choice(self.task_list)
+        print(self.next)
+        self.count = 0
+        self.left_pressed = False
+        self.right_pressed = False
+        self.right_was_pressed = False
+        self.start_time = pygame.time.get_ticks()
+        self.timer_start = self.timer_check(self.score)
+        self.mine_img = self.images['mining-1']
+
+        game_snd = self.music_check(self.score)
+        pygame.mixer.music.load(self.sounds[game_snd])
+        pygame.mixer.music.play(-1)
+
+    def get_event(self, event):
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            self.left_pressed = True
+            if self.right_was_pressed and not self.right_pressed:
+                self.mine_img = self.images['mining-1']
+                self.right_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            self.right_pressed = True
+            if not self.left_pressed:
+                self.mine_img = self.images['mining-2']
+        elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
+            self.left_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+            if self.right_pressed:
+                self.right_pressed = False
+                self.right_was_pressed = True
+
+    def update(self, screen, dt):
+        self.mine_img = self.render_image(self.mine_img, self.screen_size, screen)
+        self.draw(screen)
+        time_elapsed = pygame.time.get_ticks() - self.start_time
+        timer_seconds = float(time_elapsed / 1000 % 60)
+        timer = round(self.timer_start - timer_seconds, 1)
+        timer_text = 'Timer: ' + str(timer)
+        score_text = 'Score: ' + str(self.score)
+        self.clear_text(self.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        self.render_text(self.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        self.clear_text(self.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        self.render_text(self.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        self.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
+        self.count_check(self.count, timer)
+
+    def draw(self, screen):
+        screen.blit(self.mine_img, [0, 0])
 
 class Loss(State, Assets):
     """Loss state.
