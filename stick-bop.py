@@ -177,7 +177,7 @@ class StateController:
         self.states = {
             'loading': Loading(),
             'menu': Menu(),
-            #'start': Start(),
+            'start': Start(),
             #'loss': Loss(),
             #'win': Win(),
             #'drilling': Drilling(),
@@ -269,7 +269,6 @@ class Loading(State, Assets):
             self.done = True
 
     def draw(self, screen):
-        """Displays loading image."""
         screen.blit(self.load_img, [0, 0])
 
 class Menu(State, Assets):
@@ -282,13 +281,18 @@ class Menu(State, Assets):
     def __init__(self):
         State.__init__(self)
         self.__dict__.update(settings)
-        #self.next = 'start'
+        self.next = 'start'
 
     def startup(self):
         self.menu_img = self.images['stick-bop-menu']
+        pygame.mixer.music.load(self.sounds['insert-quarter'])
+        pygame.mixer.music.play(-1)
 
     def get_event(self, event):
-        pass
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            self.quit = True
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+            self.done = True
 
     def update(self, screen, dt):
         self.menu_img = self.render_image(self.menu_img, self.screen_size, screen)
@@ -296,6 +300,38 @@ class Menu(State, Assets):
 
     def draw(self, screen):
         screen.blit(self.menu_img, [0, 0])
+        pass
+
+class Start(State, Assets):
+    """Displays ready, set, GO! message with sound and starts the game.
+    """
+
+    def __init__(self):
+        State.__init__(self)
+        self.__dict__.update(settings)
+        #self.next = 'start'
+
+    def startup(self):
+        pygame.mixer.music.stop()
+        ready_snd = pygame.mixer.Sound(self.sounds['ready-set-go'])
+        ready_snd.play()
+        self.start_time = pygame.time.get_ticks()
+        self.start_img = self.images['ready']
+
+    def get_event(self, event):
+        pass
+
+    def update(self, screen, dt):
+        self.start_img = self.render_image(self.start_img, self.screen_size, screen)
+        self.draw(screen)
+        time_elapsed = pygame.time.get_ticks() - self.start_time
+        if time_elapsed >= 1000:
+            self.start_img = self.images['set']
+        if time_elapsed >= 2000:
+            self.start_img = self.images['go']
+
+    def draw(self, screen):
+        screen.blit(self.start_img, [0, 0])
         pass
 
 def main():
@@ -330,23 +366,6 @@ class ZZZ:
         SCREEN_MAX_HEIGHT = display_info.current_h
         pygame.display.set_mode(SCREEN_SIZE)
         pygame.display.set_caption('Stick Bop!')
-
-    def load_images(self, path_dir):
-        """Load the images and return them in a dictionary."""
-
-        global IMG_DICT
-        global SCREEN_WIDTH
-        global SCREEN_HEIGHT
-
-        screen = pygame.display.get_surface()
-        
-        for filename in os.listdir(path_dir):
-            if filename.endswith('.png'):
-                path = os.path.join(path_dir, filename)
-                key = filename[:-4]
-                IMG_DICT[key] = pygame.image.load(path).convert()
-                #IMG_DICT[key] = pygame.transform.smoothscale(IMG_DICT[key], (SCREEN_WIDTH, SCREEN_HEIGHT), screen)
-        #return IMG_DICT
 
     def draw_text(self, surface, color, text, size, x, y):
         """Draw text in rectangle to surface."""
