@@ -410,10 +410,7 @@ class Woodchopping(State, Assets):
     def __init__(self):
         State.__init__(self)
         self.__dict__.update(settings)
-        self.next = 'loss'
-        #self.next = 'woodchopping'
-        #self.next = 'menu'
-        #self.next = random.choice(self.task_list)
+        self.next = random.choice(self.task_list)
 
     def startup(self):
         self.left_pressed = False
@@ -519,7 +516,7 @@ class Win(State, Assets):
         self.draw(screen)
 
     def draw(self, screen):
-        screen.blit(self.loss_img, [0, 0])
+        screen.blit(self.win_img, [0, 0])
 
 def main():
     """Initialize pygame and run game."""
