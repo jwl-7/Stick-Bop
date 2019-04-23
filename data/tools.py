@@ -15,20 +15,6 @@ images = {}
 sounds = {}
 fonts = {}
 
-'''
-class Assets:
-    """Sets up game assets including fonts, images, and sounds.
-
-    Attributes:
-        images (dict): Holds all images loaded by the game.
-        sounds (dict): Holds all sounds loaded by the game.
-        fonts (dict): Holds all fonts loaded by the game.
-    """
-
-def __init__(self):
-    pass
-'''
-
 def load_images(directory, colorkey=(0, 0, 0), extensions=('.png', '.jpg', '.bmp')):
     """Loads all images with the specified file extensions.
 
