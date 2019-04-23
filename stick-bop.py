@@ -375,9 +375,9 @@ class Start(State, Assets):
     def __init__(self):
         State.__init__(self)
         self.__dict__.update(settings)
-        self.next = random.choice(self.task_list)
 
     def startup(self):
+        self.next = random.choice(self.task_list)
         pygame.mixer.music.stop()
         ready_snd = pygame.mixer.Sound(self.sounds['ready-set-go'])
         ready_snd.play()
@@ -408,7 +408,6 @@ class Woodchopping(State, Assets):
     def __init__(self):
         State.__init__(self)
         self.__dict__.update(settings)
-        self.next = random.choice(self.task_list)
 
     def startup(self):
         self.next = random.choice(self.task_list)
@@ -468,7 +467,6 @@ class Drilling(State, Assets):
     def __init__(self):
         State.__init__(self)
         self.__dict__.update(settings)
-        self.next = random.choice(self.task_list)
 
     def startup(self):
         self.next = random.choice(self.task_list)
@@ -514,7 +512,6 @@ class Mining(State, Assets):
     def __init__(self):
         State.__init__(self)
         self.__dict__.update(settings)
-        self.next = random.choice(self.task_list)
 
     def startup(self):
         self.next = random.choice(self.task_list)
