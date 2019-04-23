@@ -163,12 +163,48 @@ class State(object):
     """
     score = 0
     count = 0
+    task_list = ['drilling', 'mining', 'woodchopping']
 
     def __init__(self):
         self.done = False
         self.quit = False
         self.next = None
         self.current = None
+
+    def music_check(self, score):
+        music_track = 'neon-runner'
+        if score == 25:
+            music_track = 'neon-runner-x125'
+        elif score == 50:
+            music_track = 'neon-runner-x150'
+        elif score == 75:
+            music_track = 'neon-runner-x175'
+        elif score == 100:
+            self.next = 'win'
+            self.done = True
+        return music_track
+
+    def count_check(self, count, timer):
+        if count >= 5 and timer > 0:
+            State.score += 1
+            task_done_snd = pygame.mixer.Sound(self.sounds['task-done'])
+            pygame.mixer.Channel(0).play(task_done_snd)
+            self.done = True
+            print('task_complete')
+        elif timer <= 0:
+            self.done = True
+
+    def timer_check(self, score):
+        if score >= 0:
+            timer_start = 5
+        elif score >= 25:
+            timer_start = 4.5
+        elif score >= 50:
+            timer_start = 4
+        elif score >= 75:
+            timer_start = 3.5
+        return timer_start
+
 
 class StateController:
     """Controls and sets up the game settings, game states, and main game loop.
@@ -200,7 +236,7 @@ class StateController:
             'loading': Loading(),
             'menu': Menu(),
             'start': Start(),
-            #'loss': Loss(),
+            'loss': Loss(),
             #'win': Win(),
             #'drilling': Drilling(),
             #'mining': Mining(),
@@ -364,14 +400,22 @@ class Woodchopping(State, Assets):
     def __init__(self):
         State.__init__(self)
         self.__dict__.update(settings)
-        #self.next = 'start'
+        self.next = 'loss'
+        #self.next = 'woodchopping'
+        #self.next = 'menu'
+        #self.next = random.choice(self.task_list)
 
     def startup(self):
         self.left_pressed = False
         self.right_pressed = False
         self.right_was_pressed = False
         self.start_time = pygame.time.get_ticks()
+        self.timer_start = self.timer_check(self.score)
         self.wood_img = self.images['woodchopping-1']
+
+        game_snd = self.music_check(self.score)
+        pygame.mixer.music.load(self.sounds[game_snd])
+        pygame.mixer.music.play(-1)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
@@ -392,21 +436,49 @@ class Woodchopping(State, Assets):
                 self.right_was_pressed = True
 
     def update(self, screen, dt):
-        timer_start = 5
         self.wood_img = self.render_image(self.wood_img, self.screen_size, screen)
         self.draw(screen)
         time_elapsed = pygame.time.get_ticks() - self.start_time
         timer_seconds = float(time_elapsed / 1000 % 60)
-        timer = round(timer_start - timer_seconds, 1)
+        timer = round(self.timer_start - timer_seconds, 1)
         timer_text = 'Timer: ' + str(timer)
         score_text = 'Score: ' + str(self.count)
         self.clear_text(self.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
         self.render_text(self.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
         self.clear_text(self.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
         self.render_text(self.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        self.count_check(self.count, timer)
 
     def draw(self, screen):
         screen.blit(self.wood_img, [0, 0])
+
+class Loss(State, Assets):
+    """Loss task.
+    """
+
+    def __init__(self):
+        State.__init__(self)
+        self.__dict__.update(settings)
+        self.next = 'menu'
+
+    def startup(self):
+        pygame.mixer.music.stop()
+        self.loss_img = self.images['game-over']
+        pygame.mixer.music.load(self.sounds['piano-lofi-rain'])
+        pygame.mixer.music.play(-1)
+
+    def get_event(self, event):
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            self.quit = True
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+            self.done = True
+
+    def update(self, screen, dt):
+        self.loss_img = self.render_image(self.loss_img, self.screen_size, screen)
+        self.draw(screen)
+
+    def draw(self, screen):
+        screen.blit(self.loss_img, [0, 0])
 
 def main():
     """Initialize pygame and run game."""
