@@ -379,6 +379,7 @@ class Woodchopping(State, Assets):
             if self.right_was_pressed and not self.right_pressed:
                 self.wood_img = self.images['woodchopping-1']
                 self.right_was_pressed = False
+                self.count += 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             self.right_pressed = True
             if not self.left_pressed:
@@ -398,8 +399,11 @@ class Woodchopping(State, Assets):
         timer_seconds = float(time_elapsed / 1000 % 60)
         timer = round(timer_start - timer_seconds, 1)
         timer_text = 'Timer: ' + str(timer)
+        score_text = 'Score: ' + str(self.count)
         self.clear_text(self.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
         self.render_text(self.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        self.clear_text(self.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        self.render_text(self.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
 
     def draw(self, screen):
         screen.blit(self.wood_img, [0, 0])
