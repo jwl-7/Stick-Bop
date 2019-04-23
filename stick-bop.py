@@ -138,8 +138,6 @@ class Assets:
         text_surface = text_font.render(text, True, color)
         text_rect = text_surface.get_rect()
         text_rect.midtop = (x, y)
-        #text = (text_surface, text_rect)
-        #return text
         screen.blit(text_surface, text_rect)
 
     def clear_text(self, font, color, text, size, x, y, screen):
@@ -148,9 +146,21 @@ class Assets:
         text_surface = text_font.render(text, True, color)
         text_rect = text_surface.get_rect()
         text_rect.midtop = (x, y)
-        #clear_text = (color, text_rect)
-        #return clear_text
         screen.fill(color, text_rect)
+
+    def draw_progress_bar(self, x, y, progress, screen):
+        """Draw a colored progress bar with outline to surface."""
+        BAR_LENGTH = 40
+        BAR_HEIGHT = 400
+
+        progress = max(progress, 0)
+        fill = (progress / 100) * BAR_HEIGHT
+        fill_rect = pygame.Rect(x, y, BAR_LENGTH, fill)
+        outline_rect = pygame.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
+
+        pygame.draw.rect(screen, GREEN, outline_rect)
+        pygame.draw.rect(screen, WHITE, fill_rect)
+        pygame.draw.rect(screen, BLACK, outline_rect, 4)
 
 class State(object):
     """Parent class for various game states.
@@ -447,6 +457,7 @@ class Woodchopping(State, Assets):
         self.render_text(self.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
         self.clear_text(self.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
         self.render_text(self.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        self.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
         self.count_check(self.count, timer)
 
     def draw(self, screen):
