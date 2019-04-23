@@ -182,7 +182,7 @@ class StateController:
             #'win': Win(),
             #'drilling': Drilling(),
             #'mining': Mining(),
-            #'woodchopping': Woodchopping()
+            'woodchopping': Woodchopping()
         }
     
     def setup_states(self, start_state):
@@ -309,7 +309,7 @@ class Start(State, Assets):
     def __init__(self):
         State.__init__(self)
         self.__dict__.update(settings)
-        #self.next = 'start'
+        self.next = 'woodchopping'
 
     def startup(self):
         pygame.mixer.music.stop()
@@ -329,9 +329,52 @@ class Start(State, Assets):
             self.start_img = self.images['set']
         if time_elapsed >= 2000:
             self.start_img = self.images['go']
+        if time_elapsed >= 3000:
+            self.done = True
 
     def draw(self, screen):
         screen.blit(self.start_img, [0, 0])
+
+class Woodchopping(State, Assets):
+    """Woodchopping task.
+    """
+
+    def __init__(self):
+        State.__init__(self)
+        self.__dict__.update(settings)
+        #self.next = 'start'
+
+    def startup(self):
+        self.left_pressed = False
+        self.right_pressed = False
+        self.right_was_pressed = False
+        self.start_time = pygame.time.get_ticks()
+        self.wood_img = self.images['woodchopping-1']
+
+    def get_event(self, event):
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            self.left_pressed = True
+            if self.right_was_pressed and not self.right_pressed:
+                self.wood_img = self.images['woodchopping-1']
+                self.right_was_pressed = False
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            self.right_pressed = True
+            if not self.left_pressed:
+                self.wood_img = self.images['woodchopping-2']
+        elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
+            self.left_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+            if self.right_pressed:
+                self.right_pressed = False
+                self.right_was_pressed = True
+
+    def update(self, screen, dt):
+        self.wood_img = self.render_image(self.wood_img, self.screen_size, screen)
+        self.draw(screen)
+        time_elapsed = pygame.time.get_ticks() - self.start_time
+
+    def draw(self, screen):
+        screen.blit(self.wood_img, [0, 0])
         pass
 
 def main():
