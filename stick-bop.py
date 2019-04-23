@@ -12,14 +12,16 @@ import random
 import sys
 import os
 
+from data import tools
+
 # for use with PyInstaller
 if getattr(sys, 'frozen', False):
     os.chdir(sys._MEIPASS)
 
 # asset folder paths
-IMG_DIR = os.path.join(os.path.dirname(__file__), 'images')
-SND_DIR = os.path.join(os.path.dirname(__file__), 'sounds')
-FNT_DIR = os.path.join(os.path.dirname(__file__), 'fonts')
+IMG_DIR = os.path.join(os.path.dirname(__file__), 'assets', 'images')
+SND_DIR = os.path.join(os.path.dirname(__file__), 'assets', 'sounds')
+FNT_DIR = os.path.join(os.path.dirname(__file__), 'assets', 'fonts')
 
 # monokai color palette
 WHITE = (253, 250, 243)
@@ -40,124 +42,6 @@ settings = {
     'fps': 60,
     'title': 'Stick Bop!'  
 }
-
-class Assets:
-    """Sets up game assets including fonts, images, and sounds.
-
-    Attributes:
-        images (dict): Holds all images loaded by the game.
-        sounds (dict): Holds all sounds loaded by the game.
-        fonts (dict): Holds all fonts loaded by the game.
-    """
-
-    images = {}
-    sounds = {}
-    fonts = {}
-
-    def __init__(self):
-        pass
-
-    def load_images(self, directory, colorkey=(0, 0, 0), extensions=('.png', '.jpg', '.bmp')):
-        """Loads all images with the specified file extensions.
-
-        Args:
-            directory (str): Path to the directory that contains the files.
-            colorkey  (tup): Used to set colorkey if no alpha transparency is found in image.
-            extensions (tup): The file extensions accepted by the function.
-
-        Returns:
-            images (dict): The loaded images.
-        """
-        images = Assets.images
-        for img in os.listdir(directory):
-            name, ext = os.path.splitext(img)
-            if ext in extensions:
-                img = pygame.image.load(os.path.join(directory, img))
-                if img.get_alpha():
-                    img = img.convert_alpha()
-                else:
-                    img = img.convert()
-                    img.set_colorkey(colorkey)
-                images[name] = img
-        return images
-
-    def load_sounds(self, directory, extensions=('.ogg', '.mp3', '.wav', '.mdi')):
-        """Loads all sounds with the specified file extensions.
-
-        Args:
-            directory (str): Path to the directory that contains the files.
-            extensions (tup): The file extensions accepted by the function.
-
-        Returns:
-            sounds (dict): The loaded images.
-        """
-        sounds = Assets.sounds
-        for snd in os.listdir(directory):
-            name, ext = os.path.splitext(snd)
-            if ext in extensions:
-                sounds[name] = os.path.join(directory, snd)
-        return sounds
-
-    def load_fonts(self, directory, extensions=('.ttf')):
-        """Loads all fonts with the specified file extension.
-
-        Args:
-            directory (str): Path to the directory that contains the files.
-            extensions (tup): The file extensions accepted by the function.
-
-        Returns:
-            fonts (dict): The loaded fonts.
-        """ 
-        fonts = Assets.fonts
-        for fnt in os.listdir(directory):
-            name, ext = os.path.splitext(fnt)
-            if ext in extensions:
-                fonts[name] = os.path.join(directory, fnt)
-        return fonts
-
-    def render_image(self, image, screen_size, screen):
-        """Renders an image to the screen at the size of the window.
-
-        Args:
-            image (obj): Image that has been loaded by the game.
-            screen_size (tup): The width and height of the screen.
-            screen (obj): The surface to render the image on.
-        Returns:
-            image (obj): Image that has been scaled to the screen size.
-        """
-        if image.get_size() != screen_size:
-            image = pygame.transform.smoothscale(image, screen_size, screen)
-        return image
-
-    def render_text(self, font, color, text, size, x, y, screen):
-        """Draws text in rectangle to surface."""
-        text_font = pygame.font.Font(font, size)
-        text_surface = text_font.render(text, True, color)
-        text_rect = text_surface.get_rect()
-        text_rect.midtop = (x, y)
-        screen.blit(text_surface, text_rect)
-
-    def clear_text(self, font, color, text, size, x, y, screen):
-        """Covers text with solid rectangle to surface."""
-        text_font = pygame.font.Font(font, size)
-        text_surface = text_font.render(text, True, color)
-        text_rect = text_surface.get_rect()
-        text_rect.midtop = (x, y)
-        screen.fill(color, text_rect)
-
-    def draw_progress_bar(self, x, y, progress, screen):
-        """Draw a colored progress bar with outline to surface."""
-        BAR_LENGTH = 40
-        BAR_HEIGHT = 400
-
-        progress = max(progress, 0)
-        fill = (progress / 100) * BAR_HEIGHT
-        fill_rect = pygame.Rect(x, y, BAR_LENGTH, fill)
-        outline_rect = pygame.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
-
-        pygame.draw.rect(screen, GREEN, outline_rect)
-        pygame.draw.rect(screen, WHITE, fill_rect)
-        pygame.draw.rect(screen, BLACK, outline_rect, 4)
 
 class State(object):
     """Parent class for various game states.
@@ -200,7 +84,7 @@ class State(object):
     def count_check(self, count, timer):
         if count >= 5 and timer > 0:
             State.score += 1
-            task_done_snd = pygame.mixer.Sound(self.sounds['task-done'])
+            task_done_snd = pygame.mixer.Sound(tools.sounds['task-done'])
             pygame.mixer.Channel(0).play(task_done_snd)
             self.done = True
             print('task_complete')
@@ -298,7 +182,7 @@ class StateController:
             self.update(delta_time)
             pygame.display.update()
 
-class Loading(State, Assets):
+class Loading(State):
     """Displays loading image. Loads all assets including fonts, images, and sounds.
 
     Attributes:
@@ -314,14 +198,16 @@ class Loading(State, Assets):
         self.next = 'menu'
         self.load = True
         self.start_time = pygame.time.get_ticks()
+        files_path = [os.path.abspath(x) for x in os.listdir()]
+        print(os.path.join(IMG_DIR, 'loading.png'))
         self.load_img = pygame.image.load(os.path.join(IMG_DIR, 'loading.png')).convert()
     
     def load_assets(self):
         """Loads all assets including, fonts, images, and sounds into Assets dictionaries."""
         if self.load == True:
-            self.images = self.load_images(IMG_DIR)
-            self.sounds = self.load_sounds(SND_DIR)
-            self.fonts = self.load_fonts(FNT_DIR)
+            tools.images = tools.load_images(IMG_DIR)
+            tools.sounds = tools.load_sounds(SND_DIR)
+            tools.fonts = tools.load_fonts(FNT_DIR)
             self.load = False
 
     def startup(self):
@@ -332,7 +218,7 @@ class Loading(State, Assets):
 
     def update(self, screen, dt):
         """Renders loading image and quits state after assets are done loading."""
-        self.load_img = self.render_image(self.load_img, self.screen_size, screen)
+        self.load_img = tools.render_image(self.load_img, self.screen_size, screen)
         self.draw(screen)
         time_elapsed = pygame.time.get_ticks() - self.start_time
         if time_elapsed >= 200:
@@ -343,7 +229,7 @@ class Loading(State, Assets):
     def draw(self, screen):
         screen.blit(self.load_img, [0, 0])
 
-class Menu(State, Assets):
+class Menu(State):
     """Displays main menu. Allows user to start or quit game.
 
     Attributes:
@@ -356,8 +242,8 @@ class Menu(State, Assets):
         self.next = 'start'
 
     def startup(self):
-        self.menu_img = self.images['stick-bop-menu']
-        pygame.mixer.music.load(self.sounds['insert-quarter'])
+        self.menu_img = tools.images['stick-bop-menu']
+        pygame.mixer.music.load(tools.sounds['insert-quarter'])
         pygame.mixer.music.play(-1)
 
     def get_event(self, event):
@@ -367,14 +253,14 @@ class Menu(State, Assets):
             self.done = True
 
     def update(self, screen, dt):
-        self.menu_img = self.render_image(self.menu_img, self.screen_size, screen)
+        self.menu_img = tools.render_image(self.menu_img, self.screen_size, screen)
         self.draw(screen)
 
     def draw(self, screen):
         screen.blit(self.menu_img, [0, 0])
         pass
 
-class Start(State, Assets):
+class Start(State):
     """Displays ready, set, GO! message with sound and starts the game.
     """
 
@@ -385,29 +271,29 @@ class Start(State, Assets):
     def startup(self):
         self.next = random.choice(self.task_list)
         pygame.mixer.music.stop()
-        ready_snd = pygame.mixer.Sound(self.sounds['ready-set-go'])
+        ready_snd = pygame.mixer.Sound(tools.sounds['ready-set-go'])
         ready_snd.play()
         self.start_time = pygame.time.get_ticks()
-        self.start_img = self.images['ready']
+        self.start_img = tools.images['ready']
 
     def get_event(self, event):
         pass
 
     def update(self, screen, dt):
-        self.start_img = self.render_image(self.start_img, self.screen_size, screen)
+        self.start_img = tools.render_image(self.start_img, self.screen_size, screen)
         self.draw(screen)
         time_elapsed = pygame.time.get_ticks() - self.start_time
         if time_elapsed >= 1000:
-            self.start_img = self.images['set']
+            self.start_img = tools.images['set']
         if time_elapsed >= 2000:
-            self.start_img = self.images['go']
+            self.start_img = tools.images['go']
         if time_elapsed >= 3000:
             self.done = True
 
     def draw(self, screen):
         screen.blit(self.start_img, [0, 0])
 
-class Woodchopping(State, Assets):
+class Woodchopping(State):
     """Woodchopping task.
     """
 
@@ -424,21 +310,21 @@ class Woodchopping(State, Assets):
         self.right_was_pressed = False
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
-        self.wood_img = self.images['woodchopping-1']
+        self.wood_img = tools.images['woodchopping-1']
         game_snd = self.track_check(self.score)
-        self.music_check(self.score, self.sounds[game_snd])
+        self.music_check(self.score, tools.sounds[game_snd])
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             self.left_pressed = True
             if self.right_was_pressed and not self.right_pressed:
-                self.wood_img = self.images['woodchopping-1']
+                self.wood_img = tools.images['woodchopping-1']
                 self.right_was_pressed = False
                 self.count += 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             self.right_pressed = True
             if not self.left_pressed:
-                self.wood_img = self.images['woodchopping-2']
+                self.wood_img = tools.images['woodchopping-2']
         elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
             self.left_pressed = False
         elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
@@ -447,24 +333,24 @@ class Woodchopping(State, Assets):
                 self.right_was_pressed = True
 
     def update(self, screen, dt):
-        self.wood_img = self.render_image(self.wood_img, self.screen_size, screen)
+        self.wood_img = tools.render_image(self.wood_img, self.screen_size, screen)
         self.draw(screen)
         time_elapsed = pygame.time.get_ticks() - self.start_time
         timer_seconds = float(time_elapsed / 1000 % 60)
         timer = round(self.timer_start - timer_seconds, 1)
         timer_text = 'Timer: ' + str(timer)
         score_text = 'Score: ' + str(self.score)
-        self.clear_text(self.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
-        self.render_text(self.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
-        self.clear_text(self.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
-        self.render_text(self.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
-        self.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        tools.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
         self.count_check(self.count, timer)
 
     def draw(self, screen):
         screen.blit(self.wood_img, [0, 0])
 
-class Drilling(State, Assets):
+class Drilling(State):
     """Drilling task.
     """
 
@@ -478,36 +364,36 @@ class Drilling(State, Assets):
         self.count = 0
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
-        self.drill_img = self.images['drilling-1']
+        self.drill_img = tools.images['drilling-1']
         game_snd = self.track_check(self.score)
-        self.music_check(self.score, self.sounds[game_snd])
+        self.music_check(self.score, tools.sounds[game_snd])
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            self.drill_img = self.images['drilling-2']
+            self.drill_img = tools.images['drilling-2']
             self.count += 1
         elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
-            self.drill_img = self.images['drilling-1']
+            self.drill_img = tools.images['drilling-1']
 
     def update(self, screen, dt):
-        self.drill_img = self.render_image(self.drill_img, self.screen_size, screen)
+        self.drill_img = tools.render_image(self.drill_img, self.screen_size, screen)
         self.draw(screen)
         time_elapsed = pygame.time.get_ticks() - self.start_time
         timer_seconds = float(time_elapsed / 1000 % 60)
         timer = round(self.timer_start - timer_seconds, 1)
         timer_text = 'Timer: ' + str(timer)
         score_text = 'Score: ' + str(self.score)
-        self.clear_text(self.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
-        self.render_text(self.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
-        self.clear_text(self.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
-        self.render_text(self.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
-        self.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        tools.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
         self.count_check(self.count, timer)
 
     def draw(self, screen):
         screen.blit(self.drill_img, [0, 0])
 
-class Mining(State, Assets):
+class Mining(State):
     """Mining task.
     """
 
@@ -524,21 +410,21 @@ class Mining(State, Assets):
         self.right_was_pressed = False
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
-        self.mine_img = self.images['mining-1']
+        self.mine_img = tools.images['mining-1']
         game_snd = self.track_check(self.score)
-        self.music_check(self.score, self.sounds[game_snd])
+        self.music_check(self.score, tools.sounds[game_snd])
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             self.left_pressed = True
             if self.right_was_pressed and not self.right_pressed:
-                self.mine_img = self.images['mining-1']
+                self.mine_img = tools.images['mining-1']
                 self.right_was_pressed = False
                 self.count += 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             self.right_pressed = True
             if not self.left_pressed:
-                self.mine_img = self.images['mining-2']
+                self.mine_img = tools.images['mining-2']
         elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
             self.left_pressed = False
         elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
@@ -547,24 +433,24 @@ class Mining(State, Assets):
                 self.right_was_pressed = True
 
     def update(self, screen, dt):
-        self.mine_img = self.render_image(self.mine_img, self.screen_size, screen)
+        self.mine_img = tools.render_image(self.mine_img, self.screen_size, screen)
         self.draw(screen)
         time_elapsed = pygame.time.get_ticks() - self.start_time
         timer_seconds = float(time_elapsed / 1000 % 60)
         timer = round(self.timer_start - timer_seconds, 1)
         timer_text = 'Timer: ' + str(timer)
         score_text = 'Score: ' + str(self.score)
-        self.clear_text(self.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
-        self.render_text(self.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
-        self.clear_text(self.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
-        self.render_text(self.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
-        self.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        tools.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
         self.count_check(self.count, timer)
 
     def draw(self, screen):
         screen.blit(self.mine_img, [0, 0])
 
-class Loss(State, Assets):
+class Loss(State):
     """Loss state.
     """
 
@@ -574,9 +460,9 @@ class Loss(State, Assets):
         self.next = 'menu'
 
     def startup(self):
-        self.loss_img = self.images['game-over']
+        self.loss_img = tools.images['game-over']
         pygame.mixer.music.stop()
-        pygame.mixer.music.load(self.sounds['piano-lofi-rain'])
+        pygame.mixer.music.load(tools.sounds['piano-lofi-rain'])
         pygame.mixer.music.play(-1)
         self.score_text = 'Final Score: ' + str(self.score)
 
@@ -587,14 +473,14 @@ class Loss(State, Assets):
             self.done = True
 
     def update(self, screen, dt):
-        self.loss_img = self.render_image(self.loss_img, self.screen_size, screen)
-        self.render_text(self.fonts['OpenSans-Regular'], BLACK, self.score_text, 100, self.screen_width/2, self.screen_height/2.5, screen)
+        self.loss_img = tools.render_image(self.loss_img, self.screen_size, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, self.score_text, 100, self.screen_width/2, self.screen_height/2.5, screen)
         self.draw(screen)
 
     def draw(self, screen):
         screen.blit(self.loss_img, [0, 0])
 
-class Win(State, Assets):
+class Win(State):
     """Win state.
     """
 
@@ -604,9 +490,9 @@ class Win(State, Assets):
         self.next = 'menu'
 
     def startup(self):
-        self.win_img = self.images['winner']
+        self.win_img = tools.images['winner']
         pygame.mixer.music.stop()
-        pygame.mixer.music.load(self.sounds['future-grid'])
+        pygame.mixer.music.load(tools.sounds['future-grid'])
         pygame.mixer.music.play(-1)
 
     def get_event(self, event):
@@ -616,7 +502,7 @@ class Win(State, Assets):
             self.done = True
 
     def update(self, screen, dt):
-        self.win_img = self.render_image(self.win_img, self.screen_size, screen)
+        self.win_img = tools.render_image(self.win_img, self.screen_size, screen)
         self.draw(screen)
 
     def draw(self, screen):
