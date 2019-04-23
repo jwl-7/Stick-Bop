@@ -237,7 +237,7 @@ class StateController:
             'menu': Menu(),
             'start': Start(),
             'loss': Loss(),
-            #'win': Win(),
+            'win': Win(),
             #'drilling': Drilling(),
             #'mining': Mining(),
             'woodchopping': Woodchopping()
@@ -453,7 +453,7 @@ class Woodchopping(State, Assets):
         screen.blit(self.wood_img, [0, 0])
 
 class Loss(State, Assets):
-    """Loss task.
+    """Loss state.
     """
 
     def __init__(self):
@@ -462,8 +462,8 @@ class Loss(State, Assets):
         self.next = 'menu'
 
     def startup(self):
-        pygame.mixer.music.stop()
         self.loss_img = self.images['game-over']
+        pygame.mixer.music.stop()
         pygame.mixer.music.load(self.sounds['piano-lofi-rain'])
         pygame.mixer.music.play(-1)
         self.score_text = 'Final Score: ' + str(self.score)
@@ -477,6 +477,34 @@ class Loss(State, Assets):
     def update(self, screen, dt):
         self.loss_img = self.render_image(self.loss_img, self.screen_size, screen)
         self.render_text(self.fonts['OpenSans-Regular'], BLACK, self.score_text, 100, self.screen_width/2, self.screen_height/2.5, screen)
+        self.draw(screen)
+
+    def draw(self, screen):
+        screen.blit(self.loss_img, [0, 0])
+
+class Win(State, Assets):
+    """Win state.
+    """
+
+    def __init__(self):
+        State.__init__(self)
+        self.__dict__.update(settings)
+        self.next = 'menu'
+
+    def startup(self):
+        self.win_img = self.images['winner']
+        pygame.mixer.music.stop()
+        pygame.mixer.music.load(self.sounds['future-grid'])
+        pygame.mixer.music.play(-1)
+
+    def get_event(self, event):
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            self.quit = True
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+            self.done = True
+
+    def update(self, screen, dt):
+        self.win_img = self.render_image(self.win_img, self.screen_size, screen)
         self.draw(screen)
 
     def draw(self, screen):
