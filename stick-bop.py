@@ -21,9 +21,6 @@ IMG_DIR = os.path.join(os.path.dirname(__file__), 'images')
 SND_DIR = os.path.join(os.path.dirname(__file__), 'sounds')
 FNT_DIR = os.path.join(os.path.dirname(__file__), 'fonts')
 
-# game constants
-SCORE = 0
-
 # monokai color palette
 WHITE = (253, 250, 243)
 BLACK = (45, 43, 46)
