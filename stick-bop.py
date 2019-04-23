@@ -408,9 +408,11 @@ class Woodchopping(State, Assets):
     def __init__(self):
         State.__init__(self)
         self.__dict__.update(settings)
-        self.next = random.choice(self.task_list)
+        #self.next = random.choice(self.task_list)
+        self.next = 'woodchopping'
 
     def startup(self):
+        self.count = 0
         self.left_pressed = False
         self.right_pressed = False
         self.right_was_pressed = False
