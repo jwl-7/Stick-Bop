@@ -11,67 +11,6 @@ settings = {
     'title': 'Stick Bop!'  
 }
 
-class State(object):
-    """Parent class for various game states.
-
-    Attributes:
-        done (bool): State completion status.
-        quit (bool): State exit status.
-        next (none): Holds the value of the next state.
-        current (none): Holds the value of the current state.
-    """
-    score = 0
-    count = 0
-    task_list = ['drilling', 'mining', 'woodchopping']
-
-    def __init__(self):
-        self.done = False
-        self.quit = False
-        self.next = None
-        self.current = None
-
-    def track_check(self, score):
-        music_track = 'neon-runner'
-        if score == 25:
-            music_track = 'neon-runner-x125'
-        elif score == 50:
-            music_track = 'neon-runner-x150'
-        elif score == 75:
-            music_track = 'neon-runner-x175'
-        elif score == 100:
-            self.next = 'win'
-            self.done = True
-        return music_track
-
-    def music_check(self, score, track):
-        new_music_scores = [0, 25, 50, 75]
-        if score in new_music_scores:
-            pygame.mixer.music.load(track)
-            pygame.mixer.music.play(-1)
-
-    def count_check(self, count, timer):
-        if count >= 5 and timer > 0:
-            State.score += 1
-            task_done_snd = pygame.mixer.Sound(tools.sounds['task-done'])
-            pygame.mixer.Channel(0).play(task_done_snd)
-            self.done = True
-            print('task_complete')
-        elif timer <= 0:
-            self.next = 'loss'
-            self.done = True
-
-    def timer_check(self, score):
-        if score >= 0:
-            timer_start = 5
-        elif score >= 25:
-            timer_start = 4.5
-        elif score >= 50:
-            timer_start = 4
-        elif score >= 75:
-            timer_start = 3.5
-        return timer_start
-
-
 class StateController:
     """Controls and sets up the game settings, game states, and main game loop.
     
@@ -141,3 +80,63 @@ class StateController:
             self.event_loop()
             self.update(delta_time)
             pygame.display.update()
+
+class State(object):
+    """Parent class for various game states.
+
+    Attributes:
+        done (bool): State completion status.
+        quit (bool): State exit status.
+        next (none): Holds the value of the next state.
+        current (none): Holds the value of the current state.
+    """
+    score = 0
+    count = 0
+    task_list = ['drilling', 'mining', 'woodchopping']
+
+    def __init__(self):
+        self.done = False
+        self.quit = False
+        self.next = None
+        self.current = None
+
+    def track_check(self, score):
+        music_track = 'neon-runner'
+        if score == 25:
+            music_track = 'neon-runner-x125'
+        elif score == 50:
+            music_track = 'neon-runner-x150'
+        elif score == 75:
+            music_track = 'neon-runner-x175'
+        elif score == 100:
+            self.next = 'win'
+            self.done = True
+        return music_track
+
+    def music_check(self, score, track):
+        new_music_scores = [0, 25, 50, 75]
+        if score in new_music_scores:
+            pygame.mixer.music.load(track)
+            pygame.mixer.music.play(-1)
+
+    def count_check(self, count, timer):
+        if count >= 5 and timer > 0:
+            State.score += 1
+            task_done_snd = pygame.mixer.Sound(tools.sounds['task-done'])
+            pygame.mixer.Channel(0).play(task_done_snd)
+            self.done = True
+            print('task_complete')
+        elif timer <= 0:
+            self.next = 'loss'
+            self.done = True
+
+    def timer_check(self, score):
+        if score >= 0:
+            timer_start = 5
+        elif score >= 25:
+            timer_start = 4.5
+        elif score >= 50:
+            timer_start = 4
+        elif score >= 75:
+            timer_start = 3.5
+        return timer_start
