@@ -178,7 +178,7 @@ class State(object):
         self.next = None
         self.current = None
 
-    def score_check(self, score):
+    def track_check(self, score):
         music_track = 'neon-runner'
         if score == 25:
             music_track = 'neon-runner-x125'
@@ -425,7 +425,7 @@ class Woodchopping(State, Assets):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.wood_img = self.images['woodchopping-1']
-        game_snd = self.score_check(self.score)
+        game_snd = self.track_check(self.score)
         self.music_check(self.score, self.sounds[game_snd])
 
     def get_event(self, event):
@@ -479,7 +479,7 @@ class Drilling(State, Assets):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.drill_img = self.images['drilling-1']
-        game_snd = self.score_check(self.score)
+        game_snd = self.track_check(self.score)
         self.music_check(self.score, self.sounds[game_snd])
 
     def get_event(self, event):
@@ -525,7 +525,7 @@ class Mining(State, Assets):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.mine_img = self.images['mining-1']
-        game_snd = self.score_check(self.score)
+        game_snd = self.track_check(self.score)
         self.music_check(self.score, self.sounds[game_snd])
 
     def get_event(self, event):
