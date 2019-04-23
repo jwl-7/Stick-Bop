@@ -466,6 +466,7 @@ class Loss(State, Assets):
         self.loss_img = self.images['game-over']
         pygame.mixer.music.load(self.sounds['piano-lofi-rain'])
         pygame.mixer.music.play(-1)
+        self.score_text = 'Final Score: ' + str(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -475,6 +476,7 @@ class Loss(State, Assets):
 
     def update(self, screen, dt):
         self.loss_img = self.render_image(self.loss_img, self.screen_size, screen)
+        self.render_text(self.fonts['OpenSans-Regular'], BLACK, self.score_text, 100, self.screen_width/2, self.screen_height/2.5, screen)
         self.draw(screen)
 
     def draw(self, screen):
