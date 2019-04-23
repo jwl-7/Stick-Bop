@@ -199,6 +199,7 @@ class State(object):
             self.done = True
             print('task_complete')
         elif timer <= 0:
+            self.next = 'loss'
             self.done = True
 
     def timer_check(self, score):
@@ -446,7 +447,7 @@ class Woodchopping(State, Assets):
         timer_seconds = float(time_elapsed / 1000 % 60)
         timer = round(self.timer_start - timer_seconds, 1)
         timer_text = 'Timer: ' + str(timer)
-        score_text = 'Score: ' + str(self.count)
+        score_text = 'Score: ' + str(self.score)
         self.clear_text(self.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
         self.render_text(self.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
         self.clear_text(self.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
