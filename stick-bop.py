@@ -46,16 +46,19 @@ settings = {
 
 class Assets:
     """Sets up game assets including fonts, images, and sounds.
+
+    Attributes:
+        images (dict): Holds all images loaded by the game.
+        sounds (dict): Holds all sounds loaded by the game.
+        fonts (dict): Holds all fonts loaded by the game.
     """
+
     images = {}
     sounds = {}
     fonts = {}
 
     def __init__(self):
         pass
-        #self.images = {}
-        #self.sounds = {}
-        #self.fonts = {}
 
     def load_images(self, directory, colorkey=(0, 0, 0), extensions=('.png', '.jpg', '.bmp')):
         """Loads all images with the specified file extensions.
@@ -66,7 +69,7 @@ class Assets:
             extensions (tup): The file extensions accepted by the function.
 
         Returns:
-            self.images (dict): The loaded images.
+            images (dict): The loaded images.
         """
         images = Assets.images
         for img in os.listdir(directory):
@@ -89,7 +92,7 @@ class Assets:
             extensions (tup): The file extensions accepted by the function.
 
         Returns:
-            self.sounds (dict): The loaded images.
+            sounds (dict): The loaded images.
         """
         sounds = Assets.sounds
         for snd in os.listdir(directory):
@@ -106,7 +109,7 @@ class Assets:
             extensions (tup): The file extensions accepted by the function.
 
         Returns:
-            self.fonts (dict): The loaded fonts.
+            fonts (dict): The loaded fonts.
         """ 
         fonts = Assets.fonts
         for fnt in os.listdir(directory):
@@ -119,7 +122,9 @@ class Assets:
         """Renders an image to the screen at the size of the window.
 
         Args:
-            image (str): Filename of the image.
+            image (obj): Image that has been loaded by the game.
+            screen_size (tup): The width and height of the screen.
+            screen (obj): The surface to render the image on.
         Returns:
             image (obj): Image that has been scaled to the screen size.
         """
@@ -181,6 +186,7 @@ class StateController:
         }
     
     def setup_states(self, start_state):
+        """Sets the initial state."""
         self.state_name = start_state
         self.state = self.states[self.state_name]
 
@@ -225,6 +231,8 @@ class Loading(State, Assets):
 
     Attributes:
         next (str): Specifies the name of the next state.
+        load (bool): Determines whether or not the assets should be loaded.
+        start_time (int): Start timer used for delaying asset loading.
         load_img (obj): Loading image that displays while the assets load.
     """
 
@@ -235,9 +243,9 @@ class Loading(State, Assets):
         self.load = True
         self.start_time = pygame.time.get_ticks()
         self.load_img = pygame.image.load(os.path.join(IMG_DIR, 'loading.png')).convert()
-        print('loading state activated')
     
     def load_assets(self):
+        """Loads all assets including, fonts, images, and sounds into Assets dictionaries."""
         if self.load == True:
             self.images = self.load_images(IMG_DIR)
             self.sounds = self.load_sounds(SND_DIR)
@@ -251,6 +259,7 @@ class Loading(State, Assets):
         pass
 
     def update(self, screen, dt):
+        """Renders loading image and quits state after assets are done loading."""
         self.load_img = self.render_image(self.load_img, self.screen_size, screen)
         self.draw(screen)
         time_elapsed = pygame.time.get_ticks() - self.start_time
@@ -260,10 +269,14 @@ class Loading(State, Assets):
             self.done = True
 
     def draw(self, screen):
+        """Displays loading image."""
         screen.blit(self.load_img, [0, 0])
 
 class Menu(State, Assets):
     """Displays main menu. Allows user to start or quit game.
+
+    Attributes:
+        next (str): Specifies the name of the next state.
     """
 
     def __init__(self):
@@ -272,7 +285,6 @@ class Menu(State, Assets):
         #self.next = 'start'
 
     def startup(self):
-        print('menu state activated')
         self.menu_img = self.images['stick-bop-menu']
 
     def get_event(self, event):
