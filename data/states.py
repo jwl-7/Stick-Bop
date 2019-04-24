@@ -4,21 +4,6 @@ import os
 from . import state_machine
 from . import tools
 
-# asset folder paths
-IMG_DIR = os.path.join('assets', 'images')
-SND_DIR = os.path.join('assets', 'sounds')
-FNT_DIR = os.path.join('assets', 'fonts')
-
-# monokai color palette
-WHITE = (253, 250, 243)
-BLACK = (45, 43, 46)
-RED = (255, 96, 137)
-GREEN = (169, 220, 199)
-BLUE = (119, 220, 230)
-YELLOW = (255, 216, 102)
-ORANGE = (252, 151, 105)
-PURPLE = (171, 157, 244)
-
 class Loading(state_machine.State):
     """Displays loading image. Loads all assets including fonts, images, and sounds.
 
@@ -35,14 +20,14 @@ class Loading(state_machine.State):
         self.next = 'menu'
         self.load = True
         self.start_time = pygame.time.get_ticks()
-        self.load_img = pygame.image.load(os.path.join(IMG_DIR, 'loading.png')).convert()
+        self.load_img = pygame.image.load(os.path.join(tools.IMG_DIR, 'loading.png')).convert()
     
     def load_assets(self):
         """Loads all assets including, fonts, images, and sounds into Assets dictionaries."""
         if self.load == True:
-            tools.images = tools.load_images(IMG_DIR)
-            tools.sounds = tools.load_sounds(SND_DIR)
-            tools.fonts = tools.load_fonts(FNT_DIR)
+            tools.images = tools.load_images(tools.IMG_DIR)
+            tools.sounds = tools.load_sounds(tools.SND_DIR)
+            tools.fonts = tools.load_fonts(tools.FNT_DIR)
             self.load = False
 
     def startup(self):
@@ -171,10 +156,10 @@ class Woodchopping(state_machine.State):
         timer = round(self.timer_start - timer_seconds, 1)
         timer_text = 'Timer: ' + str(timer)
         score_text = 'Score: ' + str(self.score)
-        tools.clear_text(tools.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
-        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
-        tools.clear_text(tools.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
-        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, score_text, 40, self.screen_width-150, 0, screen)
         tools.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
         self.count_check(self.count, timer)
 
@@ -212,10 +197,10 @@ class Drilling(state_machine.State):
         timer = round(self.timer_start - timer_seconds, 1)
         timer_text = 'Timer: ' + str(timer)
         score_text = 'Score: ' + str(self.score)
-        tools.clear_text(tools.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
-        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
-        tools.clear_text(tools.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
-        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, score_text, 40, self.screen_width-150, 0, screen)
         tools.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
         self.count_check(self.count, timer)
 
@@ -267,10 +252,10 @@ class Mining(state_machine.State):
         timer = round(self.timer_start - timer_seconds, 1)
         timer_text = 'Timer: ' + str(timer)
         score_text = 'Score: ' + str(self.score)
-        tools.clear_text(tools.fonts['OpenSans-Regular'], WHITE, timer_text, 40, self.screen_width/2, 0, screen)
-        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, timer_text, 40, self.screen_width/2, 0, screen)
-        tools.clear_text(tools.fonts['OpenSans-Regular'], WHITE, score_text, 40, self.screen_width-150, 0, screen)
-        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, score_text, 40, self.screen_width-150, 0, screen)
         tools.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
         self.count_check(self.count, timer)
 
@@ -299,7 +284,7 @@ class Loss(state_machine.State):
 
     def update(self, screen, dt):
         self.loss_img = tools.render_image(self.loss_img, self.screen_size, screen)
-        tools.render_text(tools.fonts['OpenSans-Regular'], BLACK, self.score_text, 100, self.screen_width/2, self.screen_height/2.5, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, self.score_text, 100, self.screen_width/2, self.screen_height/2.5, screen)
         self.draw(screen)
 
     def draw(self, screen):

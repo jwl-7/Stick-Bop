@@ -1,6 +1,11 @@
 import pygame
 import os
 
+# asset folder paths
+IMG_DIR = os.path.join('assets', 'images')
+SND_DIR = os.path.join('assets', 'sounds')
+FNT_DIR = os.path.join('assets', 'fonts')
+
 # monokai color palette
 WHITE = (253, 250, 243)
 BLACK = (45, 43, 46)
@@ -11,6 +16,7 @@ YELLOW = (255, 216, 102)
 ORANGE = (252, 151, 105)
 PURPLE = (171, 157, 244)
 
+# asset dictionaries
 images = {}
 sounds = {}
 fonts = {}
