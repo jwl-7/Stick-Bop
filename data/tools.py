@@ -116,3 +116,11 @@ def draw_progress_bar(x, y, progress, screen):
     pygame.draw.rect(screen, GREEN, outline_rect)
     pygame.draw.rect(screen, WHITE, fill_rect)
     pygame.draw.rect(screen, BLACK, outline_rect, 4)
+
+def play_music(track):
+    pygame.mixer.music.load(track)
+    pygame.mixer.music.play(-1)
+
+def play_sound(sound):
+    snd = pygame.mixer.Sound(sound)
+    snd.play()

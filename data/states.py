@@ -78,8 +78,7 @@ class Menu(state_machine.State):
 
     def startup(self):
         self.menu_img = tools.images['stick-bop-menu']
-        pygame.mixer.music.load(tools.sounds['insert-quarter'])
-        pygame.mixer.music.play(-1)
+        tools.play_music(tools.sounds['insert-quarter'])
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -106,8 +105,7 @@ class Start(state_machine.State):
     def startup(self):
         self.next = random.choice(self.task_list)
         pygame.mixer.music.stop()
-        ready_snd = pygame.mixer.Sound(tools.sounds['ready-set-go'])
-        ready_snd.play()
+        tools.play_sound(tools.sounds['ready-set-go'])
         self.start_time = pygame.time.get_ticks()
         self.start_img = tools.images['ready']
 
@@ -138,7 +136,6 @@ class Woodchopping(state_machine.State):
 
     def startup(self):
         self.next = random.choice(self.task_list)
-        print(self.next)
         self.count = 0
         self.left_pressed = False
         self.right_pressed = False
@@ -146,8 +143,7 @@ class Woodchopping(state_machine.State):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.wood_img = tools.images['woodchopping-1']
-        game_snd = self.track_check(self.score)
-        self.music_check(self.score, tools.sounds[game_snd])
+        self.score_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
@@ -195,13 +191,11 @@ class Drilling(state_machine.State):
 
     def startup(self):
         self.next = random.choice(self.task_list)
-        print(self.next)
         self.count = 0
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.drill_img = tools.images['drilling-1']
-        game_snd = self.track_check(self.score)
-        self.music_check(self.score, tools.sounds[game_snd])
+        self.score_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
@@ -238,7 +232,6 @@ class Mining(state_machine.State):
 
     def startup(self):
         self.next = random.choice(self.task_list)
-        print(self.next)
         self.count = 0
         self.left_pressed = False
         self.right_pressed = False
@@ -246,8 +239,7 @@ class Mining(state_machine.State):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.mine_img = tools.images['mining-1']
-        game_snd = self.track_check(self.score)
-        self.music_check(self.score, tools.sounds[game_snd])
+        self.score_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
@@ -296,9 +288,7 @@ class Loss(state_machine.State):
 
     def startup(self):
         self.loss_img = tools.images['game-over']
-        pygame.mixer.music.stop()
-        pygame.mixer.music.load(tools.sounds['piano-lofi-rain'])
-        pygame.mixer.music.play(-1)
+        tools.play_music(tools.sounds['piano-lofi-rain'])
         self.score_text = 'Final Score: ' + str(self.score)
 
     def get_event(self, event):
@@ -326,9 +316,7 @@ class Win(state_machine.State):
 
     def startup(self):
         self.win_img = tools.images['winner']
-        pygame.mixer.music.stop()
-        pygame.mixer.music.load(tools.sounds['future-grid'])
-        pygame.mixer.music.play(-1)
+        tools.play_music(tools.sounds['future-grid'])
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:

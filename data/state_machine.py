@@ -100,43 +100,35 @@ class State(object):
         self.next = None
         self.current = None
 
-    def track_check(self, score):
-        music_track = 'neon-runner'
-        if score == 25:
-            music_track = 'neon-runner-x125'
+    def score_check(self, score):
+        if score == 0:
+            tools.play_music(tools.sounds['neon-runner'])
+        elif score == 25:
+            tools.play_music(tools.sounds['neon-runner-x125'])
         elif score == 50:
-            music_track = 'neon-runner-x150'
+            tools.play_music(tools.sounds['neon-runner-x150'])
         elif score == 75:
-            music_track = 'neon-runner-x175'
+            tools.play_music(tools.sounds['neon-runner-x175'])
         elif score == 100:
             self.next = 'win'
             self.done = True
-        return music_track
-
-    def music_check(self, score, track):
-        new_music_scores = [0, 25, 50, 75]
-        if score in new_music_scores:
-            pygame.mixer.music.load(track)
-            pygame.mixer.music.play(-1)
 
     def count_check(self, count, timer):
         if count >= 5 and timer > 0:
             State.score += 1
-            task_done_snd = pygame.mixer.Sound(tools.sounds['task-done'])
-            pygame.mixer.Channel(0).play(task_done_snd)
+            tools.play_sound(tools.sounds['task-done'])
             self.done = True
-            print('task_complete')
         elif timer <= 0:
             self.next = 'loss'
             self.done = True
 
     def timer_check(self, score):
         if score >= 0:
-            timer_start = 5
+            start_time = 5
         elif score >= 25:
-            timer_start = 4.5
+            start_time = 4.5
         elif score >= 50:
-            timer_start = 4
+            start_time = 4
         elif score >= 75:
-            timer_start = 3.5
-        return timer_start
+            start_time = 3.5
+        return start_time
