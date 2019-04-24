@@ -1,6 +1,7 @@
 import pygame
 from . import tools
 
+# pygame display settings dictionary
 settings = {
     'screen_size': (900, 700),
     'screen_width': 900,
@@ -82,9 +83,12 @@ class StateController:
             pygame.display.update()
 
 class State(object):
-    """Parent class for various game states.
+    """Prototype class for all game states to inherit from.
 
     Attributes:
+        score (int): Stores the game score.
+        count (int): Used for tracking progress of task.
+        task_list (list): Used for shuffling tasks randomly.
         done (bool): State completion status.
         quit (bool): State exit status.
         next (none): Holds the value of the next state.
@@ -101,6 +105,7 @@ class State(object):
         self.current = None
 
     def score_check(self, score):
+        """Checks for when to speed up music and win state."""
         if score == 0:
             tools.play_music(tools.sounds['neon-runner'])
         elif score == 25:
@@ -114,6 +119,7 @@ class State(object):
             self.done = True
 
     def count_check(self, count, timer):
+        """Checks for task completion / fail."""
         if count >= 5 and timer > 0:
             State.score += 1
             tools.play_sound(tools.sounds['task-done'])
@@ -123,6 +129,7 @@ class State(object):
             self.done = True
 
     def timer_check(self, score):
+        """Checks for what the timer should start at for the task."""
         if score >= 0:
             start_time = 5
         elif score >= 25:

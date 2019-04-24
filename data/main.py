@@ -4,7 +4,7 @@ from . import state_machine
 from . import states
 
 def main():
-    """Initialize pygame and run game."""
+    """Initialize pygame, state machine, and runs the main game loop."""
     pygame.init()
     game = state_machine.StateController(**state_machine.settings)
     state_dict = {

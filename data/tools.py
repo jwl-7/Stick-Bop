@@ -32,7 +32,6 @@ def load_images(directory, colorkey=(0, 0, 0), extensions=('.png', '.jpg', '.bmp
     Returns:
         images (dict): The loaded images.
     """
-    #images = Assets.images
     for img in os.listdir(directory):
         name, ext = os.path.splitext(img)
         if ext in extensions:
@@ -55,7 +54,6 @@ def load_sounds(directory, extensions=('.ogg', '.mp3', '.wav', '.mdi')):
     Returns:
         sounds (dict): The loaded images.
     """
-    #sounds = Assets.sounds
     for snd in os.listdir(directory):
         name, ext = os.path.splitext(snd)
         if ext in extensions:
@@ -72,7 +70,6 @@ def load_fonts(directory, extensions=('.ttf')):
     Returns:
         fonts (dict): The loaded fonts.
     """ 
-    #fonts = Assets.fonts
     for fnt in os.listdir(directory):
         name, ext = os.path.splitext(fnt)
         if ext in extensions:
@@ -94,7 +91,17 @@ def render_image(image, screen_size, screen):
     return image
 
 def render_text(font, color, text, size, x, y, screen):
-    """Draws text in rectangle to surface."""
+    """Draws text in rectangle to surface.
+    
+    Args:
+        font (str): Name of font.
+        color (tup): RGB color code.
+        text (str): The text to be displayed.
+        size (int): Size of the text.
+        x (int): X-axis coordinate of text rectangle.
+        y (int): Y-axis coordinate of text rectangle.
+        screen (obj): Surface to draw text on.  
+    """
     text_font = pygame.font.Font(font, size)
     text_surface = text_font.render(text, True, color)
     text_rect = text_surface.get_rect()
@@ -102,7 +109,17 @@ def render_text(font, color, text, size, x, y, screen):
     screen.blit(text_surface, text_rect)
 
 def clear_text(font, color, text, size, x, y, screen):
-    """Covers text with solid rectangle to surface."""
+    """Covers text with solid rectangle to surface.
+    
+    Args:
+        font (str): Use same font as the text to be covered.
+        color (tup): RGB color code. Use same color as background.
+        text (str): Use the same text that you are covering.
+        size (int): Use the same size as the rendered text.
+        x (int): Use same X-axis coordinate as the rendered text.
+        y (int): Use same Y-axis coordinate as the rendered text.
+        screen (obj): Surface to draw rectangle on.
+    """
     text_font = pygame.font.Font(font, size)
     text_surface = text_font.render(text, True, color)
     text_rect = text_surface.get_rect()
@@ -110,23 +127,30 @@ def clear_text(font, color, text, size, x, y, screen):
     screen.fill(color, text_rect)
 
 def draw_progress_bar(x, y, progress, screen):
-    """Draw a colored progress bar with outline to surface."""
-    BAR_LENGTH = 40
-    BAR_HEIGHT = 400
+    """Draw a colored progress bar with outline to surface.
 
+    Args:
+        x (int): X-axis coordinate to draw the bar.
+        y (int): Y-axis coordinate to draw the bar.
+        progress (int): Completion progress of the task.
+        screen (obj): Surface to render bar on.    
+    """
+    bar_length = 40
+    bar_height = 400
     progress = max(progress, 0)
-    fill = (progress / 100) * BAR_HEIGHT
-    fill_rect = pygame.Rect(x, y, BAR_LENGTH, fill)
-    outline_rect = pygame.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
-
+    fill = (progress / 100) * bar_height
+    fill_rect = pygame.Rect(x, y, bar_length, fill)
+    outline_rect = pygame.Rect(x, y, bar_length, bar_height)
     pygame.draw.rect(screen, GREEN, outline_rect)
     pygame.draw.rect(screen, WHITE, fill_rect)
     pygame.draw.rect(screen, BLACK, outline_rect, 4)
 
 def play_music(track):
+    """Plays a music sound on infinite loop."""
     pygame.mixer.music.load(track)
     pygame.mixer.music.play(-1)
 
 def play_sound(sound):
+    """Plays a sound once."""
     snd = pygame.mixer.Sound(sound)
     snd.play()
