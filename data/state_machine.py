@@ -41,7 +41,12 @@ class StateController:
         self.states = {}
     
     def setup_states(self, state_dict, start_state):
-        """Sets the initial state."""
+        """Sets the initial state.
+
+        Args:
+            state_dict (dict): Holds a list of all states and their respective class instances.
+            start_state (str): The name of the first state to be used.
+        """
         self.states = state_dict
         self.state_name = start_state
         self.state = self.states[self.state_name]
@@ -86,9 +91,9 @@ class State(object):
     """Prototype class for all game states to inherit from.
 
     Attributes:
-        score (int): Stores the game score.
-        count (int): Used for tracking progress of task.
-        task_list (list): Used for shuffling tasks randomly.
+        score (int): Holds the game score.
+        count (int): Represents the progress of task completion.
+        task_list (list): List of game states. Used for randomly shuffling tasks.
         done (bool): State completion status.
         quit (bool): State exit status.
         next (none): Holds the value of the next state.
@@ -105,7 +110,11 @@ class State(object):
         self.current = None
 
     def score_check(self, score):
-        """Checks for when to speed up music and win state."""
+        """Checks for when to speed up music and win state.
+
+        Args:
+            score (int): Game score.
+        """
         if score == 0:
             tools.play_music(tools.sounds['neon-runner'])
         elif score == 25:
@@ -119,7 +128,12 @@ class State(object):
             self.done = True
 
     def count_check(self, count, timer):
-        """Checks for task completion / fail."""
+        """Checks for task completion / fail.
+        
+        Args:
+            count (int): Represents the progress of task completion.
+            timer (int): Rounded time in seconds elapsed since task started.
+        """
         if count >= 5 and timer > 0:
             State.score += 1
             tools.play_sound(tools.sounds['task-done'])
@@ -129,7 +143,11 @@ class State(object):
             self.done = True
 
     def timer_check(self, score):
-        """Checks for what the timer should start at for the task."""
+        """Checks for what the timer should start at for the task.
+
+        Args:
+            score (int): Game score.
+        """
         if score >= 0:
             start_time = 5
         elif score >= 25:

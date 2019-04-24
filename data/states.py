@@ -5,14 +5,7 @@ from . import state_machine
 from . import tools
 
 class Loading(state_machine.State):
-    """Displays loading image. Loads all assets including fonts, images, and sounds.
-
-    Attributes:
-        next (str): Specifies the name of the next state.
-        load (bool): Determines whether or not the assets should be loaded.
-        start_time (int): Start timer used for delaying asset loading.
-        load_img (obj): Loading image that displays while the assets load.
-    """
+    """Displays loading image. Loads all assets including fonts, images, and sounds."""
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -23,7 +16,6 @@ class Loading(state_machine.State):
         self.load_img = pygame.image.load(os.path.join(tools.IMG_DIR, 'loading.png')).convert()
     
     def load_assets(self):
-        """Loads all assets including, fonts, images, and sounds into Assets dictionaries."""
         if self.load == True:
             tools.images = tools.load_images(tools.IMG_DIR)
             tools.sounds = tools.load_sounds(tools.SND_DIR)
@@ -37,7 +29,6 @@ class Loading(state_machine.State):
         pass
 
     def update(self, screen, dt):
-        """Renders loading image and quits state after assets are done loading."""
         self.load_img = tools.render_image(self.load_img, self.screen_size, screen)
         self.draw(screen)
         time_elapsed = pygame.time.get_ticks() - self.start_time
@@ -50,11 +41,7 @@ class Loading(state_machine.State):
         screen.blit(self.load_img, [0, 0])
 
 class Menu(state_machine.State):
-    """Displays main menu. Allows user to start or quit game.
-
-    Attributes:
-        next (str): Specifies the name of the next state.
-    """
+    """Displays main menu. Allows user to start or quit game."""
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -80,8 +67,7 @@ class Menu(state_machine.State):
         pass
 
 class Start(state_machine.State):
-    """Displays ready, set, GO! message with sound and starts the game.
-    """
+    """Displays ready, set, GO! message with sound and starts the game."""
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -112,8 +98,7 @@ class Start(state_machine.State):
         screen.blit(self.start_img, [0, 0])
 
 class Woodchopping(state_machine.State):
-    """Woodchopping task.
-    """
+    """Woodchopping task."""
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -167,8 +152,7 @@ class Woodchopping(state_machine.State):
         screen.blit(self.wood_img, [0, 0])
 
 class Drilling(state_machine.State):
-    """Drilling task.
-    """
+    """Drilling task."""
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -208,8 +192,7 @@ class Drilling(state_machine.State):
         screen.blit(self.drill_img, [0, 0])
 
 class Mining(state_machine.State):
-    """Mining task.
-    """
+    """Mining task. """
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -263,8 +246,7 @@ class Mining(state_machine.State):
         screen.blit(self.mine_img, [0, 0])
 
 class Loss(state_machine.State):
-    """Loss state.
-    """
+    """Game loss."""
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -291,8 +273,7 @@ class Loss(state_machine.State):
         screen.blit(self.loss_img, [0, 0])
 
 class Win(state_machine.State):
-    """Win state.
-    """
+    """Game won."""
 
     def __init__(self):
         state_machine.State.__init__(self)

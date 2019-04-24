@@ -146,11 +146,19 @@ def draw_progress_bar(x, y, progress, screen):
     pygame.draw.rect(screen, BLACK, outline_rect, 4)
 
 def play_music(track):
-    """Plays a music sound on infinite loop."""
+    """Plays a music sound on infinite loop.
+
+    Args:
+        track (str): Name of the music track to play.
+    """
     pygame.mixer.music.load(track)
     pygame.mixer.music.play(-1)
 
 def play_sound(sound):
-    """Plays a sound once."""
+    """Plays a sound once.
+
+    Args:
+        sound (str): Name of the sound to play.
+    """
     snd = pygame.mixer.Sound(sound)
     snd.play()
