@@ -213,13 +213,33 @@ class Mining(state_machine.State):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             self.left_pressed = True
             if self.right_was_pressed and not self.right_pressed:
-                self.mine_img = tools.images['mining-1']
+                if self.count == 0:
+                    self.mine_img = tools.images['mining-1']
+                elif self.count == 1:
+                    self.mine_img = tools.images['mining-3']
+                elif self.count == 2:
+                    self.mine_img = tools.images['mining-5']
+                elif self.count == 3:
+                    self.mine_img = tools.images['mining-7']
+                elif self.count == 4:
+                    self.mine_img = tools.images['mining-9']
+                elif self.count == 5:
+                    self.mine_img = tools.images['mining-11']
                 self.right_was_pressed = False
                 self.count += 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             self.right_pressed = True
             if not self.left_pressed:
-                self.mine_img = tools.images['mining-2']
+                if self.count == 0:
+                    self.mine_img = tools.images['mining-2']
+                elif self.count == 1:
+                    self.mine_img = tools.images['mining-4']
+                elif self.count == 2:
+                    self.mine_img = tools.images['mining-6']
+                elif self.count == 3:
+                    self.mine_img = tools.images['mining-8']
+                elif self.count == 4:
+                    self.mine_img = tools.images['mining-10']
         elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
             self.left_pressed = False
         elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
