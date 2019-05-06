@@ -102,6 +102,14 @@ class State(object):
     score = 0
     count = 0
     task_list = ['drilling', 'mining', 'woodchopping']
+    '''task_list = [
+        'drilling', 
+        'mining', 
+        'woodchopping', 
+        'flagraising', 
+        'hammering', 
+        'waterpumping'
+        ]'''
 
     def __init__(self):
         self.done = False

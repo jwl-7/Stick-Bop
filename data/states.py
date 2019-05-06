@@ -286,6 +286,86 @@ class Mining(state_machine.State):
     def draw(self, screen):
         screen.blit(self.mine_img, [0, 0])
 
+class Flagraising(state_machine.State):
+    """Flagraising task."""
+    # key sequence = down, up, down, up, down, up, down, up, down, up
+
+    def __init__(self):
+        state_machine.State.__init__(self)
+        self.__dict__.update(state_machine.settings)
+
+    def startup(self):
+        pass
+
+    def get_event(self, event):
+        pass
+
+    def update(self, screen, dt):
+        pass
+
+    def draw(self, screen):
+        pass
+
+class Hammering(state_machine.State):
+    """Hammering task."""
+    # key sequence = space, space, space, space, space
+
+    def __init__(self):
+        state_machine.State.__init__(self)
+        self.__dict__.update(state_machine.settings)
+
+    def startup(self):
+        pass
+
+    def get_event(self, event):
+        pass
+
+    def update(self, screen, dt):
+        pass
+
+    def draw(self, screen):
+        pass
+
+class Waterpumping(state_machine.State):
+    """Waterpumping task."""
+    # key sequence = down, up, down, up, down, up, down, up, down, up
+
+    def __init__(self):
+        state_machine.State.__init__(self)
+        self.__dict__.update(state_machine.settings)
+
+    def startup(self):
+        pass
+
+    def get_event(self, event):
+        pass
+
+    def update(self, screen, dt):
+        pass
+
+    def draw(self, screen):
+        pass
+
+class Excalibur(state_machine.State):
+    """Excalibur task."""
+    # key sequence = up, up, down, down, left, right, left, right, space, space
+
+    def __init__(self):
+        state_machine.State.__init__(self)
+        self.__dict__.update(state_machine.settings)
+
+    def startup(self):
+        pass
+
+    def get_event(self, event):
+        pass
+
+    def update(self, screen, dt):
+        pass
+
+    def draw(self, screen):
+        pass
+
 class Loss(state_machine.State):
     """Game loss."""
 

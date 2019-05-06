@@ -15,7 +15,11 @@ def main():
             'win': states.Win(),
             'drilling': states.Drilling(),
             'mining': states.Mining(),
-            'woodchopping': states.Woodchopping()
+            'woodchopping': states.Woodchopping(),
+            #'flagraising': states.Flagraising(),
+            #'hammering': states.Hammering(),
+            #'waterpumping': states.Waterpumping(),
+            #'excalibur': states.Excalibur()
         }
     game.setup_states(state_dict, 'loading')
     game.game_loop()
