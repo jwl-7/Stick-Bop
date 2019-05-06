@@ -168,10 +168,31 @@ class Drilling(state_machine.State):
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            self.drill_img = tools.images['drilling-2']
+            if self.count == 0:
+                self.drill_img = tools.images['drilling-2']
+            elif self.count == 1:
+                self.drill_img = tools.images['drilling-4']
+            elif self.count == 2:
+                self.drill_img = tools.images['drilling-6']
+            elif self.count == 3:
+                self.drill_img = tools.images['drilling-8']
+            elif self.count == 4:
+                self.drill_img = tools.images['drilling-10']
             self.count += 1
         elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
-            self.drill_img = tools.images['drilling-1']
+            if self.count == 0:
+                self.drill_img = tools.images['drilling-1']
+            elif self.count == 1:
+                self.drill_img = tools.images['drilling-3']
+            elif self.count == 2:
+                self.drill_img = tools.images['drilling-5']
+            elif self.count == 3:
+                self.drill_img = tools.images['drilling-7']
+            elif self.count == 4:
+                self.drill_img = tools.images['drilling-9']
+            elif self.count == 5:
+                self.drill_img = tools.images['drilling-11']
+            
 
     def update(self, screen, dt):
         self.drill_img = tools.render_image(self.drill_img, self.screen_size, screen)
