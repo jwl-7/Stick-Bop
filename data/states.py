@@ -143,6 +143,8 @@ class Woodchopping(state_machine.State):
             if self.right_was_pressed and not self.right_pressed:
                 self.wood_img = tools.images['woodchopping-1']
                 self.right_was_pressed = False
+                if self.count == 4:
+                    self.wood_img = tools.images['woodchopping-3']
                 self.count += 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             self.right_pressed = True
