@@ -74,6 +74,7 @@ class Start(state_machine.State):
         self.__dict__.update(state_machine.settings)
 
     def startup(self):
+        state_machine.State.score = 0
         self.next = random.choice(self.task_list)
         pygame.mixer.music.stop()
         tools.play_sound(tools.sounds['ready-set-go'])
