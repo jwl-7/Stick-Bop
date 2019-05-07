@@ -98,6 +98,28 @@ class Start(state_machine.State):
     def draw(self, screen):
         screen.blit(self.start_img, [0, 0])
 
+class Taskdone(state_machine.State):
+    """Sets the next state to a random task and then switches to it after 400ms."""
+
+    def __init__(self):
+        state_machine.State.__init__(self)
+        self.__dict__.update(state_machine.settings)
+
+    def startup(self):
+        self.next = random.choice(self.task_list)
+        self.start_time = pygame.time.get_ticks()
+
+    def get_event(self, event):
+        pass
+
+    def update(self, screen, dt):
+        time_elapsed = pygame.time.get_ticks() - self.start_time
+        if time_elapsed >= 400:
+            self.done = True
+
+    def draw(self, screen):
+        pass
+
 class Woodchopping(state_machine.State):
     """Woodchopping task."""
 
@@ -106,7 +128,6 @@ class Woodchopping(state_machine.State):
         self.__dict__.update(state_machine.settings)
 
     def startup(self):
-        self.next = random.choice(self.task_list)
         self.count = 0
         self.left_pressed = False
         self.right_pressed = False
@@ -160,7 +181,6 @@ class Drilling(state_machine.State):
         self.__dict__.update(state_machine.settings)
 
     def startup(self):
-        self.next = random.choice(self.task_list)
         self.count = 0
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
@@ -219,7 +239,6 @@ class Mining(state_machine.State):
         self.__dict__.update(state_machine.settings)
 
     def startup(self):
-        self.next = random.choice(self.task_list)
         self.count = 0
         self.left_pressed = False
         self.right_pressed = False

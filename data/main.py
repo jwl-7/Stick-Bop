@@ -13,6 +13,7 @@ def main():
             'start': states.Start(),
             'loss': states.Loss(),
             'win': states.Win(),
+            'taskdone': states.Taskdone(),
             'drilling': states.Drilling(),
             'mining': states.Mining(),
             'woodchopping': states.Woodchopping(),

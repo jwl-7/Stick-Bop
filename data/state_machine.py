@@ -145,6 +145,7 @@ class State(object):
         if count >= 5 and timer > 0:
             State.score += 1
             tools.play_sound(tools.sounds['task-done'])
+            self.next = 'taskdone'
             self.done = True
         elif timer <= 0:
             self.next = 'loss'
