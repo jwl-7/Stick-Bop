@@ -17,7 +17,7 @@ def main():
             'drilling': states.Drilling(),
             'mining': states.Mining(),
             'woodchopping': states.Woodchopping(),
-            #'flagraising': states.Flagraising(),
+            'flagraising': states.Flagraising(),
             #'hammering': states.Hammering(),
             #'waterpumping': states.Waterpumping(),
             #'excalibur': states.Excalibur()
