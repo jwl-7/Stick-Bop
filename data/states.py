@@ -178,20 +178,18 @@ class Drilling(state_machine.State):
                 self.drill_img = tools.images['drilling-8']
             elif self.count == 4:
                 self.drill_img = tools.images['drilling-10']
-            self.count += 1
         elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
             if self.count == 0:
-                self.drill_img = tools.images['drilling-1']
-            elif self.count == 1:
                 self.drill_img = tools.images['drilling-3']
-            elif self.count == 2:
+            elif self.count == 1:
                 self.drill_img = tools.images['drilling-5']
-            elif self.count == 3:
+            elif self.count == 2:
                 self.drill_img = tools.images['drilling-7']
-            elif self.count == 4:
+            elif self.count == 3:
                 self.drill_img = tools.images['drilling-9']
-            elif self.count == 5:
+            elif self.count == 4:
                 self.drill_img = tools.images['drilling-11']
+            self.count += 1
             
 
     def update(self, screen, dt):
@@ -235,16 +233,14 @@ class Mining(state_machine.State):
             self.left_pressed = True
             if self.right_was_pressed and not self.right_pressed:
                 if self.count == 0:
-                    self.mine_img = tools.images['mining-1']
-                elif self.count == 1:
                     self.mine_img = tools.images['mining-3']
-                elif self.count == 2:
+                elif self.count == 1:
                     self.mine_img = tools.images['mining-5']
-                elif self.count == 3:
+                elif self.count == 2:
                     self.mine_img = tools.images['mining-7']
-                elif self.count == 4:
+                elif self.count == 3:
                     self.mine_img = tools.images['mining-9']
-                elif self.count == 5:
+                elif self.count == 4:
                     self.mine_img = tools.images['mining-11']
                 self.right_was_pressed = False
                 self.count += 1
