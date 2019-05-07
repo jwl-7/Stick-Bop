@@ -322,9 +322,6 @@ class Flagraising(state_machine.State):
         self.flag_img = tools.images['flagraising-1']
         self.score_check(self.score)
 
-        # LEFT = UP
-        # RIGHT = DOWN
-
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
             self.up_pressed = True
