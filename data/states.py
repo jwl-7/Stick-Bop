@@ -402,16 +402,68 @@ class Tirepumping(state_machine.State):
         self.__dict__.update(state_machine.settings)
 
     def startup(self):
-        pass
+        self.count = 0
+        self.up_pressed = False
+        self.down_pressed = False
+        self.down_was_pressed = False
+        self.start_time = pygame.time.get_ticks()
+        self.timer_start = self.timer_check(self.score)
+        self.tire_img = tools.images['tirepumping-1']
+        self.score_check(self.score)
 
     def get_event(self, event):
-        pass
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+            self.up_pressed = True
+            if self.down_was_pressed and not self.down_pressed:
+                if self.count == 0:
+                    self.tire_img = tools.images['tirepumping-3']
+                elif self.count == 1:
+                    self.tire_img = tools.images['tirepumping-5']
+                elif self.count == 2:
+                    self.tire_img = tools.images['tirepumping-7']
+                elif self.count == 3:
+                    self.tire_img = tools.images['tirepumping-9']
+                elif self.count == 4:
+                    self.tire_img = tools.images['tirepumping-11']
+                self.down_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+            self.down_pressed = True
+            if not self.up_pressed:
+                if self.count == 0:
+                    self.tire_img = tools.images['tirepumping-2']
+                elif self.count == 1:
+                    self.tire_img = tools.images['tirepumping-4']
+                elif self.count == 2:
+                    self.tire_img = tools.images['tirepumping-6']
+                elif self.count == 3:
+                    self.tire_img = tools.images['tirepumping-8']
+                elif self.count == 4:
+                    self.tire_img = tools.images['tirepumping-10']
+        elif event.type == pygame.KEYUP and event.key == pygame.K_UP:
+            self.up_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
+            if self.down_pressed:
+                self.down_pressed = False
+                self.down_was_pressed = True
 
     def update(self, screen, dt):
-        pass
+        self.tire_img = tools.render_image(self.tire_img, self.screen_size, screen)
+        self.draw(screen)
+        time_elapsed = pygame.time.get_ticks() - self.start_time
+        timer_seconds = float(time_elapsed / 1000 % 60)
+        timer = round(self.timer_start - timer_seconds, 1)
+        timer_text = 'Timer: ' + str(timer)
+        score_text = 'Score: ' + str(self.score)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        tools.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
+        self.count_check(self.count, timer)
 
     def draw(self, screen):
-        pass
+        screen.blit(self.tire_img, [0, 0])
 
 class Excalibur1(state_machine.State):
     """Excalibur1 task."""
