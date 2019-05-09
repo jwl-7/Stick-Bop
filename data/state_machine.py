@@ -106,7 +106,7 @@ class State(object):
         'mining', 
         'woodchopping', 
         'flagraising', 
-        #'hammering', 
+        'hammering', 
         'tirepumping'
         ]
 
