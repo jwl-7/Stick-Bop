@@ -21,6 +21,16 @@ images = {}
 sounds = {}
 fonts = {}
 
+def change_icon(filename):
+    """Changes the icon of the display window.
+
+    Args:
+        filename (str): The filename of the icon in the images directory, including the extension.
+    """
+    icon = pygame.image.load(os.path.join(IMG_DIR, filename))
+    icon = icon.convert_alpha()
+    pygame.display.set_icon(icon)
+
 def load_images(directory, colorkey=(0, 0, 0), extensions=('.png', '.jpg', '.bmp')):
     """Loads all images with the specified file extensions.
 

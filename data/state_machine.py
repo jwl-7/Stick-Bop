@@ -36,6 +36,7 @@ class StateController:
         self.screen_max_width = self.display_info.current_w
         self.screen_max_height = self.display_info.current_h
         self.screen = pygame.display.set_mode(self.screen_size)
+        tools.change_icon('helmet-icon.png')
         self.caption = pygame.display.set_caption(self.title)
         self.clock = pygame.time.Clock()
         self.states = {}
