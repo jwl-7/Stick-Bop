@@ -621,6 +621,7 @@ class Loss(state_machine.State):
 
     def update(self, screen, dt):
         self.loss_img = tools.render_image(self.loss_img, self.screen_size, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, self.score_text, 100, self.screen_width/2, self.screen_height/2.5, screen)
         tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, self.score_text, 100, self.screen_width/2, self.screen_height/2.5, screen)
         self.draw(screen)
 
