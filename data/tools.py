@@ -8,7 +8,7 @@ FNT_DIR = os.path.join('assets', 'fonts')
 
 # monokai color palette
 WHITE = (253, 250, 243)
-BLACK = (45, 43, 46)
+BLACK = (56, 54, 57)
 RED = (255, 96, 137)
 GREEN = (169, 220, 199)
 BLUE = (119, 220, 230)
