@@ -306,7 +306,6 @@ class Mining(state_machine.State):
 
 class Flagraising(state_machine.State):
     """Flagraising task."""
-    # key sequence = down, up, down, up, down, up, down, up, down, up
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -378,7 +377,6 @@ class Flagraising(state_machine.State):
 
 class Hammering(state_machine.State):
     """Hammering task."""
-    # key sequence = space, space, space, space, space
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -396,9 +394,8 @@ class Hammering(state_machine.State):
     def draw(self, screen):
         pass
 
-class Waterpumping(state_machine.State):
-    """Waterpumping task."""
-    # key sequence = down, up, down, up, down, up, down, up, down, up
+class Tirepumping(state_machine.State):
+    """Tirepumping task."""
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -416,9 +413,65 @@ class Waterpumping(state_machine.State):
     def draw(self, screen):
         pass
 
-class Excalibur(state_machine.State):
-    """Excalibur task."""
-    # key sequence = up, up, down, down, left, right, left, right, space, space
+class Excalibur1(state_machine.State):
+    """Excalibur1 task."""
+
+    def __init__(self):
+        state_machine.State.__init__(self)
+        self.__dict__.update(state_machine.settings)
+
+    def startup(self):
+        pass
+
+    def get_event(self, event):
+        pass
+
+    def update(self, screen, dt):
+        pass
+
+    def draw(self, screen):
+        pass
+
+class Excalibur2(state_machine.State):
+    """Excalibur2 task."""
+
+    def __init__(self):
+        state_machine.State.__init__(self)
+        self.__dict__.update(state_machine.settings)
+
+    def startup(self):
+        pass
+
+    def get_event(self, event):
+        pass
+
+    def update(self, screen, dt):
+        pass
+
+    def draw(self, screen):
+        pass
+
+class Excalibur3(state_machine.State):
+    """Excalibur3 task."""
+
+    def __init__(self):
+        state_machine.State.__init__(self)
+        self.__dict__.update(state_machine.settings)
+
+    def startup(self):
+        pass
+
+    def get_event(self, event):
+        pass
+
+    def update(self, screen, dt):
+        pass
+
+    def draw(self, screen):
+        pass
+
+class Excalibur4(state_machine.State):
+    """Excalibur4 task."""
 
     def __init__(self):
         state_machine.State.__init__(self)

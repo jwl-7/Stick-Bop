@@ -18,9 +18,12 @@ def main():
             'mining': states.Mining(),
             'woodchopping': states.Woodchopping(),
             'flagraising': states.Flagraising(),
-            #'hammering': states.Hammering(),
-            #'waterpumping': states.Waterpumping(),
-            #'excalibur': states.Excalibur()
+            'hammering': states.Hammering(),
+            'tirepumping': states.Tirepumping(),
+            'excalibur1': states.Excalibur1(),
+            'excalibur2': states.Excalibur2(),
+            'excalibur3': states.Excalibur3(),
+            'excalibur4': states.Excalibur4()
         }
     game.setup_states(state_dict, 'loading')
     game.game_loop()

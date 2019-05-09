@@ -106,8 +106,8 @@ class State(object):
         'mining', 
         'woodchopping', 
         'flagraising', 
-        #'hammering', 
-        #'waterpumping'
+        'hammering', 
+        'tirepumping'
         ]
 
     def __init__(self):
