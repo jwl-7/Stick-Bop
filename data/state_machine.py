@@ -155,8 +155,7 @@ class State(object):
             score (int): Game score.
         """
         if score >= 0 and score < 25:
-            #start_time = 5
-            start_time = 60 # --------------------------------- FOR TESTING PURPOSES ------------------------------
+            start_time = 5
         elif score >= 25 and score < 50:
             start_time = 4.5
         elif score >= 50 and score < 75:
