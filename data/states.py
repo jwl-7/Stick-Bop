@@ -532,16 +532,106 @@ class Excalibur1(state_machine.State):
         self.__dict__.update(state_machine.settings)
 
     def startup(self):
-        pass
+        self.count = 0
+        self.up_pressed = False
+        self.up_was_pressed = False
+        self.down_pressed = False
+        self.down_was_pressed = False
+        self.left_pressed = False
+        self.left_was_pressed = False
+        self.right_pressed = False
+        self.right_was_pressed = False
+        self.space_pressed = False
+        self.space_was_pressed = False
+        self.start_time = pygame.time.get_ticks()
+        self.timer_start = self.timer_check(self.score)
+        self.excalibur1_img = tools.images['excalibur-1-1']
+        self.score_check(self.score)
 
     def get_event(self, event):
-        pass
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+            self.up_pressed = True
+            if not self.up_was_pressed and self.count == 0:
+                self.excalibur1_img = tools.images['excalibur-1-2']
+            elif self.up_was_pressed and self.count == 0:
+                self.excalibur1_img = tools.images['excalibur-1-3']
+                self.up_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+            self.down_pressed = True
+            if not self.down_was_pressed and self.count == 1:
+                self.excalibur1_img = tools.images['excalibur-1-4']
+            elif self.down_was_pressed and self.count == 1:
+                self.excalibur1_img = tools.images['excalibur-1-5']
+                self.down_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            self.left_pressed = True
+            if not self.left_was_pressed and self.count == 2:
+                self.excalibur1_img = tools.images['excalibur-1-6']
+            elif not self.left_was_pressed and self.count == 3:
+                self.excalibur1_img = tools.images['excalibur-1-8']
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            self.right_pressed = True
+            if self.left_was_pressed and self.count == 2:
+                self.excalibur1_img = tools.images['excalibur-1-7']
+                self.left_was_pressed = False
+                self.count += 1
+            elif self.left_was_pressed and self.count == 3:
+                self.excalibur1_img = tools.images['excalibur-1-9']
+                self.left_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            self.space_pressed = True
+            if not self.space_was_pressed and self.count == 4:
+                self.excalibur1_img = tools.images['excalibur-1-10']
+            elif self.space_was_pressed and self.count == 4:
+                self.excalibur1_img = tools.images['excalibur-1-11']
+                self.space_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYUP and event.key == pygame.K_UP:
+            if self.up_pressed:
+                if self.count == 0:
+                    self.up_was_pressed = True
+                self.up_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
+            if self.down_pressed:
+                if self.count == 1:
+                    self.down_was_pressed = True
+                self.down_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
+            if self.left_pressed:
+                if self.count == 2 or self.count == 3:
+                    self.left_was_pressed = True
+                self.left_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+            if self.right_pressed:
+                if self.count == 2 or self.count == 3:
+                    self.right_was_pressed = True
+                self.right_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+            if self.space_pressed:
+                if self.count == 4:
+                    self.space_was_pressed = True
+                self.space_pressed = False
 
     def update(self, screen, dt):
-        pass
+        self.excalibur1_img = tools.render_image(self.excalibur1_img, self.screen_size, screen)
+        self.draw(screen)
+        time_elapsed = pygame.time.get_ticks() - self.start_time
+        timer_seconds = float(time_elapsed / 1000 % 60)
+        timer = round(self.timer_start - timer_seconds, 1)
+        timer_text = 'Timer: ' + str(timer)
+        score_text = 'Score: ' + str(self.score)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        tools.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
+        self.count_check(self.count, timer)
 
     def draw(self, screen):
-        pass
+        screen.blit(self.excalibur1_img, [0, 0])
 
 class Excalibur2(state_machine.State):
     """Excalibur2 task."""
@@ -551,16 +641,106 @@ class Excalibur2(state_machine.State):
         self.__dict__.update(state_machine.settings)
 
     def startup(self):
-        pass
+        self.count = 0
+        self.up_pressed = False
+        self.up_was_pressed = False
+        self.down_pressed = False
+        self.down_was_pressed = False
+        self.left_pressed = False
+        self.left_was_pressed = False
+        self.right_pressed = False
+        self.right_was_pressed = False
+        self.space_pressed = False
+        self.space_was_pressed = False
+        self.start_time = pygame.time.get_ticks()
+        self.timer_start = self.timer_check(self.score)
+        self.excalibur2_img = tools.images['excalibur-2-1']
+        self.score_check(self.score)
 
     def get_event(self, event):
-        pass
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+            self.up_pressed = True
+            if not self.up_was_pressed and self.count == 0:
+                self.excalibur2_img = tools.images['excalibur-2-2']
+            elif self.up_was_pressed and self.count == 0:
+                self.excalibur2_img = tools.images['excalibur-2-3']
+                self.up_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+            self.down_pressed = True
+            if not self.down_was_pressed and self.count == 1:
+                self.excalibur2_img = tools.images['excalibur-2-4']
+            elif self.down_was_pressed and self.count == 1:
+                self.excalibur2_img = tools.images['excalibur-2-5']
+                self.down_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            self.left_pressed = True
+            if not self.left_was_pressed and self.count == 2:
+                self.excalibur2_img = tools.images['excalibur-2-6']
+            elif not self.left_was_pressed and self.count == 3:
+                self.excalibur2_img = tools.images['excalibur-2-8']
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            self.right_pressed = True
+            if self.left_was_pressed and self.count == 2:
+                self.excalibur2_img = tools.images['excalibur-2-7']
+                self.left_was_pressed = False
+                self.count += 1
+            elif self.left_was_pressed and self.count == 3:
+                self.excalibur2_img = tools.images['excalibur-2-9']
+                self.left_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            self.space_pressed = True
+            if not self.space_was_pressed and self.count == 4:
+                self.excalibur2_img = tools.images['excalibur-2-10']
+            elif self.space_was_pressed and self.count == 4:
+                self.excalibur2_img = tools.images['excalibur-2-11']
+                self.space_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYUP and event.key == pygame.K_UP:
+            if self.up_pressed:
+                if self.count == 0:
+                    self.up_was_pressed = True
+                self.up_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
+            if self.down_pressed:
+                if self.count == 1:
+                    self.down_was_pressed = True
+                self.down_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
+            if self.left_pressed:
+                if self.count == 2 or self.count == 3:
+                    self.left_was_pressed = True
+                self.left_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+            if self.right_pressed:
+                if self.count == 2 or self.count == 3:
+                    self.right_was_pressed = True
+                self.right_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+            if self.space_pressed:
+                if self.count == 4:
+                    self.space_was_pressed = True
+                self.space_pressed = False
 
     def update(self, screen, dt):
-        pass
+        self.excalibur2_img = tools.render_image(self.excalibur2_img, self.screen_size, screen)
+        self.draw(screen)
+        time_elapsed = pygame.time.get_ticks() - self.start_time
+        timer_seconds = float(time_elapsed / 1000 % 60)
+        timer = round(self.timer_start - timer_seconds, 1)
+        timer_text = 'Timer: ' + str(timer)
+        score_text = 'Score: ' + str(self.score)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        tools.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
+        self.count_check(self.count, timer)
 
     def draw(self, screen):
-        pass
+        screen.blit(self.excalibur2_img, [0, 0])
 
 class Excalibur3(state_machine.State):
     """Excalibur3 task."""
@@ -570,16 +750,106 @@ class Excalibur3(state_machine.State):
         self.__dict__.update(state_machine.settings)
 
     def startup(self):
-        pass
+        self.count = 0
+        self.up_pressed = False
+        self.up_was_pressed = False
+        self.down_pressed = False
+        self.down_was_pressed = False
+        self.left_pressed = False
+        self.left_was_pressed = False
+        self.right_pressed = False
+        self.right_was_pressed = False
+        self.space_pressed = False
+        self.space_was_pressed = False
+        self.start_time = pygame.time.get_ticks()
+        self.timer_start = self.timer_check(self.score)
+        self.excalibur3_img = tools.images['excalibur-3-1']
+        self.score_check(self.score)
 
     def get_event(self, event):
-        pass
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+            self.up_pressed = True
+            if not self.up_was_pressed and self.count == 0:
+                self.excalibur3_img = tools.images['excalibur-3-2']
+            elif self.up_was_pressed and self.count == 0:
+                self.excalibur3_img = tools.images['excalibur-3-3']
+                self.up_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+            self.down_pressed = True
+            if not self.down_was_pressed and self.count == 1:
+                self.excalibur3_img = tools.images['excalibur-3-4']
+            elif self.down_was_pressed and self.count == 1:
+                self.excalibur3_img = tools.images['excalibur-3-5']
+                self.down_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            self.left_pressed = True
+            if not self.left_was_pressed and self.count == 2:
+                self.excalibur3_img = tools.images['excalibur-3-6']
+            elif not self.left_was_pressed and self.count == 3:
+                self.excalibur3_img = tools.images['excalibur-3-8']
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            self.right_pressed = True
+            if self.left_was_pressed and self.count == 2:
+                self.excalibur3_img = tools.images['excalibur-3-7']
+                self.left_was_pressed = False
+                self.count += 1
+            elif self.left_was_pressed and self.count == 3:
+                self.excalibur3_img = tools.images['excalibur-3-9']
+                self.left_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            self.space_pressed = True
+            if not self.space_was_pressed and self.count == 4:
+                self.excalibur3_img = tools.images['excalibur-3-10']
+            elif self.space_was_pressed and self.count == 4:
+                self.excalibur3_img = tools.images['excalibur-3-11']
+                self.space_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYUP and event.key == pygame.K_UP:
+            if self.up_pressed:
+                if self.count == 0:
+                    self.up_was_pressed = True
+                self.up_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
+            if self.down_pressed:
+                if self.count == 1:
+                    self.down_was_pressed = True
+                self.down_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
+            if self.left_pressed:
+                if self.count == 2 or self.count == 3:
+                    self.left_was_pressed = True
+                self.left_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+            if self.right_pressed:
+                if self.count == 2 or self.count == 3:
+                    self.right_was_pressed = True
+                self.right_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+            if self.space_pressed:
+                if self.count == 4:
+                    self.space_was_pressed = True
+                self.space_pressed = False
 
     def update(self, screen, dt):
-        pass
+        self.excalibur3_img = tools.render_image(self.excalibur3_img, self.screen_size, screen)
+        self.draw(screen)
+        time_elapsed = pygame.time.get_ticks() - self.start_time
+        timer_seconds = float(time_elapsed / 1000 % 60)
+        timer = round(self.timer_start - timer_seconds, 1)
+        timer_text = 'Timer: ' + str(timer)
+        score_text = 'Score: ' + str(self.score)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        tools.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
+        self.count_check(self.count, timer)
 
     def draw(self, screen):
-        pass
+        screen.blit(self.excalibur3_img, [0, 0])
 
 class Excalibur4(state_machine.State):
     """Excalibur4 task."""
@@ -589,16 +859,106 @@ class Excalibur4(state_machine.State):
         self.__dict__.update(state_machine.settings)
 
     def startup(self):
-        pass
+        self.count = 0
+        self.up_pressed = False
+        self.up_was_pressed = False
+        self.down_pressed = False
+        self.down_was_pressed = False
+        self.left_pressed = False
+        self.left_was_pressed = False
+        self.right_pressed = False
+        self.right_was_pressed = False
+        self.space_pressed = False
+        self.space_was_pressed = False
+        self.start_time = pygame.time.get_ticks()
+        self.timer_start = self.timer_check(self.score)
+        self.excalibur4_img = tools.images['excalibur-4-1']
+        self.score_check(self.score)
 
     def get_event(self, event):
-        pass
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+            self.up_pressed = True
+            if not self.up_was_pressed and self.count == 0:
+                self.excalibur4_img = tools.images['excalibur-4-2']
+            elif self.up_was_pressed and self.count == 0:
+                self.excalibur4_img = tools.images['excalibur-4-3']
+                self.up_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+            self.down_pressed = True
+            if not self.down_was_pressed and self.count == 1:
+                self.excalibur4_img = tools.images['excalibur-4-4']
+            elif self.down_was_pressed and self.count == 1:
+                self.excalibur4_img = tools.images['excalibur-4-5']
+                self.down_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            self.left_pressed = True
+            if not self.left_was_pressed and self.count == 2:
+                self.excalibur4_img = tools.images['excalibur-4-6']
+            elif not self.left_was_pressed and self.count == 3:
+                self.excalibur4_img = tools.images['excalibur-4-8']
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            self.right_pressed = True
+            if self.left_was_pressed and self.count == 2:
+                self.excalibur4_img = tools.images['excalibur-4-7']
+                self.left_was_pressed = False
+                self.count += 1
+            elif self.left_was_pressed and self.count == 3:
+                self.excalibur4_img = tools.images['excalibur-4-9']
+                self.left_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            self.space_pressed = True
+            if not self.space_was_pressed and self.count == 4:
+                self.excalibur4_img = tools.images['excalibur-4-10']
+            elif self.space_was_pressed and self.count == 4:
+                self.excalibur4_img = tools.images['excalibur-4-11']
+                self.space_was_pressed = False
+                self.count += 1
+        elif event.type == pygame.KEYUP and event.key == pygame.K_UP:
+            if self.up_pressed:
+                if self.count == 0:
+                    self.up_was_pressed = True
+                self.up_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
+            if self.down_pressed:
+                if self.count == 1:
+                    self.down_was_pressed = True
+                self.down_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
+            if self.left_pressed:
+                if self.count == 2 or self.count == 3:
+                    self.left_was_pressed = True
+                self.left_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+            if self.right_pressed:
+                if self.count == 2 or self.count == 3:
+                    self.right_was_pressed = True
+                self.right_pressed = False
+        elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+            if self.space_pressed:
+                if self.count == 4:
+                    self.space_was_pressed = True
+                self.space_pressed = False
 
     def update(self, screen, dt):
-        pass
+        self.excalibur4_img = tools.render_image(self.excalibur4_img, self.screen_size, screen)
+        self.draw(screen)
+        time_elapsed = pygame.time.get_ticks() - self.start_time
+        timer_seconds = float(time_elapsed / 1000 % 60)
+        timer = round(self.timer_start - timer_seconds, 1)
+        timer_text = 'Timer: ' + str(timer)
+        score_text = 'Score: ' + str(self.score)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, timer_text, 40, self.screen_width/2, 0, screen)
+        tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, score_text, 40, self.screen_width-150, 0, screen)
+        tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, score_text, 40, self.screen_width-150, 0, screen)
+        tools.draw_progress_bar(self.screen_width-100, self.screen_height/4, self.count*20, screen)
+        self.count_check(self.count, timer)
 
     def draw(self, screen):
-        pass
+        screen.blit(self.excalibur4_img, [0, 0])
 
 class Loss(state_machine.State):
     """Game loss."""
