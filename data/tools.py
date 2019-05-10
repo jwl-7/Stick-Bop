@@ -1,3 +1,5 @@
+"""This module contains helper functions and variables, especially in terms of assets, for the game."""
+
 import pygame
 import os
 

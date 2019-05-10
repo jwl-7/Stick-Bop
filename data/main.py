@@ -1,3 +1,5 @@
+"""This module contains the initialization of the game and main game loop."""
+
 import pygame
 import sys
 from . import state_machine

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
 
+"""This module runs the game."""
+
 import sys
 import os
 from data.main import main

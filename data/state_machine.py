@@ -1,3 +1,5 @@
+"""This module contains the finite state machine controller and prototype state class."""
+
 import pygame
 from . import tools
 

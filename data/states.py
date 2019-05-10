@@ -1,3 +1,5 @@
+"""This module contains all the various game states."""
+
 import pygame
 import random
 import os
