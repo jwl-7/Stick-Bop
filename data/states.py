@@ -1034,8 +1034,8 @@ class Loss(state_machine.State):
 
     def startup(self):
         self.loss_img = tools.images['game-over']
-        tools.play_music(tools.sounds['piano-lofi-rain'])
         self.score_text = 'Final Score: ' + str(self.score)
+        tools.play_music(tools.sounds['piano-lofi-rain'])
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -1045,9 +1045,9 @@ class Loss(state_machine.State):
 
     def update(self, screen, dt):
         self.loss_img = tools.render_image(self.loss_img, self.screen_size, screen)
+        self.draw(screen)
         tools.clear_text(tools.fonts['OpenSans-Regular'], tools.WHITE, self.score_text, 100, self.screen_width/2, self.screen_height/2.5, screen)
         tools.render_text(tools.fonts['OpenSans-Regular'], tools.BLACK, self.score_text, 100, self.screen_width/2, self.screen_height/2.5, screen)
-        self.draw(screen)
 
     def draw(self, screen):
         screen.blit(self.loss_img, [0, 0])
