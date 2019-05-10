@@ -126,7 +126,15 @@ class Taskdone(state_machine.State):
         Args:
             score (int): Game score.
         """
-        if score == 100:
+        if score == 24:
+            self.next = 'excalibur1'
+        elif score == 49:
+            self.next = 'excalibur2'
+        elif score == 74:
+            self.next = 'excalibur3'
+        elif score == 99:
+            self.next = 'excalibur4'
+        elif score == 100:
             self.next = 'win'
         else:
             self.next = random.choice(self.task_list)
