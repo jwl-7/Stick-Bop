@@ -117,8 +117,8 @@ class State(object):
         self.next = None
         self.current = None
 
-    def score_check(self, score):
-        """Checks for when to speed up music and win state.
+    def music_check(self, score):
+        """Checks for when to speed up music.
 
         Args:
             score (int): Game score.
@@ -131,9 +131,9 @@ class State(object):
             tools.play_music(tools.sounds['neon-runner-x150'])
         elif score == 75:
             tools.play_music(tools.sounds['neon-runner-x175'])
-        elif score == 100:
-            self.next = 'win'
-            self.done = True
+        #elif score == 100:
+            #self.next = 'win'
+            #self.done = True
 
     def count_check(self, count, timer):
         """Checks for task completion / fail.

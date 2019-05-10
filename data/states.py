@@ -135,7 +135,7 @@ class Woodchopping(state_machine.State):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.wood_img = tools.images['woodchopping-1']
-        self.score_check(self.score)
+        self.music_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
@@ -187,7 +187,7 @@ class Drilling(state_machine.State):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.drill_img = tools.images['drilling-1']
-        self.score_check(self.score)
+        self.music_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
@@ -248,7 +248,7 @@ class Mining(state_machine.State):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.mine_img = tools.images['mining-1']
-        self.score_check(self.score)
+        self.music_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
@@ -319,7 +319,7 @@ class Flagraising(state_machine.State):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.flag_img = tools.images['flagraising-1']
-        self.score_check(self.score)
+        self.music_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
@@ -387,7 +387,7 @@ class Hammering(state_machine.State):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.hammer_img = tools.images['hammering-1']
-        self.score_check(self.score)
+        self.music_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
@@ -468,7 +468,7 @@ class Tirepumping(state_machine.State):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.tire_img = tools.images['tirepumping-1']
-        self.score_check(self.score)
+        self.music_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
@@ -546,7 +546,7 @@ class Excalibur1(state_machine.State):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.excalibur1_img = tools.images['excalibur-1-1']
-        self.score_check(self.score)
+        self.music_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
@@ -655,7 +655,7 @@ class Excalibur2(state_machine.State):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.excalibur2_img = tools.images['excalibur-2-1']
-        self.score_check(self.score)
+        self.music_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
@@ -764,7 +764,7 @@ class Excalibur3(state_machine.State):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.excalibur3_img = tools.images['excalibur-3-1']
-        self.score_check(self.score)
+        self.music_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
@@ -873,7 +873,7 @@ class Excalibur4(state_machine.State):
         self.start_time = pygame.time.get_ticks()
         self.timer_start = self.timer_check(self.score)
         self.excalibur4_img = tools.images['excalibur-4-1']
-        self.score_check(self.score)
+        self.music_check(self.score)
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
