@@ -167,9 +167,9 @@ class Woodchopping(state_machine.State):
                 self.count += 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             self.right_pressed = True
-            if not self.left_pressed:
+            if not self.right_was_pressed and not self.left_pressed:
                 self.wood_img = tools.images['woodchopping-2']
-        elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
+        if event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
             self.left_pressed = False
         elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
             if self.right_pressed:
@@ -220,7 +220,7 @@ class Drilling(state_machine.State):
                 self.drill_img = tools.images['drilling-8']
             elif self.count == 4:
                 self.drill_img = tools.images['drilling-10']
-        elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+        if event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
             if self.count == 0:
                 self.drill_img = tools.images['drilling-3']
             elif self.count == 1:
@@ -287,7 +287,7 @@ class Mining(state_machine.State):
                 self.count += 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             self.right_pressed = True
-            if not self.left_pressed:
+            if not self.right_was_pressed and not self.left_pressed:
                 if self.count == 0:
                     self.mine_img = tools.images['mining-2']
                 elif self.count == 1:
@@ -298,7 +298,7 @@ class Mining(state_machine.State):
                     self.mine_img = tools.images['mining-8']
                 elif self.count == 4:
                     self.mine_img = tools.images['mining-10']
-        elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
+        if event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
             self.left_pressed = False
         elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
             if self.right_pressed:
@@ -358,7 +358,7 @@ class Flagraising(state_machine.State):
                 self.count += 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
             self.down_pressed = True
-            if not self.up_pressed:
+            if not self.down_was_pressed and not self.up_pressed:
                 if self.count == 0:
                     self.flag_img = tools.images['flagraising-2']
                 elif self.count == 1:
@@ -369,7 +369,7 @@ class Flagraising(state_machine.State):
                     self.flag_img = tools.images['flagraising-8']
                 elif self.count == 4:
                     self.flag_img = tools.images['flagraising-10']
-        elif event.type == pygame.KEYUP and event.key == pygame.K_UP:
+        if event.type == pygame.KEYUP and event.key == pygame.K_UP:
             self.up_pressed = False
         elif event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
             if self.down_pressed:
@@ -430,7 +430,7 @@ class Hammering(state_machine.State):
                 self.hammer_img = tools.images['hammering-18']
             elif self.count == 4.5:
                 self.hammer_img = tools.images['hammering-20']
-        elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+        if event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
             if self.count == 0:
                 self.hammer_img = tools.images['hammering-3']
             elif self.count == 0.5:
@@ -507,7 +507,7 @@ class Tirepumping(state_machine.State):
                 self.count += 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
             self.down_pressed = True
-            if not self.up_pressed:
+            if not self.down_was_pressed and not self.up_pressed:
                 if self.count == 0:
                     self.tire_img = tools.images['tirepumping-2']
                 elif self.count == 1:
@@ -518,7 +518,7 @@ class Tirepumping(state_machine.State):
                     self.tire_img = tools.images['tirepumping-8']
                 elif self.count == 4:
                     self.tire_img = tools.images['tirepumping-10']
-        elif event.type == pygame.KEYUP and event.key == pygame.K_UP:
+        if event.type == pygame.KEYUP and event.key == pygame.K_UP:
             self.up_pressed = False
         elif event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
             if self.down_pressed:
@@ -608,7 +608,7 @@ class Excalibur1(state_machine.State):
                 self.excalibur1_img = tools.images['excalibur-1-11']
                 self.space_was_pressed = False
                 self.count += 1
-        elif event.type == pygame.KEYUP and event.key == pygame.K_UP:
+        if event.type == pygame.KEYUP and event.key == pygame.K_UP:
             if self.up_pressed:
                 if self.count == 0:
                     self.up_was_pressed = True
@@ -717,7 +717,7 @@ class Excalibur2(state_machine.State):
                 self.excalibur2_img = tools.images['excalibur-2-11']
                 self.space_was_pressed = False
                 self.count += 1
-        elif event.type == pygame.KEYUP and event.key == pygame.K_UP:
+        if event.type == pygame.KEYUP and event.key == pygame.K_UP:
             if self.up_pressed:
                 if self.count == 0:
                     self.up_was_pressed = True
@@ -826,7 +826,7 @@ class Excalibur3(state_machine.State):
                 self.excalibur3_img = tools.images['excalibur-3-11']
                 self.space_was_pressed = False
                 self.count += 1
-        elif event.type == pygame.KEYUP and event.key == pygame.K_UP:
+        if event.type == pygame.KEYUP and event.key == pygame.K_UP:
             if self.up_pressed:
                 if self.count == 0:
                     self.up_was_pressed = True
@@ -935,7 +935,7 @@ class Excalibur4(state_machine.State):
                 self.excalibur4_img = tools.images['excalibur-4-11']
                 self.space_was_pressed = False
                 self.count += 1
-        elif event.type == pygame.KEYUP and event.key == pygame.K_UP:
+        if event.type == pygame.KEYUP and event.key == pygame.K_UP:
             if self.up_pressed:
                 if self.count == 0:
                     self.up_was_pressed = True
