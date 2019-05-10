@@ -106,7 +106,7 @@ class Taskdone(state_machine.State):
         self.__dict__.update(state_machine.settings)
 
     def startup(self):
-        self.next = random.choice(self.task_list)
+        self.score_check(self.score)
         self.start_time = pygame.time.get_ticks()
 
     def get_event(self, event):
@@ -119,6 +119,17 @@ class Taskdone(state_machine.State):
 
     def draw(self, screen):
         pass
+
+    def score_check(self, score):
+        """Checks the score to determine the next state.
+
+        Args:
+            score (int): Game score.
+        """
+        if score == 100:
+            self.next = 'win'
+        else:
+            self.next = random.choice(self.task_list)
 
 class Woodchopping(state_machine.State):
     """Woodchopping task."""

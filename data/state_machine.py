@@ -131,9 +131,6 @@ class State(object):
             tools.play_music(tools.sounds['neon-runner-x150'])
         elif score == 75:
             tools.play_music(tools.sounds['neon-runner-x175'])
-        #elif score == 100:
-            #self.next = 'win'
-            #self.done = True
 
     def count_check(self, count, timer):
         """Checks for task completion / fail.
