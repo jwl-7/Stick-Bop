@@ -8,15 +8,12 @@ IMG_DIR = os.path.join('assets', 'images')
 SND_DIR = os.path.join('assets', 'sounds')
 FNT_DIR = os.path.join('assets', 'fonts')
 
-# monokai color palette
+# colors
 WHITE = (253, 250, 243)
 BLACK = (56, 54, 57)
 RED = (255, 96, 137)
 GREEN = (169, 220, 199)
 BLUE = (119, 220, 230)
-YELLOW = (255, 216, 102)
-ORANGE = (252, 151, 105)
-PURPLE = (171, 157, 244)
 
 # asset dictionaries
 images = {}

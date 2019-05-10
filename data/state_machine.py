@@ -3,7 +3,6 @@
 import pygame
 from . import tools
 
-# pygame display settings dictionary
 settings = {
     'screen_size': (1000, 800),
     'screen_width': 1000,
