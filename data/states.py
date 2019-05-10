@@ -140,7 +140,11 @@ class Taskdone(state_machine.State):
             self.next = random.choice(self.task_list)
 
 class Woodchopping(state_machine.State):
-    """Woodchopping task."""
+    """Woodchopping task.
+    
+    Key Sequence: 
+        Right -> Left (5x).
+    """
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -195,7 +199,11 @@ class Woodchopping(state_machine.State):
         screen.blit(self.wood_img, [0, 0])
 
 class Drilling(state_machine.State):
-    """Drilling task."""
+    """Drilling task.
+
+    Key Sequence: 
+        Space (5x).
+    """
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -253,7 +261,11 @@ class Drilling(state_machine.State):
         screen.blit(self.drill_img, [0, 0])
 
 class Mining(state_machine.State):
-    """Mining task. """
+    """Mining task.
+
+    Key Sequence: 
+        Right -> Left (5x).
+    """
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -324,7 +336,11 @@ class Mining(state_machine.State):
         screen.blit(self.mine_img, [0, 0])
 
 class Flagraising(state_machine.State):
-    """Flagraising task."""
+    """Flagraising task.
+
+    Key Sequence: 
+        Down -> Up (5x).
+    """
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -395,7 +411,11 @@ class Flagraising(state_machine.State):
         screen.blit(self.flag_img, [0, 0])
 
 class Hammering(state_machine.State):
-    """Hammering task."""
+    """Hammering task.
+
+    Key Sequence: 
+        Space (10x).
+    """
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -473,7 +493,11 @@ class Hammering(state_machine.State):
         screen.blit(self.hammer_img, [0, 0])
 
 class Tirepumping(state_machine.State):
-    """Tirepumping task."""
+    """Tirepumping task.
+
+    Key Sequence: 
+        Down -> Up (5x).
+    """
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -544,7 +568,11 @@ class Tirepumping(state_machine.State):
         screen.blit(self.tire_img, [0, 0])
 
 class Excalibur1(state_machine.State):
-    """Excalibur1 task."""
+    """Excalibur1 task.
+
+    Key Sequence: 
+        Up -> Up, Down -> Down, Left -> Right, Left -> Right, Space -> Space.
+    """
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -653,7 +681,11 @@ class Excalibur1(state_machine.State):
         screen.blit(self.excalibur1_img, [0, 0])
 
 class Excalibur2(state_machine.State):
-    """Excalibur2 task."""
+    """Excalibur2 task.
+
+    Key Sequence: 
+        Up -> Up, Down -> Down, Left -> Right, Left -> Right, Space -> Space.
+    """
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -762,7 +794,11 @@ class Excalibur2(state_machine.State):
         screen.blit(self.excalibur2_img, [0, 0])
 
 class Excalibur3(state_machine.State):
-    """Excalibur3 task."""
+    """Excalibur3 task.
+
+    Key Sequence: 
+        Up -> Up, Down -> Down, Left -> Right, Left -> Right, Space -> Space.
+    """
 
     def __init__(self):
         state_machine.State.__init__(self)
@@ -871,7 +907,11 @@ class Excalibur3(state_machine.State):
         screen.blit(self.excalibur3_img, [0, 0])
 
 class Excalibur4(state_machine.State):
-    """Excalibur4 task."""
+    """Excalibur4 task.
+
+    Key Sequence: 
+        Up -> Up, Down -> Down, Left -> Right, Left -> Right, Space -> Space.
+    """
 
     def __init__(self):
         state_machine.State.__init__(self)
