@@ -66,7 +66,10 @@ class Menu(state_machine.State):
 
     def draw(self, screen):
         screen.blit(self.menu_img, [0, 0])
-        pass
+
+    def update_screen_size(self, screen_size, screen):
+        screen = pygame.display.set_mode(screen_size)
+
 
 class Start(state_machine.State):
     """Displays ready, set, GO! message with sound and starts the game."""
