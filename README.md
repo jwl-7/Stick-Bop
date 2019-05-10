@@ -1,13 +1,13 @@
 # Stick Bop!
 a python game inspired by the 90s Bop It! toy
+<img src="https://i.imgur.com/4sOPEkE.png" width="400" height="200">
 
 ## Gameplay
 You need to help your stick-figure character do as much work as possible!  
 Follow the on-screen instructions for each work task.  
 You win the game by getting a score of 100.
 
-## Screenshots
-[![stick-bop-menu.png](https://i.imgur.com/NB7x7E2.png)](https://imgur.com/NB7x7E2)
+<img src="https://i.imgur.com/MwisTc8.mp4" width="400" height="200">
 
 ## Requirements
 * Python 3.7+
