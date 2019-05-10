@@ -5,11 +5,9 @@ from . import tools
 
 # pygame display settings dictionary
 settings = {
-    'screen_size': (900, 700),
-    'screen_width': 900,
-    'screen_height': 700,
-    'screen_max_width': 1920,
-    'screen_max_height': 1080,
+    'screen_size': (1000, 800),
+    'screen_width': 1000,
+    'screen_height': 800,
     'fps': 60,
     'title': 'Stick Bop!'  
 }
@@ -34,9 +32,6 @@ class StateController:
     def __init__(self, **settings):
         self.__dict__.update(settings)
         self.done = False
-        self.display_info = pygame.display.Info()
-        self.screen_max_width = self.display_info.current_w
-        self.screen_max_height = self.display_info.current_h
         self.screen = pygame.display.set_mode(self.screen_size)
         tools.change_icon('helmet-icon.png')
         self.caption = pygame.display.set_caption(self.title)
