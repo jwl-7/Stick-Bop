@@ -78,7 +78,7 @@ class StateController:
     def game_loop(self):
         """This is the main game loop."""
         while not self.done:
-            delta_time = self.clock.tick(self.fps) / 1000.0
+            delta_time = self.clock.tick(FPS) / 1000.0
             self.event_loop()
             self.update(delta_time)
             pygame.display.update()
@@ -95,6 +95,9 @@ class State(object):
         quit (bool): State exit status.
         next (none): Holds the value of the next state.
         current (none): Holds the value of the current state.
+        screen_size (tup): The width and height of the game screen.
+        screen_width (int): The width of the game screen.
+        screen_height (int): The height of the game screen.
     """
     score = 0
     count = 0

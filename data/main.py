@@ -15,7 +15,7 @@ from . import states
 def main():
     """Initialize pygame, state machine, and run the main game loop."""
     pygame.init()
-    game = state_machine.StateController(**state_machine.settings)
+    game = state_machine.StateController()
     state_dict = {
         'loading': states.Loading(),
         'menu': states.Menu(),
