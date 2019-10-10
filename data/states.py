@@ -19,7 +19,6 @@ class Loading(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
         self.next = 'menu'
         self.load = True
         self.start_time = pygame.time.get_ticks()
@@ -56,7 +55,6 @@ class Menu(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
         self.next = 'start'
 
     def startup(self):
@@ -76,16 +74,12 @@ class Menu(state_machine.State):
     def draw(self, screen):
         screen.blit(self.menu_img, [0, 0])
 
-    def update_screen_size(self, screen_size, screen):
-        screen = pygame.display.set_mode(screen_size)
-
 
 class Start(state_machine.State):
     """Displays ready, set, GO! message with sound and starts the game."""
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
 
     def startup(self):
         state_machine.State.score = 0
@@ -118,7 +112,6 @@ class Taskdone(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
 
     def startup(self):
         self.score_check(self.score)
@@ -164,7 +157,6 @@ class Woodchopping(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
 
     def startup(self):
         self.count = 0
@@ -224,7 +216,6 @@ class Drilling(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
 
     def startup(self):
         self.count = 0
@@ -286,7 +277,6 @@ class Mining(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
 
     def startup(self):
         self.count = 0
@@ -362,7 +352,6 @@ class Flagraising(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
 
     def startup(self):
         self.count = 0
@@ -438,7 +427,6 @@ class Hammering(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
 
     def startup(self):
         self.count = 0
@@ -520,7 +508,6 @@ class Tirepumping(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
 
     def startup(self):
         self.count = 0
@@ -596,7 +583,6 @@ class Excalibur1(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
 
     def startup(self):
         self.count = 0
@@ -710,7 +696,6 @@ class Excalibur2(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
 
     def startup(self):
         self.count = 0
@@ -824,7 +809,6 @@ class Excalibur3(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
 
     def startup(self):
         self.count = 0
@@ -938,7 +922,6 @@ class Excalibur4(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
 
     def startup(self):
         self.count = 0
@@ -1048,7 +1031,6 @@ class Loss(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
         self.next = 'menu'
 
     def startup(self):
@@ -1077,7 +1059,6 @@ class Win(state_machine.State):
 
     def __init__(self):
         state_machine.State.__init__(self)
-        self.__dict__.update(state_machine.settings)
         self.next = 'menu'
 
     def startup(self):

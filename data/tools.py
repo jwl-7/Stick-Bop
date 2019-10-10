@@ -15,17 +15,17 @@ IMG_DIR = os.path.join('assets', 'images')
 SND_DIR = os.path.join('assets', 'sounds')
 FNT_DIR = os.path.join('assets', 'fonts')
 
+# asset dictionaries
+images = {}
+sounds = {}
+fonts = {}
+
 # colors
 WHITE = (253, 250, 243)
 BLACK = (56, 54, 57)
 RED = (255, 96, 137)
 GREEN = (169, 220, 199)
 BLUE = (119, 220, 230)
-
-# asset dictionaries
-images = {}
-sounds = {}
-fonts = {}
 
 
 def change_icon(filename):

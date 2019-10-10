@@ -9,26 +9,18 @@ import pygame
 from . import tools
 
 
-settings = {
-    'screen_size': (1000, 800),
-    'screen_width': 1000,
-    'screen_height': 800,
-    'fps': 60,
-    'title': 'Stick Bop!'
-}
+TITLE = 'Stick Bop!'
+WINDOW_SIZE = (1000, 800)
+WINDOW_WIDTH = 1000
+WINDOW_HEIGHT = 800
+FPS = 60
 
 
 class StateController:
     """Controls and sets up the game settings, game states, and main game loop.
 
-    Args:
-        **settings (dict): Game display settings.
-
     Attributes:
         done (bool): State completion status.
-        display_info (obj): Provides information about the default display mode.
-        screen_max_width (int): Maximum screen width allowed based on display_info.
-        screen_max_height (int): Maximum screen height allowed based on display_height.
         screen (obj): Initializes display surface.
         caption (obj): Sets the window title.
         clock (obj): Initializes clock object to help track time.
@@ -38,9 +30,9 @@ class StateController:
     def __init__(self, **settings):
         self.__dict__.update(settings)
         self.done = False
-        self.screen = pygame.display.set_mode(self.screen_size)
+        self.screen = pygame.display.set_mode(WINDOW_SIZE)
         tools.change_icon('helmet-icon.png')
-        self.caption = pygame.display.set_caption(self.title)
+        self.caption = pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
         self.states = {}
 
@@ -120,6 +112,9 @@ class State(object):
         self.quit = False
         self.next = None
         self.current = None
+        self.screen_size = WINDOW_SIZE
+        self.screen_width = WINDOW_WIDTH
+        self.screen_height = WINDOW_HEIGHT
 
     def music_check(self, score):
         """Checks for when to speed up music.
