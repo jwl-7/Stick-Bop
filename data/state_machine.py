@@ -1,19 +1,26 @@
-"""This module contains the finite state machine controller and prototype state class."""
+"""Finite State Machine
+
+This module contains the game state controller and prototype state class.
+"""
+
 
 import pygame
+
 from . import tools
+
 
 settings = {
     'screen_size': (1000, 800),
     'screen_width': 1000,
     'screen_height': 800,
     'fps': 60,
-    'title': 'Stick Bop!'  
+    'title': 'Stick Bop!'
 }
+
 
 class StateController:
     """Controls and sets up the game settings, game states, and main game loop.
-    
+
     Args:
         **settings (dict): Game display settings.
 
@@ -36,7 +43,7 @@ class StateController:
         self.caption = pygame.display.set_caption(self.title)
         self.clock = pygame.time.Clock()
         self.states = {}
-    
+
     def setup_states(self, state_dict, start_state):
         """Sets the initial state.
 
@@ -84,6 +91,7 @@ class StateController:
             self.update(delta_time)
             pygame.display.update()
 
+
 class State(object):
     """Prototype class for all game states to inherit from.
 
@@ -99,11 +107,11 @@ class State(object):
     score = 0
     count = 0
     task_list = [
-        'drilling', 
-        'mining', 
-        'woodchopping', 
-        'flagraising', 
-        'hammering', 
+        'drilling',
+        'mining',
+        'woodchopping',
+        'flagraising',
+        'hammering',
         'tirepumping'
         ]
 
@@ -130,7 +138,7 @@ class State(object):
 
     def count_check(self, count, timer):
         """Checks for task completion / fail.
-        
+
         Args:
             count (int): Represents the progress of task completion.
             timer (int): Rounded time in seconds elapsed since task started.

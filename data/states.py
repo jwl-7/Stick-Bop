@@ -1,10 +1,18 @@
-"""This module contains all the various game states."""
+""" Game States
 
-import pygame
+This module contains all the game states
+for use with the finite state machine.
+"""
+
+
 import random
 import os
+
+import pygame
+
 from . import state_machine
 from . import tools
+
 
 class Loading(state_machine.State):
     """Displays loading image. Loads all assets including fonts, images, and sounds."""
@@ -16,9 +24,9 @@ class Loading(state_machine.State):
         self.load = True
         self.start_time = pygame.time.get_ticks()
         self.load_img = pygame.image.load(os.path.join(tools.IMG_DIR, 'loading.png')).convert()
-    
+
     def load_assets(self):
-        if self.load == True:
+        if self.load:
             tools.images = tools.load_images(tools.IMG_DIR)
             tools.sounds = tools.load_sounds(tools.SND_DIR)
             tools.fonts = tools.load_fonts(tools.FNT_DIR)
@@ -36,11 +44,12 @@ class Loading(state_machine.State):
         time_elapsed = pygame.time.get_ticks() - self.start_time
         if time_elapsed >= 200:
             self.load_assets()
-        if self.load == False:
+        if not self.load:
             self.done = True
 
     def draw(self, screen):
         screen.blit(self.load_img, [0, 0])
+
 
 class Menu(state_machine.State):
     """Displays main menu. Allows user to start or quit game."""
@@ -103,6 +112,7 @@ class Start(state_machine.State):
     def draw(self, screen):
         screen.blit(self.start_img, [0, 0])
 
+
 class Taskdone(state_machine.State):
     """Sets the next state to a random task and then switches to it after 400ms."""
 
@@ -144,10 +154,11 @@ class Taskdone(state_machine.State):
         else:
             self.next = random.choice(self.task_list)
 
+
 class Woodchopping(state_machine.State):
     """Woodchopping task.
-    
-    Key Sequence: 
+
+    Key Sequence:
         Right -> Left (5x).
     """
 
@@ -203,10 +214,11 @@ class Woodchopping(state_machine.State):
     def draw(self, screen):
         screen.blit(self.wood_img, [0, 0])
 
+
 class Drilling(state_machine.State):
     """Drilling task.
 
-    Key Sequence: 
+    Key Sequence:
         Space (5x).
     """
 
@@ -245,7 +257,6 @@ class Drilling(state_machine.State):
             elif self.count == 4:
                 self.drill_img = tools.images['drilling-11']
             self.count += 1
-            
 
     def update(self, screen, dt):
         self.drill_img = tools.render_image(self.drill_img, self.screen_size, screen)
@@ -265,10 +276,11 @@ class Drilling(state_machine.State):
     def draw(self, screen):
         screen.blit(self.drill_img, [0, 0])
 
+
 class Mining(state_machine.State):
     """Mining task.
 
-    Key Sequence: 
+    Key Sequence:
         Right -> Left (5x).
     """
 
@@ -340,10 +352,11 @@ class Mining(state_machine.State):
     def draw(self, screen):
         screen.blit(self.mine_img, [0, 0])
 
+
 class Flagraising(state_machine.State):
     """Flagraising task.
 
-    Key Sequence: 
+    Key Sequence:
         Down -> Up (5x).
     """
 
@@ -415,10 +428,11 @@ class Flagraising(state_machine.State):
     def draw(self, screen):
         screen.blit(self.flag_img, [0, 0])
 
+
 class Hammering(state_machine.State):
     """Hammering task.
 
-    Key Sequence: 
+    Key Sequence:
         Space (10x).
     """
 
@@ -477,7 +491,6 @@ class Hammering(state_machine.State):
             elif self.count == 4.5:
                 self.hammer_img = tools.images['hammering-21']
             self.count += 0.5
-            
 
     def update(self, screen, dt):
         self.hammer_img = tools.render_image(self.hammer_img, self.screen_size, screen)
@@ -497,10 +510,11 @@ class Hammering(state_machine.State):
     def draw(self, screen):
         screen.blit(self.hammer_img, [0, 0])
 
+
 class Tirepumping(state_machine.State):
     """Tirepumping task.
 
-    Key Sequence: 
+    Key Sequence:
         Down -> Up (5x).
     """
 
@@ -572,10 +586,11 @@ class Tirepumping(state_machine.State):
     def draw(self, screen):
         screen.blit(self.tire_img, [0, 0])
 
+
 class Excalibur1(state_machine.State):
     """Excalibur1 task.
 
-    Key Sequence: 
+    Key Sequence:
         Up -> Up, Down -> Down, Left -> Right, Left -> Right, Space -> Space.
     """
 
@@ -685,10 +700,11 @@ class Excalibur1(state_machine.State):
     def draw(self, screen):
         screen.blit(self.excalibur1_img, [0, 0])
 
+
 class Excalibur2(state_machine.State):
     """Excalibur2 task.
 
-    Key Sequence: 
+    Key Sequence:
         Up -> Up, Down -> Down, Left -> Right, Left -> Right, Space -> Space.
     """
 
@@ -798,10 +814,11 @@ class Excalibur2(state_machine.State):
     def draw(self, screen):
         screen.blit(self.excalibur2_img, [0, 0])
 
+
 class Excalibur3(state_machine.State):
     """Excalibur3 task.
 
-    Key Sequence: 
+    Key Sequence:
         Up -> Up, Down -> Down, Left -> Right, Left -> Right, Space -> Space.
     """
 
@@ -911,10 +928,11 @@ class Excalibur3(state_machine.State):
     def draw(self, screen):
         screen.blit(self.excalibur3_img, [0, 0])
 
+
 class Excalibur4(state_machine.State):
     """Excalibur4 task.
 
-    Key Sequence: 
+    Key Sequence:
         Up -> Up, Down -> Down, Left -> Right, Left -> Right, Space -> Space.
     """
 
@@ -1024,6 +1042,7 @@ class Excalibur4(state_machine.State):
     def draw(self, screen):
         screen.blit(self.excalibur4_img, [0, 0])
 
+
 class Loss(state_machine.State):
     """Game loss."""
 
@@ -1051,6 +1070,7 @@ class Loss(state_machine.State):
 
     def draw(self, screen):
         screen.blit(self.loss_img, [0, 0])
+
 
 class Win(state_machine.State):
     """Game won."""

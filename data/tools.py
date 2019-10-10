@@ -1,7 +1,14 @@
-"""This module contains helper functions and variables, especially in terms of assets, for the game."""
+"""Tools
+
+This module contains helper functions and
+variables for the game, especially in relation to assets.
+"""
+
+
+import os
 
 import pygame
-import os
+
 
 # asset folder paths
 IMG_DIR = os.path.join('assets', 'images')
@@ -20,6 +27,7 @@ images = {}
 sounds = {}
 fonts = {}
 
+
 def change_icon(filename):
     """Changes the icon of the display window.
 
@@ -29,6 +37,7 @@ def change_icon(filename):
     icon = pygame.image.load(os.path.join(IMG_DIR, filename))
     icon = icon.convert_alpha()
     pygame.display.set_icon(icon)
+
 
 def load_images(directory, colorkey=(0, 0, 0), extensions=('.png', '.jpg', '.bmp')):
     """Loads all images with the specified file extensions.
@@ -53,6 +62,7 @@ def load_images(directory, colorkey=(0, 0, 0), extensions=('.png', '.jpg', '.bmp
             images[name] = img
     return images
 
+
 def load_sounds(directory, extensions=('.ogg', '.mp3', '.wav', '.mdi')):
     """Loads all sounds with the specified file extensions.
 
@@ -69,6 +79,7 @@ def load_sounds(directory, extensions=('.ogg', '.mp3', '.wav', '.mdi')):
             sounds[name] = os.path.join(directory, snd)
     return sounds
 
+
 def load_fonts(directory, extensions=('.ttf')):
     """Loads all fonts with the specified file extension.
 
@@ -78,12 +89,13 @@ def load_fonts(directory, extensions=('.ttf')):
 
     Returns:
         fonts (dict): The loaded fonts.
-    """ 
+    """
     for fnt in os.listdir(directory):
         name, ext = os.path.splitext(fnt)
         if ext in extensions:
             fonts[name] = os.path.join(directory, fnt)
     return fonts
+
 
 def render_image(image, screen_size, screen):
     """Renders an image to the screen at the size of the window.
@@ -99,9 +111,10 @@ def render_image(image, screen_size, screen):
         image = pygame.transform.smoothscale(image, screen_size, screen)
     return image
 
+
 def render_text(font, color, text, size, x, y, screen):
     """Draws text in rectangle to surface.
-    
+
     Args:
         font (str): Name of font.
         color (tup): RGB color code.
@@ -109,7 +122,7 @@ def render_text(font, color, text, size, x, y, screen):
         size (int): Size of the text.
         x (int): X-axis coordinate of text rectangle.
         y (int): Y-axis coordinate of text rectangle.
-        screen (obj): Surface to draw text on.  
+        screen (obj): Surface to draw text on.
     """
     text_font = pygame.font.Font(font, size)
     text_surface = text_font.render(text, True, color)
@@ -117,9 +130,10 @@ def render_text(font, color, text, size, x, y, screen):
     text_rect.midtop = (x, y)
     screen.blit(text_surface, text_rect)
 
+
 def clear_text(font, color, text, size, x, y, screen):
     """Covers text with solid rectangle to surface.
-    
+
     Args:
         font (str): Use same font as the text to be covered.
         color (tup): RGB color code. Use same color as background.
@@ -135,6 +149,7 @@ def clear_text(font, color, text, size, x, y, screen):
     text_rect.midtop = (x, y)
     screen.fill(color, text_rect)
 
+
 def draw_progress_bar(x, y, progress, screen):
     """Draw a colored progress bar with outline to surface.
 
@@ -142,7 +157,7 @@ def draw_progress_bar(x, y, progress, screen):
         x (int): X-axis coordinate to draw the bar.
         y (int): Y-axis coordinate to draw the bar.
         progress (int): Completion progress of the task.
-        screen (obj): Surface to render bar on.    
+        screen (obj): Surface to render bar on.
     """
     bar_length = 40
     bar_height = 400
@@ -154,6 +169,7 @@ def draw_progress_bar(x, y, progress, screen):
     pygame.draw.rect(screen, WHITE, fill_rect)
     pygame.draw.rect(screen, BLACK, outline_rect, 4)
 
+
 def play_music(track):
     """Plays a music sound on infinite loop.
 
@@ -162,6 +178,7 @@ def play_music(track):
     """
     pygame.mixer.music.load(track)
     pygame.mixer.music.play(-1)
+
 
 def play_sound(sound):
     """Plays a sound once.
