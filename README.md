@@ -36,7 +36,7 @@ The release includes self-contained executables for Windows, macOS, and Linux. N
 
 ## Requirements
 * Python 3.7+
-* Pygame 1.9.4
+* Pygame 1.9.6
 
 ## License
 This project is released under the GNU GPL License - see the [LICENSE](LICENSE) file for details
