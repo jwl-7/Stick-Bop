@@ -84,7 +84,7 @@ class StateController:
             pygame.display.update()
 
 
-class State(object):
+class State:
     """Prototype class for all game states to inherit from.
 
     Attributes:
